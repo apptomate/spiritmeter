@@ -22,3 +22,6 @@ export const defaultAvatar = () => <Avatar icon='user' />;
 
 //Default Place
 export const defaultPlace = DefaultPlace;
+
+//Google Map API Key
+export const GOOGLE_MAP_API_KEY = "AIzaSyCFjxawo00zpDtbCdDDujEaj-UY-FMbWvE";
