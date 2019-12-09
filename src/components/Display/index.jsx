@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { List, Avatar, Icon, Spin } from "antd";
 import { getAllListDisplay } from "../../Redux/_actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Display extends Component {
   componentDidMount() {
@@ -9,7 +10,7 @@ class Display extends Component {
   }
   render() {
     const {
-      DisplayResponseData: { data = [], loading = true }
+      DisplayResponseData: { data = [], loading }
     } = this.props;
     let dataToDisplay = [];
     data.forEach((element, key) => {
@@ -17,8 +18,8 @@ class Display extends Component {
       let filePathParsed = JSON.parse(filePathJson);
       filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
       dataToDisplay.push({
-        href: "http://ant.design",
-        title: "element.name",
+        //href: "#",
+        title: element.name,
         filePath: filePathParsed,
         content: (
           <div className='list-display' key={`list_${key}`}>
@@ -38,7 +39,10 @@ class Display extends Component {
             </p>
             <div className='item-center list-username'>
               <Avatar icon='user' />
-              <span>{element.createdName}</span>
+              <span>{element.createdByName}</span>
+              <span>
+                <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link>
+              </span>
             </div>
           </div>
         )

@@ -15,6 +15,7 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route path='/login' component={Login} />
+            <Route exact path='/' component={AdminLayout} />
             <Route path='/admin' component={AdminLayout} />
             <Route path='*' component={Unauthorized} />
           </Switch>
