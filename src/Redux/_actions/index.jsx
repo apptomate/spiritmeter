@@ -47,7 +47,6 @@ export function authLogin(formData) {
       })
       .catch(error => {
         if (error.response) {
-          const { data } = error.response;
           dispatch({
             type: AUTHLOGIN_ERROR,
             payload: error.response.data

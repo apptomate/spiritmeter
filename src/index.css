@@ -156,6 +156,12 @@ code {
   margin-bottom: 1rem;
 }
 
+.login-form-forgot {
+  float: right;
+}
+.login-button-style {
+  width: 25%;
+}
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #001a3559 !important;
 }

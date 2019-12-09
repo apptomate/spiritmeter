@@ -18,7 +18,10 @@ export const ALL_LIST_ROUTES_URL = BASE_URL + "Route/listRoutes";
 export const ALL_LIST_USERS_URL = BASE_URL + "User/listUser";
 
 //Default Avatar
-export const defaultAvatar = () => <Avatar icon='user' />;
+export const DefaultAvatar = <Avatar icon='user' />;
 
 //Default Place
 export const defaultPlace = DefaultPlace;
+
+//Google Map API Key
+export const GOOGLE_MAP_API_KEY = "AIzaSyCFjxawo00zpDtbCdDDujEaj-UY-FMbWvE";
