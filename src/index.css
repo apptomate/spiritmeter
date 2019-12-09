@@ -88,7 +88,6 @@ code {
   font-weight: 500;
   font-size: inherit;
   padding-right: initial;
-  margin-top: 1.5rem;
   display: unset;
   margin-right: 9px;
 }
@@ -165,6 +164,10 @@ code {
   font-weight: 500 !important;
   font-size: 13px !important;
 }
+.ant-menu-item > a {
+  display: block;
+  color: rgb(0, 26, 53) !important;
+}
 .ant-menu-vertical .ant-menu-item,
 .ant-menu-vertical-left .ant-menu-item,
 .ant-menu-vertical-right .ant-menu-item,
@@ -206,4 +209,241 @@ code {
     opacity 0.15s cubic-bezier(0.215, 0.61, 0.355, 1),
     -webkit-transform 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
   content: "";
+}
+
+.list-img {
+  width: 40%;
+  overflow: hidden;
+  height: 16rem;
+  float: left;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.list-img:hover img {
+  transform: scale(1.5);
+}
+
+.list-img img {
+  object-fit: contain;
+  min-height: 16rem !important;
+  max-height: 16rem !important;
+  transition: transform 0.9s ease;
+}
+.listing-contant {
+  width: 60%;
+  float: left;
+  padding: 1rem;
+}
+.list-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #001a35;
+}
+.list-name-imp {
+  font-size: 14px;
+  color: #252525d1;
+  font-weight: 500;
+  margin-top: 0.6rem;
+}
+
+.list-name-imp i {
+  padding-right: 5px;
+}
+.color-r {
+  color: red;
+}
+.ant-btn > i,
+.ant-btn > span {
+  display: initial !important;
+  -webkit-transition: margin-left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: margin-left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  pointer-events: none;
+  margin-right: initial;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+.ml-a {
+  margin-left: auto;
+}
+.list-card {
+  width: 100%;
+  display: inline-block;
+  margin-top: 1.5rem;
+  box-shadow: 0 0 15px #ababab;
+}
+@import url("https://fonts.googleapis.com/css?family=Mukta:700");
+
+button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+button.cus-btn {
+  width: 7rem;
+  height: auto;
+}
+button.cus-btn .circle {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 2rem;
+  background: #282936;
+  border-radius: 1.625rem;
+}
+button.cus-btn .circle .icon {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+button.cus-btn .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+button.cus-btn .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+}
+button.cus-btn .button-text {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.3rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+button:hover .circle {
+  width: 100%;
+}
+button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+button:hover .button-text {
+  color: #fff;
+}
+
+/* For demo */
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+.ant-carousel .slick-slide {
+  line-height: 0px !important;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.listing-map-div {
+  height: 18rem;
+  margin-top: 1rem;
+  overflow: hidden;
+  margin: 1rem;
+}
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #fff !important;
+  font-weight: 500;
+  background: rgb(63, 63, 63) !important;
+  border: 2px rgb(63, 63, 63) solid;
+}
+.ant-tabs-ink-bar {
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  z-index: 1;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 2px;
+  background-color: #000000 !important;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  display: none !important;
+}
+.ant-tabs-nav .ant-tabs-tab:last-child {
+  margin-right: 0;
+  border: 2px rgb(63, 63, 63) solid;
+  font-weight: 500;
+}
+
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: #b5b4b4 !important;
+}
+
+.ant-tabs-nav .ant-tabs-tab {
+  border: 2px rgb(63, 63, 63) solid;
+  font-weight: 500;
+}
+.ant-tabs-nav .ant-tabs-tab {
+  margin: 0 7px 0 0 !important;
+}
+.ant-tabs-nav-container {
+  margin-bottom: 3px !important;
+}
+
+.route-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2196f3;
+  padding-bottom: 10px;
+}
+.route-name i {
+  padding-right: 10px;
+  padding-left: 15px;
+}
+
+.route-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #001a35;
+  margin-bottom: 10px;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+.my-card {
+  box-shadow: 0 0 15px #ababab;
 }
