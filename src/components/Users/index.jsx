@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { getAllListUsers } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import { List, Avatar, Icon, Spin } from "antd";
-import { defaultAvatar } from "../../Redux/_helpers/Constants";
+import { DefaultAvatar } from "../../Redux/_helpers/Constants";
 
 class Users extends Component {
   componentDidMount() {
@@ -13,7 +13,7 @@ class Users extends Component {
       UsersResponse: { data = [], loading }
     } = this.props;
     let dataToDisplay = [];
-    const defaultImg = defaultAvatar();
+    // const defaultImg = DefaultAvatar();
     data.forEach((element, key) => {
       dataToDisplay.push({
         imgPath: element.profileImage,
@@ -56,7 +56,11 @@ class Users extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={
-                    item.imgPath ? <Avatar src={item.imgPath} /> : defaultImg
+                    !item.imgPath ? (
+                      <Avatar src={item.imgPath} />
+                    ) : (
+                      DefaultAvatar
+                    )
                   }
                   title={<a href='#'>{item.title}</a>}
                   description={item.content}

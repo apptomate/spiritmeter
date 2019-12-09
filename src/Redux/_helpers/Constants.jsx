@@ -18,7 +18,7 @@ export const ALL_LIST_ROUTES_URL = BASE_URL + "Route/listRoutes";
 export const ALL_LIST_USERS_URL = BASE_URL + "User/listUser";
 
 //Default Avatar
-export const defaultAvatar = () => <Avatar icon='user' />;
+export const DefaultAvatar = <Avatar icon='user' />;
 
 //Default Place
 export const defaultPlace = DefaultPlace;

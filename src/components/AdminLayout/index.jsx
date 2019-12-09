@@ -32,6 +32,9 @@ export default class AdminLayout extends Component {
   };
   render() {
     const { collapsed } = this.state;
+    const {
+      match: { url }
+    } = this.props;
 
     return (
       <Layout>
@@ -57,11 +60,14 @@ export default class AdminLayout extends Component {
             <Fragment>
               <Switch>
                 <Route exact path='/' component={Dashboard} />
-                <Route path='/admin/dashboard' component={Dashboard} />
-                <Route path='/admin/display' component={Display} />
-                <Route path='/admin/viewDisplay/:id' component={ViewDisplay} />
-                <Route path='/admin/routes' component={Routes} />
-                <Route path='/admin/users' component={Users} />
+                <Route path={url + "/dashboard"} component={Dashboard} />
+                <Route path={url + "/display"} component={Display} />
+                <Route
+                  path={url + "/viewDisplay/:id"}
+                  component={ViewDisplay}
+                />
+                <Route path={url + "/routes"} component={Routes} />
+                <Route path={url + "/users"} component={Users} />
               </Switch>
             </Fragment>
           </Content>

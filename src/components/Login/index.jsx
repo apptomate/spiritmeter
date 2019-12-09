@@ -74,9 +74,15 @@ class LoginForm extends Component {
                   )}
                 </Form.Item>
                 <Form.Item>
-                  <Button type='primary' htmlType='submit'>
+                  <Button
+                    type='primary'
+                    htmlType='submit'
+                    shape='round'
+                    className='login-button-style'
+                  >
                     Login
                   </Button>
+                  <a className='login-form-forgot'>Forgot password</a>
                 </Form.Item>
 
                 {/* <Form.Item>
