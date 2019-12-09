@@ -2,9 +2,15 @@ import React, { Component, Fragment } from "react";
 import { Tabs, Descriptions, Card, Row, Col, Spin } from "antd";
 import { getDisplayDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
-import { defaultPlace } from "../../../Redux/_helpers/Constants";
+import {
+  defaultPlace,
+  GOOGLE_MAP_API_KEY
+} from "../../../Redux/_helpers/Constants";
+
+import GoogleMapReact from "google-map-react";
+import CustomMapMarker from "../../Common/CustomMapMarker";
+
 const { TabPane } = Tabs;
-const { Meta } = Card;
 
 class ViewDisplay extends Component {
   componentDidMount() {
@@ -18,7 +24,6 @@ class ViewDisplay extends Component {
   render() {
     const DisplayDetails = this.props.DisplayDetails.data || "{}";
     const { loading } = this.props.DisplayDetails;
-    console.log(loading);
     let {
       name,
       categoryName,
@@ -30,11 +35,30 @@ class ViewDisplay extends Component {
       state,
       cityName,
       address,
-      filePath
+      filePath,
+      routes,
+      latitude,
+      longitude
     } = DisplayDetails;
-    //console.log(filePath);
+    let routesData = routes || "[]";
+    let parsedRoutes = JSON.parse(routesData);
+
+    parsedRoutes = parsedRoutes[0] || {};
+    let { path } = parsedRoutes;
+
     const imgPath = filePath ? filePath[0].FilePath : "";
-    //const imgPath = "";
+
+    let defaultCenter = {};
+    if (latitude && longitude) {
+      latitude = parseFloat(latitude);
+      longitude = parseFloat(longitude);
+      defaultCenter = {
+        lat: latitude,
+        lng: longitude
+      };
+    }
+    const defaultZoom = 15;
+
     return (
       <Fragment>
         <Spin spinning={loading}>
@@ -73,24 +97,26 @@ class ViewDisplay extends Component {
                   ></Card>
                 </Col>
               </Row>
+              {latitude && longitude && (
+                <div style={{ height: "100vh", width: "100%" }}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{
+                      key: GOOGLE_MAP_API_KEY
+                    }}
+                    defaultCenter={defaultCenter}
+                    defaultZoom={defaultZoom}
+                  >
+                    <CustomMapMarker
+                      lat={latitude}
+                      lng={longitude}
+                      text={name}
+                    />
+                  </GoogleMapReact>
+                </div>
+              )}
             </TabPane>
             <TabPane tab='Maping Routes' key='2'>
-              <Card
-                hoverable
-                style={{ width: 200 }}
-                cover={
-                  <img
-                    style={{ width: 200, height: 200 }}
-                    alt='example'
-                    src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-                  />
-                }
-              >
-                <Meta
-                  title='Europe Street beat'
-                  description='www.instagram.com'
-                />
-              </Card>
+              Display Routes
             </TabPane>
           </Tabs>
         </Spin>
@@ -98,6 +124,7 @@ class ViewDisplay extends Component {
     );
   }
 }
+
 const getState = state => {
   return {
     DisplayDetails: state.getDisplayDetails
