@@ -453,3 +453,61 @@ button:hover .button-text {
 .my-card {
   box-shadow: 0 0 15px #ababab;
 }
+.route-card {
+  box-shadow: 0 0 15px #ababab;
+  margin: 1rem;
+  padding: 1rem;
+}
+.route-card-map {
+  height: 18rem;
+  overflow: hidden;
+}
+.f-r {
+  float: right;
+}
+.route-list-card {
+  box-shadow: 0 0 15px #ababab;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+.color-y {
+  color: orange !important;
+}
+.routes .ant-tag {
+  font-size: 13px;
+  margin-right: 10px;
+  border-radius: 0px;
+}
+.routes span {
+  font-weight: 600;
+}
+
+.routes .route-map {
+  margin-top: 0.5rem;
+  height: 15rem;
+  overflow: hidden;
+}
+.mb-2 {
+  margin-bottom: 2rem;
+}
+.route-list .ant-tag {
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 4px;
+}
+.route-list i {
+  font-size: 17px;
+  padding-right: 10px;
+  color: #040404;
+}
+.route-title {
+  font-weight: 600;
+  color: #000;
+  padding-right: 1rem;
+}
+.p-1 {
+  padding: 0 1rem;
+}
+.mt--2 {
+  margin-top: -2rem;
+}

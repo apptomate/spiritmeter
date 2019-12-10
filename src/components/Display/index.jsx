@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { List, Avatar, Icon, Spin, Card, Button } from "antd";
+import { Avatar, Icon, Spin, PageHeader } from "antd";
 import { getAllListDisplay } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,7 +13,6 @@ class Display extends Component {
     const {
       DisplayResponseData: { data = [], loading }
     } = this.props;
-
     const listElements = data.map((element, key) => {
       let {
         name,
@@ -31,7 +30,7 @@ class Display extends Component {
       let filePathParsed = JSON.parse(filePathJson);
       filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
       return (
-        <div className='list-card' key={key}>
+        <div className='list-card'>
           <div className='list-img'>
             <DisplayImage srcPath={filePathParsed} />
           </div>
@@ -79,74 +78,16 @@ class Display extends Component {
       );
     });
 
-    // let dataToDisplay = [];
-    // data.forEach((element, key) => {
-    //   let filePathJson = element.filePath || "[]";
-    //   let filePathParsed = JSON.parse(filePathJson);
-    //   filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
-    //   dataToDisplay.push({
-    //     //href: "#",
-    //     title: element.name,
-    //     filePath: filePathParsed,
-    //     content: (
-    //       <div className='list-display' key={`list_${key}`}>
-    //         <span>
-    //           <Icon type='home' theme='filled' /> {element.categoryName}
-    //         </span>
-    //         <span>
-    //           <i className='fas fa-hand-holding-heart color-o'></i>{" "}
-    //           {element.type}{" "}
-    //         </span>
-    //         <span className='color-g'>
-    //           {element.isPrivate ? "Is Private" : "Public"}
-    //         </span>
-    //         <p>
-    //           <Icon type='environment' /> {element.country} , {element.state} ,{" "}
-    //           {element.cityName} , {element.address}
-    //         </p>
-    //         <div className='item-center list-username'>
-    //           <Avatar icon='user' />
-    //           <span>{element.createdByName}</span>
-    //           <span>
-    //             <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link>
-    //           </span>
-    //         </div>
-    //       </div>
-    //     )
-    //   });
-    // });
-
     return (
       <Fragment>
-        <div className='title-card'>
-          <h4>List of Display</h4>
-        </div>
-        <br />
+        <PageHeader
+          style={{
+            border: "1px solid rgb(235, 237, 240)"
+          }}
+          title='List of Display'
+        />
         <Spin spinning={loading}>{listElements}</Spin>
       </Fragment>
-
-      // <Spin spinning={loading}>
-      //   <List
-      //     itemLayout='vertical'
-      //     size='large'
-      //     pagination={{
-      //       onChange: page => {
-      //         console.log(page);
-      //       },
-      //       pageSize: 5
-      //     }}
-      //     dataSource={dataToDisplay}
-      //     renderItem={item => (
-      //       <List.Item
-      //         key={item.title}
-      //         extra={<img width={272} alt='logo' src={item.filePath} />}
-      //       >
-      //         <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-      //         {item.content}
-      //       </List.Item>
-      //     )}
-      //   />
-      // </Spin>
     );
   }
 }

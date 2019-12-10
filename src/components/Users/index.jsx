@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { getAllListUsers } from "../../Redux/_actions";
 import { connect } from "react-redux";
-import { List, Icon, Spin } from "antd";
+import { List, Icon, Spin, PageHeader } from "antd";
 
 import DisplayAvatar from "../Common/DisplayAvatar";
 
@@ -26,12 +26,22 @@ class Users extends Component {
               <span className='color-g'>{element.gender}</span>{" "}
               <Icon type='user' theme='filled' /> {element.role}
             </span>
-            <p>
-              <Icon type='mobile' theme='twoTone' /> {element.phoneNumber}{" "}
-              <br />
-              <Icon type='environment' /> {element.country} , {element.state} ,{" "}
-              {element.cityName} , {element.address}
-            </p>
+            <div>
+              <p>
+                <Icon type='mobile' theme='twoTone' /> {element.phoneNumber}{" "}
+                <br />
+                <Icon type='environment' /> {element.country} , {element.state}{" "}
+                , {element.cityName} , {element.address}
+              </p>
+              <div>
+                <button className='cus-btn f-r mt--2'>
+                  <span className='circle'>
+                    <span className='icon arrow'></span>
+                  </span>
+                  <span className='button-text'>View</span>
+                </button>
+              </div>
+            </div>
           </Fragment>
         )
       });
@@ -39,9 +49,13 @@ class Users extends Component {
 
     return (
       <Fragment>
-        <div className='title-card'>
-          <h4>Users</h4>
-        </div>
+        <PageHeader
+          style={{
+            border: "1px solid rgb(235, 237, 240)"
+          }}
+          title='List of Users'
+        />
+
         <Spin spinning={loading}>
           <List
             itemLayout='horizontal'
