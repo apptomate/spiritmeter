@@ -15,6 +15,7 @@ import Users from "../Users";
 import ViewDisplay from "../Display/ViewDisplay";
 import Unauthorized from "../Unauthorizrd";
 import ViewRoute from "../Routes/ViewRoute";
+import ViewUser from "../Users/ViewUser";
 
 const { Content } = Layout;
 
@@ -71,6 +72,7 @@ export default class AdminLayout extends Component {
                 <Route path={url + "/routes"} component={Routes} />
                 <Route path={url + "/viewRoute/:id"} component={ViewRoute} />
                 <Route path={url + "/users"} component={Users} />
+                <Route path={url + "/viewUser/:id"} component={ViewUser} />
                 <Route path='*' component={Unauthorized} />
               </Switch>
             </Fragment>

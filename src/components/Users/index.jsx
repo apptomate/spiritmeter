@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { getAllListUsers } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import { List, Icon, Spin, PageHeader } from "antd";
-
+import { Link } from "react-router-dom";
 import DisplayAvatar from "../Common/DisplayAvatar";
 
 class Users extends Component {
@@ -34,12 +34,14 @@ class Users extends Component {
                 , {element.cityName} , {element.address}
               </p>
               <div>
-                <button className='cus-btn f-r mt--2'>
-                  <span className='circle'>
-                    <span className='icon arrow'></span>
-                  </span>
-                  <span className='button-text'>View</span>
-                </button>
+                <Link to={"/admin/viewUser/1"}>
+                  <button className='cus-btn f-r mt--2'>
+                    <span className='circle'>
+                      <span className='icon arrow'></span>
+                    </span>
+                    <span className='button-text'>View</span>
+                  </button>
+                </Link>
               </div>
             </div>
           </Fragment>
