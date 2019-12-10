@@ -37,6 +37,10 @@ class LoginForm extends Component {
                       {
                         required: true,
                         message: "Please input your phone number"
+                      },
+                      {
+                        pattern: /^[0-9]+$/,
+                        message: "input must be a valid phone number"
                       }
                     ]
                   })(
