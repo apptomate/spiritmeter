@@ -3,7 +3,6 @@ import { Carousel } from "antd";
 import DefaultPlace from "../../../assets/img/defaultPlace.png";
 export default function DisplaySlider(props) {
   const { srcPaths } = props;
-  console.log("SRC", srcPaths);
   return (
     <Carousel autoplay>
       {srcPaths.map((list, key) => (

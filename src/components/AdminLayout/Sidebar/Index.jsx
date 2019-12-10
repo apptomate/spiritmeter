@@ -17,6 +17,7 @@ const menuList = [
 export default class Sidebar extends Component {
   render() {
     const { collapseFlag } = this.props;
+    console.log(this.props);
     return (
       <Sider trigger={null} collapsible collapsed={collapseFlag}>
         <Logo />

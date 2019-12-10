@@ -31,7 +31,6 @@ class ViewDisplay extends Component {
     this.props.getDisplayDetails(id);
   }
   render() {
-    console.log("Key", GOOGLE_MAP_API_KEY);
     const DisplayDetails = this.props.DisplayDetails.data || "{}";
     const { loading } = this.props.DisplayDetails;
     let {
