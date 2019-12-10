@@ -13,6 +13,7 @@ import Display from "../Display";
 import Navbar from "./Navbar";
 import Users from "../Users";
 import ViewDisplay from "../Display/ViewDisplay";
+import ViewRoute from "../Routes/ViewRoute";
 
 const { Content } = Layout;
 
@@ -59,7 +60,7 @@ export default class AdminLayout extends Component {
           >
             <Fragment>
               <Switch>
-                <Route exact path='/' component={Dashboard} />
+                <Route exact path="/" component={Dashboard} />
                 <Route path={url + "/dashboard"} component={Dashboard} />
                 <Route path={url + "/display"} component={Display} />
                 <Route
@@ -67,6 +68,7 @@ export default class AdminLayout extends Component {
                   component={ViewDisplay}
                 />
                 <Route path={url + "/routes"} component={Routes} />
+                <Route path={url + "/viewRoute/:id"} component={ViewRoute} />
                 <Route path={url + "/users"} component={Users} />
               </Switch>
             </Fragment>

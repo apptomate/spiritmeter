@@ -196,47 +196,49 @@ class ViewDisplay extends Component {
               )}
             </TabPane>
             <TabPane tab="Maping Routes" key="2">
-              <Row>
-                <Col span={10}>
-                  <div>
-                    <h4 className="route-title">Route names</h4>
-                    <h4 className="route-title">
-                      Cathedral of Saint Paul, St. Paul, Minnesota
-                    </h4>
-                    <div className="item-center list-username mt-1 mb-1">
-                      <Avatar icon="user" />
-                      <span>User Name</span>
-                    </div>
+              <div className="route-card">
+                <Row>
+                  <Col span={12}>
                     <div>
-                      <h4>Routes :</h4>
-                      <div className="route-name">
-                        <Icon type="swap" />
-                        Oklahoma City
+                      <h4 className="route-title">Route names</h4>
+                      <h4 className="route-title">
+                        Cathedral of Saint Paul, St. Paul, Minnesota
+                      </h4>
+                      <div className="item-center list-username mt-1 mb-1">
+                        <Avatar icon="user" />
+                        <span>User Name</span>
                       </div>
+                      <div>
+                        <h4>Routes :</h4>
+                        <div className="route-name">
+                          <Icon type="swap" />
+                          Oklahoma City
+                        </div>
 
-                      <div className="route-name">
-                        <Icon type="swap" />
-                        Lake Aluma
-                      </div>
+                        <div className="route-name">
+                          <Icon type="swap" />
+                          Lake Aluma
+                        </div>
 
-                      <div className="route-name">
-                        <Icon type="swap" />
-                        Forest Park
-                      </div>
+                        <div className="route-name">
+                          <Icon type="swap" />
+                          Forest Park
+                        </div>
 
-                      <div className="route-name">
-                        <Icon type="swap" />
-                        McLoud
+                        <div className="route-name">
+                          <Icon type="swap" />
+                          McLoud
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-                <Col span={14}>
-                  <div className="listing-map-div">
-                    <img src="https://miro.medium.com/max/5334/1*qYUvh-EtES8dtgKiBRiLsA.png" />
-                  </div>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col span={12}>
+                    <div className="route-card-map">
+                      <img src="https://miro.medium.com/max/5334/1*qYUvh-EtES8dtgKiBRiLsA.png" />
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </TabPane>
           </Tabs>
         </Spin>

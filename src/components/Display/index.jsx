@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Avatar, Icon, Spin, Card, Button } from "antd";
+import { List, Avatar, Icon, Spin, Card, PageHeader } from "antd";
 import { getAllListDisplay } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -51,9 +51,14 @@ class Display extends Component {
 
     return (
       <div>
-        <div className="title-card">
-          <h4>List of Display</h4>
-        </div>
+        <PageHeader
+          style={{
+            border: "1px solid rgb(235, 237, 240)"
+          }}
+          title="List of Display"
+          // breadcrumb={{ routes }}
+          // subTitle="This is a subtitle"
+        />
 
         <div className="list-card">
           <div className="list-img">
