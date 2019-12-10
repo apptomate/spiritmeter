@@ -52,16 +52,14 @@ class Display extends Component {
             </div>
 
             <div className='list-name-imp'>
-              {isPrivate === "Is Private" ? (
-                <Fragment>
-                  <i className='fas fa-user-lock color-g' /> Is Private{" "}
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <i className='fas fa-globe-asia color-r' />
-                  Is Public{" "}
-                </Fragment>
-              )}
+              <i
+                className={
+                  isPrivate
+                    ? "fas fa-user-lock color-g"
+                    : "fas fa-globe-asia color-r"
+                }
+              />
+              {isPrivate ? "Is Private" : "Is Public"}
             </div>
 
             <div className='item-center list-username mt-2'>

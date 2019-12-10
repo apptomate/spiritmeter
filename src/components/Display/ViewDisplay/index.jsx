@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 
 import GoogleMapReact from "google-map-react";
 import CustomMapMarker from "../../Common/CustomMapMarker";
+import DisplaySlider from "../../Common/DisplaySlider";
 
 const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
 
@@ -47,15 +48,14 @@ class ViewDisplay extends Component {
       filePath,
       routes,
       latitude,
-      longitude
+      longitude,
+      notes
     } = DisplayDetails;
     let routesData = routes || "[]";
     let parsedRoutes = JSON.parse(routesData);
 
     parsedRoutes = parsedRoutes[0] || {};
     let { path } = parsedRoutes;
-
-    const imgPath = filePath ? filePath[0].FilePath : "";
 
     let defaultCenter = {};
     if (latitude && longitude) {
@@ -76,91 +76,48 @@ class ViewDisplay extends Component {
               <Row>
                 <Col span={12}>
                   <div>
-                    <h4 className='list-name'>
-                      Cathedral of Saint Paul, St. Paul, Minnesota
-                    </h4>
+                    <h4 className='list-name'>{categoryName}</h4>
                     <div className='list-name-imp'>
-                      <Icon type='home' /> Home
+                      <Icon type='home' /> {categoryName}
                     </div>
                     <div className='list-name-imp'>
-                      <Icon type='radar-chart' /> Charity
+                      <Icon type='radar-chart' /> {type}
                     </div>
 
                     <div className='list-name-imp'>
-                      <Icon type='environment' /> United States , Texas ,
-                      Houston , Apartment1
+                      <Icon type='environment' /> {country}
+                      {state && ` , ${state}`}
+                      {cityName && ` , ${cityName}`}
+                      {address && ` , ${address}`}
                     </div>
 
                     <div className='list-name-imp'>
-                      <i className='fas fa-user-lock color-g'></i> Is Private /{" "}
-                      <i className='fas fa-globe-asia color-r'></i>Is Public
+                      <i
+                        className={
+                          isPrivate
+                            ? "fas fa-user-lock color-g"
+                            : "fas fa-globe-asia color-r"
+                        }
+                      />
+                      {isPrivate ? "Is Private" : "Is Public"}
                     </div>
 
                     <p className='mt-1'>
                       <h4>Note :</h4>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
+                      {notes}
                     </p>
 
                     <div className='item-center list-username mt-2'>
                       <Avatar icon='user' />
-                      <span>User Name</span>
+                      <span>{createdByName}</span>
                       <span>
                         {/* <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link> */}
                       </span>
                     </div>
                   </div>
-
-                  <Descriptions
-                    title='Display Info'
-                    style={{ display: "none" }}
-                  >
-                    <Descriptions.Item label='Name'>{name}</Descriptions.Item>
-                    <Descriptions.Item label='Category Name'>
-                      {categoryName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label='Type'>{type}</Descriptions.Item>
-                    <Descriptions.Item label='is Private'>
-                      {isPrivate ? "Private" : "Public"}
-                    </Descriptions.Item>
-                    <Descriptions.Item label='Created By'>
-                      {createdByName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label='Created Date'>
-                      {createdDate}
-                    </Descriptions.Item>
-                    <Descriptions.Item label='Address'>
-                      {country}
-                      {state && ` , ${state}`}
-                      {cityName && ` , ${cityName}`}
-                      {address && ` , ${address}`}
-                    </Descriptions.Item>
-                  </Descriptions>
                 </Col>
                 <Col span={12}>
-                  <Carousel autoplay>
-                    <div>
-                      <img
-                        src='https://images.unsplash.com/photo-1508985307703-52d13b2b06b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
-                        className='w-100'
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src='https://images.unsplash.com/photo-1511605673935-c919f8f2faca?ixlib=rb-1.2.1&auto=format&fit=crop&w=1044&q=80'
-                        className='w-100'
-                      />
-                    </div>
-                    <div>
-                      <img
-                        src='https://images.unsplash.com/photo-1422636123679-414dec5b79a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
-                        className='w-100'
-                      />
-                    </div>
-                  </Carousel>
+                  {filePath && <DisplaySlider srcPaths={filePath} />}
                 </Col>
               </Row>
               <Row>
