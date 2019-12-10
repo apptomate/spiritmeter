@@ -1,5 +1,3 @@
-import React from "react";
-import { Avatar } from "antd";
 // App Base URL
 export const BASE_URL = "https://spiritmeter.azurewebsites.net/api/";
 
@@ -15,6 +13,3 @@ export const ALL_LIST_ROUTES_URL = BASE_URL + "Route/listRoutes";
 
 //Users
 export const ALL_LIST_USERS_URL = BASE_URL + "User/listUser";
-
-//Default Avatar
-export const DefaultAvatar = <Avatar icon='user' />;
