@@ -26,6 +26,8 @@ import {
   GET_DISPLAY_DETAILS_ERROR
 } from "./ActionTypes";
 
+import { message } from "antd";
+
 //Authentication
 //Login
 export function authLogin(formData) {
@@ -34,24 +36,29 @@ export function authLogin(formData) {
       .then(response => {
         const {
           token,
-          user: { userId, firstName, profileImage }
+          user: { userId, firstName, profileImage, role }
         } = response.data;
-        let loggedUserData = { userId, firstName, profileImage };
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
-        dispatch({
-          type: AUTHLOGIN_SUCCESS,
-          payload: response.data
-        });
-        //Toast.fire({ icon: "success", title: "Login Success" });
+        if (role === "Admin") {
+          let loggedUserData = { userId, firstName, profileImage };
+          localStorage.setItem("authToken", token);
+          localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
+          dispatch({
+            type: AUTHLOGIN_SUCCESS,
+            payload: response.data
+          });
+          message.success("Login Success");
+        } else {
+          message.warning("You are not an admin");
+        }
       })
       .catch(error => {
         if (error.response) {
+          let { data } = error.response;
           dispatch({
             type: AUTHLOGIN_ERROR,
-            payload: error.response.data
+            payload: data
           });
-          // Swal.fire(getAlertMessage("error", data.errorMessage));
+          message.error(data.errorMessage);
         }
       });
   };
