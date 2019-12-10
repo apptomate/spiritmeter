@@ -6,12 +6,31 @@ import { Link } from "react-router-dom";
 const { Sider } = Layout;
 
 //Menu List
-
 const menuList = [
-  { icon: "dashboard", label: "Dashboard", path: "/admin/dashboard" },
-  { icon: "unordered-list", label: "List of Display", path: "/admin/display" },
-  { icon: "share-alt", label: "Routes", path: "/admin/routes" },
-  { icon: "user", label: "Users", path: "/admin/users" }
+  {
+    menuKey: "dashboard",
+    icon: "dashboard",
+    label: "Dashboard",
+    path: "/admin/dashboard"
+  },
+  {
+    menuKey: "display",
+    icon: "unordered-list",
+    label: "List of Display",
+    path: "/admin/display"
+  },
+  {
+    menuKey: "routes",
+    icon: "share-alt",
+    label: "Routes",
+    path: "/admin/routes"
+  },
+  {
+    menuKey: "users",
+    icon: "user",
+    label: "Users",
+    path: "/admin/users"
+  }
 ];
 
 export default class Sidebar extends Component {
@@ -21,9 +40,9 @@ export default class Sidebar extends Component {
     return (
       <Sider trigger={null} collapsible collapsed={collapseFlag}>
         <Logo />
-        <Menu theme='light' mode='inline' defaultSelectedKeys={["1"]}>
-          {menuList.map((list, key) => (
-            <Menu.Item key={key}>
+        <Menu theme='light' mode='inline' defaultSelectedKeys='dashboard'>
+          {menuList.map(list => (
+            <Menu.Item key={list.menuKey}>
               <Link to={list.path}>
                 <Icon type={list.icon} />
                 <span>{list.label}</span>
