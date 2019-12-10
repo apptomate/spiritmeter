@@ -13,7 +13,6 @@ class LoginForm extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        values.push({ role: "Admin" });
         this.props.authLogin(values);
       }
     });
