@@ -30,7 +30,7 @@ class Display extends Component {
       let filePathParsed = JSON.parse(filePathJson);
       filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
       return (
-        <div className='list-card'>
+        <div className='list-card' key={key}>
           <div className='list-img'>
             <DisplayImage srcPath={filePathParsed} />
           </div>
