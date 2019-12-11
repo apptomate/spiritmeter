@@ -13,13 +13,25 @@ class ViewRoute extends Component {
       }
     } = this.props;
     if (id) {
-      let routeParam = { routeId: id };
+      let routeParam = { routeId: parseInt(id) };
       this.props.getRouteDetails(routeParam);
     }
   }
   render() {
     const RouteDetails = this.props.RouteDetails.data || "{}";
     const { loading } = this.props.RouteDetails;
+    let {
+      routeName,
+      totalMiles,
+      designatedCharityName,
+      ridePoints
+    } = RouteDetails;
+
+    let filePathJson = RouteDetails.path || "[]";
+    let filePathParsed = JSON.parse(filePathJson);
+    filePathParsed = filePathParsed.routes || "[]";
+    let pathsToTravel = filePathParsed[0].legs || [];
+    let totalPaths = pathsToTravel.length;
 
     return (
       <Fragment>
@@ -27,11 +39,14 @@ class ViewRoute extends Component {
           <Tabs defaultActiveKey='1'>
             <TabPane tab='Routes' key='1'>
               <div className='routes'>
+                <center>
+                  <h1>
+                    <b>{designatedCharityName}'s Travel Route</b>
+                  </h1>
+                </center>
                 <div className='mb-2 mt-1'>
                   <span className='route-title'>Route Name :</span>
-                  <Tag color='red'>
-                    Lorem Ipsum - All the facts - Lipsum generator
-                  </Tag>
+                  <Tag color='red'>{routeName}</Tag>
                 </div>
                 <div className='mb-2'>
                   <span className='route-title'>Map Points :</span>
@@ -47,22 +62,33 @@ class ViewRoute extends Component {
                   <span className='route-title'>Map Routes Names :</span>
                   <div className='mt-1 route-list'>
                     <Icon type='right-square' />{" "}
-                    <Tag color='blue'> New York</Tag>
-                    <Icon type='swap' />
-                    <Tag color='blue'>California</Tag>
-                    <Icon type='swap' />
-                    <Tag color='blue'>Illinois</Tag>
-                    <Icon type='swap' />
-                    <Tag color='blue'>Pennsylvania</Tag>
-                    <Icon type='swap' />
-                    <Tag color='blue'>North Carolina</Tag>
+                    {pathsToTravel &&
+                      pathsToTravel.map((travelPath, key) => {
+                        if (totalPaths === key + 1) {
+                          return (
+                            <Fragment key={`path_${key}`}>
+                              <Icon type='swap' />{" "}
+                              <Tag color='blue'>{travelPath.start_address}</Tag>
+                              <Icon type='swap' />{" "}
+                              <Tag color='blue'>{travelPath.end_address}</Tag>
+                            </Fragment>
+                          );
+                        } else {
+                          return (
+                            <Fragment key={`path_${key}`}>
+                              {key !== 0 && <Icon type='swap' />}
+                              <Tag color='blue'>{travelPath.start_address}</Tag>
+                            </Fragment>
+                          );
+                        }
+                      })}
                     <Icon type='left-square' />
                   </div>
                 </div>
 
                 <div className='mb-2'>
                   <span className='route-title'>Total Miles :</span>
-                  <Badge count={25} />
+                  <Badge count={totalMiles} />
                 </div>
               </div>
             </TabPane>

@@ -145,12 +145,14 @@ export function getAllListRoutes() {
 
 //Get Route Details
 export function getRouteDetails(routeParam) {
-  console.log("Param", routeParam);
   return dispatch => {
     dispatch({
       type: GET_ROUTE_DETAILS_LOADING
     });
-    API.get(GET_ROUTE_DETAILS_URL, { headers: authHeader() })
+    API.get(GET_ROUTE_DETAILS_URL, {
+      headers: authHeader(),
+      params: routeParam
+    })
       .then(response => {
         dispatch({
           type: GET_ROUTE_DETAILS_SUCCESS,

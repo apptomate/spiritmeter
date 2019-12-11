@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { List, Icon, Spin, PageHeader, Row, Col, Avatar } from "antd";
+import { List, Icon, Spin, PageHeader, Row, Col } from "antd";
 import { getAllListRoutes } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -95,21 +95,6 @@ class Routes extends Component {
               </Col>
             </Row>
           </div>
-
-          // <div className="list-display" key={`list_${key}`}>
-          //   <span className="color-g">
-          //     {element.isPrivate ? "Is Private" : "Public"}
-          //   </span>
-          //   <p>
-          //     <Icon type="environment" /> {element.country} , {element.state} ,
-          //     {element.cityName} , {element.address}
-          //   </p>
-          //   <p>{element.comments}</p>
-          //   <div className="item-center list-username">
-          //     <Avatar icon="user" />
-          //     <span>{element.designatedCharityName}</span>
-          //   </div>
-          // </div>
         )
       });
     });
@@ -141,29 +126,6 @@ class Routes extends Component {
             )}
           />
         </Spin>
-
-        {/* <Spin spinning={loading}>
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: page => {
-                console.log(page);
-              },
-              pageSize: 5
-            }}
-            dataSource={dataToDisplay}
-            renderItem={item => (
-              <List.Item
-                key={item.title}
-                extra={<img width={272} alt="logo" src={item.filePath} />}
-              >
-                <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-                {item.content}
-              </List.Item>
-            )}
-          />
-        </Spin> */}
       </Fragment>
     );
   }
