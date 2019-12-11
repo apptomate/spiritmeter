@@ -2,11 +2,12 @@ import API from "./API";
 import { authHeader } from "../_helpers/AuthHeaders";
 //URL
 import {
+  LOGIN_URL,
   ALL_LIST_DISPLAY_URL,
   ALL_LIST_ROUTES_URL,
   ALL_LIST_USERS_URL,
   GET_DISPLAY_DETAILS_URL,
-  LOGIN_URL
+  GET_ROUTE_DETAILS_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
@@ -23,8 +24,13 @@ import {
   ALL_LIST_USERS_ERROR,
   GET_DISPLAY_DETAILS_LOADING,
   GET_DISPLAY_DETAILS_SUCCESS,
-  GET_DISPLAY_DETAILS_ERROR
+  GET_DISPLAY_DETAILS_ERROR,
+  GET_ROUTE_DETAILS_LOADING,
+  GET_ROUTE_DETAILS_SUCCESS,
+  GET_ROUTE_DETAILS_ERROR
 } from "./ActionTypes";
+
+import { message } from "antd";
 
 //Authentication
 //Login
@@ -34,24 +40,29 @@ export function authLogin(formData) {
       .then(response => {
         const {
           token,
-          user: { userId, firstName, profileImage }
+          user: { userId, firstName, profileImage, role }
         } = response.data;
-        let loggedUserData = { userId, firstName, profileImage };
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
-        dispatch({
-          type: AUTHLOGIN_SUCCESS,
-          payload: response.data
-        });
-        //Toast.fire({ icon: "success", title: "Login Success" });
+        if (role === "Admin") {
+          let loggedUserData = { userId, firstName, profileImage };
+          localStorage.setItem("authToken", token);
+          localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
+          dispatch({
+            type: AUTHLOGIN_SUCCESS,
+            payload: response.data
+          });
+          message.success("Login Success");
+        } else {
+          message.warning("You are not an admin");
+        }
       })
       .catch(error => {
         if (error.response) {
+          let { data } = error.response;
           dispatch({
             type: AUTHLOGIN_ERROR,
-            payload: error.response.data
+            payload: data
           });
-          // Swal.fire(getAlertMessage("error", data.errorMessage));
+          message.error(data.errorMessage);
         }
       });
   };
@@ -75,7 +86,7 @@ export function getAllListDisplay() {
         if (error.response) {
           dispatch({
             type: ALL_LIST_DISPLAY_ERROR,
-            payload: error.response
+            payload: error.response.data
           });
         }
       });
@@ -100,7 +111,7 @@ export function getDisplayDetails(displayId) {
         if (error.response) {
           dispatch({
             type: GET_DISPLAY_DETAILS_ERROR,
-            payload: error.response
+            payload: error.response.data
           });
         }
       });
@@ -125,7 +136,32 @@ export function getAllListRoutes() {
         if (error.response) {
           dispatch({
             type: ALL_LIST_ROUTES_ERROR,
-            payload: error.response
+            payload: error.response.data
+          });
+        }
+      });
+  };
+}
+
+//Get Route Details
+export function getRouteDetails(routeParam) {
+  console.log("Param", routeParam);
+  return dispatch => {
+    dispatch({
+      type: GET_ROUTE_DETAILS_LOADING
+    });
+    API.get(GET_ROUTE_DETAILS_URL, { headers: authHeader() })
+      .then(response => {
+        dispatch({
+          type: GET_ROUTE_DETAILS_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch({
+            type: GET_ROUTE_DETAILS_ERROR,
+            payload: error.response.data
           });
         }
       });
@@ -150,7 +186,7 @@ export function getAllListUsers() {
         if (error.response) {
           dispatch({
             type: ALL_LIST_USERS_ERROR,
-            payload: error.response
+            payload: error.response.data
           });
         }
       });

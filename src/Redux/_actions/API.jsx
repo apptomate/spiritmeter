@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { AuthenticationService } from "../_service/AuthenticationService";
+import { logout } from "../_service/AuthenticationService";
 const API = Axios.create();
 API.interceptors.response.use(
   response => {
@@ -8,7 +8,7 @@ API.interceptors.response.use(
   error => {
     const { status } = error.response;
     if (status === 401) {
-      AuthenticationService.logout();
+      logout();
     }
     return Promise.reject(error);
   }

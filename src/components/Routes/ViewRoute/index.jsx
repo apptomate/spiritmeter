@@ -1,23 +1,26 @@
 import React, { Component, Fragment } from "react";
 import { Tabs, Spin, Tag, Icon, Badge, Avatar } from "antd";
-import { getDisplayDetails } from "../../../Redux/_actions";
+import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
 import GaugeChart from "react-gauge-chart";
 
 const { TabPane } = Tabs;
 
-class ViewDisplay extends Component {
+class ViewRoute extends Component {
   componentDidMount() {
     const {
       match: {
         params: { id }
       }
     } = this.props;
-    this.props.getDisplayDetails(id);
+    if (id) {
+      let routeParam = { routeId: id };
+      this.props.getRouteDetails(routeParam);
+    }
   }
   render() {
-    const DisplayDetails = this.props.DisplayDetails.data || "{}";
-    const { loading } = this.props.DisplayDetails;
+    const RouteDetails = this.props.RouteDetails.data || "{}";
+    const { loading } = this.props.RouteDetails;
 
     return (
       <Fragment>
@@ -106,14 +109,7 @@ class ViewDisplay extends Component {
               </div>
             </TabPane>
             <TabPane tab="Near By" key="3">
-              <GaugeChart
-                id="gauge-chart5"
-                nrOfLevels={420}
-                arcsLength={[0.3, 0.5, 0.2]}
-                colors={["#5BE12C", "#F5CD19", "#EA4228"]}
-                percent={0.37}
-                arcPadding={0.02}
-              />
+              Tab3
             </TabPane>
           </Tabs>
         </Spin>
@@ -124,10 +120,10 @@ class ViewDisplay extends Component {
 
 const getState = state => {
   return {
-    DisplayDetails: state.getDisplayDetails
+    RouteDetails: state.getRouteDetails
   };
 };
 
 export default connect(getState, {
-  getDisplayDetails
-})(ViewDisplay);
+  getRouteDetails
+})(ViewRoute);

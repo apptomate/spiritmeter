@@ -1,7 +1,4 @@
-import React from "react";
-import { Avatar } from "antd";
-import DefaultPlace from "../../assets/img/defaultPlace.png";
-
+// App Base URL
 export const BASE_URL = "https://spiritmeter.azurewebsites.net/api/";
 
 //Login
@@ -13,15 +10,7 @@ export const GET_DISPLAY_DETAILS_URL = BASE_URL + "Display/selectDisplay";
 
 //Routes
 export const ALL_LIST_ROUTES_URL = BASE_URL + "Route/listRoutes";
+export const GET_ROUTE_DETAILS_URL = BASE_URL + "Route/selectRouteById";
 
 //Users
 export const ALL_LIST_USERS_URL = BASE_URL + "User/listUser";
-
-//Default Avatar
-export const DefaultAvatar = <Avatar icon='user' />;
-
-//Default Place
-export const defaultPlace = DefaultPlace;
-
-//Google Map API Key
-export const GOOGLE_MAP_API_KEY = "AIzaSyCFjxawo00zpDtbCdDDujEaj-UY-FMbWvE";
