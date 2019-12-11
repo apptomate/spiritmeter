@@ -10,6 +10,7 @@ export const GET_DISPLAY_DETAILS_URL = BASE_URL + "Display/selectDisplay";
 
 //Routes
 export const ALL_LIST_ROUTES_URL = BASE_URL + "Route/listRoutes";
+export const GET_ROUTE_DETAILS_URL = BASE_URL + "Route/selectRouteById";
 
 //Users
 export const ALL_LIST_USERS_URL = BASE_URL + "User/listUser";
