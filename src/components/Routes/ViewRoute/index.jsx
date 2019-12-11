@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Tabs, Spin, Tag, Icon, Badge, Avatar } from "antd";
 import { getDisplayDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
+import GaugeChart from "react-gauge-chart";
 
 const { TabPane } = Tabs;
 
@@ -105,7 +106,14 @@ class ViewDisplay extends Component {
               </div>
             </TabPane>
             <TabPane tab="Near By" key="3">
-              Tab3
+              <GaugeChart
+                id="gauge-chart5"
+                nrOfLevels={420}
+                arcsLength={[0.3, 0.5, 0.2]}
+                colors={["#5BE12C", "#F5CD19", "#EA4228"]}
+                percent={0.37}
+                arcPadding={0.02}
+              />
             </TabPane>
           </Tabs>
         </Spin>
