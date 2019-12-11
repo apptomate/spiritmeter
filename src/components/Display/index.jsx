@@ -32,27 +32,27 @@ class Display extends Component {
       filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
       dataToDisplay.push({
         content: (
-          <div className='list-card' key={key}>
-            <div className='list-img'>
+          <div className="list-card" key={key}>
+            <div className="list-img">
               <DisplayImage srcPath={filePathParsed} />
             </div>
-            <div className='listing-contant'>
-              <h4 className='list-name'>{name}</h4>
-              <div className='list-name-imp'>
-                <Icon type='home' /> {categoryName}
+            <div className="listing-contant">
+              <h4 className="list-name">{name}</h4>
+              <div className="list-name-imp">
+                <Icon type="home" /> {categoryName}
               </div>
-              <div className='list-name-imp'>
-                <Icon type='radar-chart' /> {type}
+              <div className="list-name-imp">
+                <Icon type="radar-chart" /> {type}
               </div>
 
-              <div className='list-name-imp'>
-                <Icon type='environment' /> {country}
+              <div className="list-name-imp">
+                <Icon type="environment" /> {country}
                 {state && ` , ${state}`}
                 {cityName && ` , ${cityName}`}
                 {address && ` , ${address}`}
               </div>
 
-              <div className='list-name-imp'>
+              <div className="list-name-imp">
                 <i
                   className={
                     isPrivate
@@ -63,18 +63,21 @@ class Display extends Component {
                 {isPrivate ? "Is Private" : "Is Public"}
               </div>
 
-              <div className='item-center list-username mt-2'>
-                <Avatar icon='user' />
+              <div className="item-center list-username mt-2 d-block">
+                <Avatar icon="user" />
                 <span>{createdByName}</span>
-                <Link to={"/admin/viewDisplay/" + displayId}>
-                  <button className='cus-btn ml-a'>
-                    <span className='circle'>
-                      <span className='icon arrow'></span>
-                    </span>
-                    <span className='button-text'>View</span>
-                  </button>
-                </Link>
               </div>
+              <Link
+                className="f-r mt--2"
+                to={"/admin/viewDisplay/" + displayId}
+              >
+                <button className="cus-btn ml-a">
+                  <span className="circle">
+                    <span className="icon arrow"></span>
+                  </span>
+                  <span className="button-text">View</span>
+                </button>
+              </Link>
             </div>
           </div>
         )
@@ -87,12 +90,12 @@ class Display extends Component {
           style={{
             border: "1px solid rgb(235, 237, 240)"
           }}
-          title='List of Display'
+          title="List of Display"
         />
         <Spin spinning={loading}>
           <List
-            itemLayout='vertical'
-            size='large'
+            itemLayout="vertical"
+            size="large"
             pagination={{
               onChange: page => {
                 console.log(page);
