@@ -511,3 +511,9 @@ button:hover .button-text {
 .mt--2 {
   margin-top: -2rem;
 }
+
+.percent-text {
+  text-anchor: middle;
+  font-family: "Roboto", sans-serif;
+  fill: rgb(63, 63, 63) !important;
+}
