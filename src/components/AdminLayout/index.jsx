@@ -63,15 +63,15 @@ export default class AdminLayout extends Component {
             <Fragment>
               <Switch>
                 <Route exact path='/' component={Dashboard} />
-                <Route path={url + "/dashboard"} component={Dashboard} />
-                <Route path={url + "/display"} component={Display} />
+                <Route exact path={url + "/dashboard"} component={Dashboard} />
+                <Route exact path={url + "/display"} component={Display} />
                 <Route
                   path={url + "/viewDisplay/:id"}
                   component={ViewDisplay}
                 />
-                <Route path={url + "/routes"} component={Routes} />
+                <Route exact path={url + "/routes"} component={Routes} />
                 <Route path={url + "/viewRoute/:id"} component={ViewRoute} />
-                <Route path={url + "/users"} component={Users} />
+                <Route exact path={url + "/users"} component={Users} />
                 <Route path={url + "/viewUser/:id"} component={ViewUser} />
                 <Route path='*' component={Unauthorized} />
               </Switch>
