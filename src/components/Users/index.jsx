@@ -1,53 +1,193 @@
 import React, { Component, Fragment } from "react";
 import { getAllListUsers } from "../../Redux/_actions";
 import { connect } from "react-redux";
-import { List, Icon, Spin, PageHeader } from "antd";
+import {
+  List,
+  Icon,
+  Spin,
+  PageHeader,
+  Table,
+  Input,
+  Button,
+  Divider
+} from "antd";
 import { Link } from "react-router-dom";
 import DisplayAvatar from "../Common/DisplayAvatar";
+import Highlighter from "react-highlight-words";
 
+const { Column, ColumnGroup } = Table;
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    width: "30%"
+  },
+  {
+    title: "Phone Number",
+    dataIndex: "age",
+    key: "age",
+    width: "20%"
+  },
+  {
+    title: "Gender",
+    dataIndex: "age",
+    key: "age",
+    width: "20%"
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address"
+  }
+];
+const data = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park"
+  },
+  {
+    key: "2",
+    name: "Joe Black",
+    age: 42,
+    address: "London No. 1 Lake Park"
+  },
+  {
+    key: "3",
+    name: "Jim Green",
+    age: 32,
+    address: "Sidney No. 1 Lake Park"
+  },
+  {
+    key: "4",
+    name: "Jim Red",
+    age: 32,
+    address: "London No. 2 Lake Park"
+  }
+];
 class Users extends Component {
   componentDidMount() {
     this.props.getAllListUsers();
   }
+  getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={node => {
+            this.searchInput = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            this.handleSearch(selectedKeys, confirm, dataIndex)
+          }
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Button
+          type="primary"
+          onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          icon="search"
+          size="small"
+          style={{ width: 90, marginRight: 8 }}
+        >
+          Search
+        </Button>
+        <Button
+          onClick={() => this.handleReset(clearFilters)}
+          size="small"
+          style={{ width: 90 }}
+        >
+          Reset
+        </Button>
+      </div>
+    ),
+    filterIcon: filtered => (
+      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => this.searchInput.select());
+      }
+    },
+    render: text =>
+      this.state.searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[this.state.searchText]}
+          autoEscape
+          textToHighlight={text.toString()}
+        />
+      ) : (
+        text
+      )
+  });
+
+  handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    this.setState({
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex
+    });
+  };
+
+  handleReset = clearFilters => {
+    clearFilters();
+    this.setState({ searchText: "" });
+  };
   render() {
     const {
       UsersResponse: { data = [], loading }
     } = this.props;
     let dataToDisplay = [];
 
-    data.forEach((element, key) => {
-      dataToDisplay.push({
-        imgPath: element.profileImage,
-        title: element.name,
-        gender: element,
-        content: (
-          <Fragment key={key}>
-            <span>
-              <span className='color-g'>{element.gender}</span>{" "}
-              <Icon type='user' theme='filled' /> {element.role}
-            </span>
-            <div>
-              <p>
-                <Icon type='mobile' theme='twoTone' /> {element.phoneNumber}{" "}
-                <br />
-                <Icon type='environment' /> {element.country} , {element.state}{" "}
-                , {element.cityName} , {element.address}
-              </p>
-              <div>
-                <Link to={"/admin/viewUser/1"}>
-                  <button className='cus-btn f-r mt--2'>
-                    <span className='circle'>
-                      <span className='icon arrow'></span>
-                    </span>
-                    <span className='button-text'>View</span>
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </Fragment>
-        )
-      });
-    });
+    // data.forEach((element, key) => {
+    //   dataToDisplay.push({
+    //     imgPath: element.profileImage,
+    //     title: element.name,
+    //     gender: element,
+    //     content: (
+    //       <Fragment key={key}>
+    //         <span>
+    //           <span className="color-g">{element.gender}</span>{" "}
+    //           <Icon type="user" theme="filled" /> {element.role}
+    //         </span>
+    //         <div>
+    //           <p>
+    //             <Icon type="mobile" theme="twoTone" /> {element.phoneNumber}{" "}
+    //             <br />
+    //             <Icon type="environment" /> {element.country} , {element.state}{" "}
+    //             , {element.cityName} , {element.address}
+    //           </p>
+    //           <div>
+    //             <Link to={"/admin/viewUser/1"}>
+    //               <button className="cus-btn f-r mt--2">
+    //                 <span className="circle">
+    //                   <span className="icon arrow"></span>
+    //                 </span>
+    //                 <span className="button-text">View</span>
+    //               </button>
+    //             </Link>
+    //           </div>
+    //         </div>
+    //       </Fragment>
+    //     )
+    //   });
+    // });
 
     return (
       <Fragment>
@@ -55,13 +195,26 @@ class Users extends Component {
           style={{
             border: "1px solid rgb(235, 237, 240)"
           }}
-          title='List of Users'
+          title="List of Users"
         />
 
         <Spin spinning={loading}>
-          <List
-            itemLayout='horizontal'
-            size='large'
+          <Table columns={columns} dataSource={data}>
+            <Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <span>
+                  <a>Invite {record.lastName}</a>
+                  <Divider type="vertical" />
+                  <a>Delete</a>
+                </span>
+              )}
+            />
+          </Table>
+          {/* <List
+            itemLayout="horizontal"
+            size="large"
             pagination={{
               onChange: page => {
                 console.log(page);
@@ -73,12 +226,12 @@ class Users extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={<DisplayAvatar srcPath={item.imgPath} />}
-                  title={<a href='#'>{item.title}</a>}
+                  title={<a href="#">{item.title}</a>}
                   description={item.content}
                 />
               </List.Item>
             )}
-          />
+          /> */}
         </Spin>
       </Fragment>
     );
