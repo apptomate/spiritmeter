@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Tabs, Spin, Tag, Icon, Badge, Avatar } from "antd";
+import { Tabs, Spin, Tag, Icon, Badge, Avatar, Row, Col } from "antd";
 import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
 import GaugeChart from "react-gauge-chart";
@@ -14,13 +14,25 @@ class ViewRoute extends Component {
       }
     } = this.props;
     if (id) {
-      let routeParam = { routeId: id };
+      let routeParam = { routeId: parseInt(id) };
       this.props.getRouteDetails(routeParam);
     }
   }
   render() {
     const RouteDetails = this.props.RouteDetails.data || "{}";
     const { loading } = this.props.RouteDetails;
+    let {
+      routeName,
+      totalMiles,
+      designatedCharityName,
+      ridePoints
+    } = RouteDetails;
+
+    // let filePathJson = RouteDetails.path || "[]";
+    // let filePathParsed = JSON.parse(filePathJson);
+    // filePathParsed = filePathParsed.routes || "[]";
+    // let pathsToTravel = filePathParsed[0].legs || [];
+    // let totalPaths = pathsToTravel.length;
 
     return (
       <Fragment>
@@ -28,43 +40,63 @@ class ViewRoute extends Component {
           <Tabs defaultActiveKey="1">
             <TabPane tab="Routes" key="1">
               <div className="routes">
-                <div className="mb-2 mt-1">
-                  <span className="route-title">Route Name :</span>
-                  <Tag color="red">
-                    Lorem Ipsum - All the facts - Lipsum generator
-                  </Tag>
-                </div>
-                <div className="mb-2">
-                  <span className="route-title">Map Points :</span>
-                  <div className="route-map">
-                    <img
-                      className="w-100"
-                      src="https://unitednewsdesk.com/wp-content/uploads/2019/02/Wired.jpg"
-                    />
-                  </div>
-                </div>
+                <Row>
+                  <Col className="route-maintitle" span={24}>
+                    <h3 className="route-name-h3">
+                      {designatedCharityName}'s Travel Route
+                    </h3>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={24}>
+                    <div className="mb-2 mt-1">
+                      <span className="route-title">Route Name :</span>
+                      <Tag color="red">{routeName}</Tag>
+                    </div>
+                    <div className="mb-2">
+                      <span className="route-title">Map Points :</span>
+                      <div className="route-map">
+                        <img
+                          className="w-100"
+                          src="https://unitednewsdesk.com/wp-content/uploads/2019/02/Wired.jpg"
+                        />
+                      </div>
+                    </div>
 
-                <div className="mb-2">
-                  <span className="route-title">Map Routes Names :</span>
-                  <div className="mt-1 route-list">
-                    <Icon type="right-square" />{" "}
-                    <Tag color="blue"> New York</Tag>
-                    <Icon type="swap" />
-                    <Tag color="blue">California</Tag>
-                    <Icon type="swap" />
-                    <Tag color="blue">Illinois</Tag>
-                    <Icon type="swap" />
-                    <Tag color="blue">Pennsylvania</Tag>
-                    <Icon type="swap" />
-                    <Tag color="blue">North Carolina</Tag>
-                    <Icon type="left-square" />
-                  </div>
-                </div>
+                    <div className="mb-2">
+                      <span className="route-title">Map Routes Names :</span>
+                      <div className="mt-1 route-list">
+                        <Icon type="right-square" />{" "}
+                        {/* {pathsToTravel &&
+                      pathsToTravel.map((travelPath, key) => {
+                        if (totalPaths === key + 1) {
+                          return (
+                            <Fragment key={`path_${key}`}>
+                              <Icon type="swap" />{" "}
+                              <Tag color="blue">{travelPath.start_address}</Tag>
+                              <Icon type="swap" />{" "}
+                              <Tag color="blue">{travelPath.end_address}</Tag>
+                            </Fragment>
+                          );
+                        } else {
+                          return (
+                            <Fragment key={`path_${key}`}>
+                              {key !== 0 && <Icon type="swap" />}
+                              <Tag color="blue">{travelPath.start_address}</Tag>
+                            </Fragment>
+                          );
+                        }
+                      })} */}
+                        <Icon type="left-square" />
+                      </div>
+                    </div>
 
-                <div className="mb-2">
-                  <span className="route-title">Total Miles :</span>
-                  <Badge count={25} />
-                </div>
+                    <div className="mb-2">
+                      <span className="route-title">Total Miles :</span>
+                      <Badge count={totalMiles} />
+                    </div>
+                  </Col>
+                </Row>
               </div>
             </TabPane>
             <TabPane tab="Display List" key="2">

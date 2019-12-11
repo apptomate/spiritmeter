@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { List, Icon, Spin, PageHeader, Row, Col, Button, Tooltip } from "antd";
+import { List, Icon, Spin, PageHeader, Row, Col, Tooltip } from "antd";
 import { getAllListRoutes } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -20,10 +20,10 @@ class Routes extends Component {
         comments,
         routeId
       } = element;
-      let filePathJson = element.path || "[]";
-      let filePathParsed = JSON.parse(filePathJson);
-      let pathsToTravel = filePathParsed.routes[0].legs;
-      let totalPaths = pathsToTravel.length;
+      // let filePathJson = element.path || "[]";
+      // let filePathParsed = JSON.parse(filePathJson);
+      // let pathsToTravel = filePathParsed.routes[0].legs;
+      // let totalPaths = pathsToTravel.length;
       dataToDisplay.push({
         content: (
           <div className="route-list-card" key={key}>
@@ -63,7 +63,7 @@ class Routes extends Component {
                   </div>
                   <div>
                     <h4>Routes :</h4>
-                    {pathsToTravel.map((travelPath, key) => {
+                    {/* {pathsToTravel.map((travelPath, key) => {
                       if (totalPaths === key + 1)
                         return (
                           <Fragment key={`path_${key}`}>
@@ -83,7 +83,7 @@ class Routes extends Component {
                             <Icon type="swap" /> {travelPath.start_address}{" "}
                           </div>
                         );
-                    })}
+                    })} */}
                   </div>
                   <Link to={`/admin/viewRoute/${routeId}`}>
                     <button className="cus-btn f-r">
@@ -102,21 +102,6 @@ class Routes extends Component {
               </Col>
             </Row>
           </div>
-
-          // <div className="list-display" key={`list_${key}`}>
-          //   <span className="color-g">
-          //     {element.isPrivate ? "Is Private" : "Public"}
-          //   </span>
-          //   <p>
-          //     <Icon type="environment" /> {element.country} , {element.state} ,
-          //     {element.cityName} , {element.address}
-          //   </p>
-          //   <p>{element.comments}</p>
-          //   <div className="item-center list-username">
-          //     <Avatar icon="user" />
-          //     <span>{element.designatedCharityName}</span>
-          //   </div>
-          // </div>
         )
       });
     });
@@ -148,29 +133,6 @@ class Routes extends Component {
             )}
           />
         </Spin>
-
-        {/* <Spin spinning={loading}>
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: page => {
-                console.log(page);
-              },
-              pageSize: 5
-            }}
-            dataSource={dataToDisplay}
-            renderItem={item => (
-              <List.Item
-                key={item.title}
-                extra={<img width={272} alt="logo" src={item.filePath} />}
-              >
-                <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-                {item.content}
-              </List.Item>
-            )}
-          />
-        </Spin> */}
       </Fragment>
     );
   }
