@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from "react";
-import { List, Icon, Spin, PageHeader, Row, Col, Tooltip } from "antd";
-import { getAllListRoutes } from "../../Redux/_actions";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { Component, Fragment } from 'react';
+import { List, Icon, Spin, PageHeader, Row, Col, Tooltip } from 'antd';
+import { getAllListRoutes } from '../../Redux/_actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import RouteMap from '../Common/googleMap/RoutingCheck';
 class Routes extends Component {
   componentDidMount() {
     this.props.getAllListRoutes();
@@ -18,43 +19,46 @@ class Routes extends Component {
         isPrivate,
         designatedCharityName,
         comments,
-        routeId
+        routeId,
+        routePoints
       } = element;
       // let filePathJson = element.path || "[]";
       // let filePathParsed = JSON.parse(filePathJson);
       // let pathsToTravel = filePathParsed.routes[0].legs;
       // let totalPaths = pathsToTravel.length;
+      routePoints = JSON.parse(routePoints || null) || {};
+
       dataToDisplay.push({
         content: (
-          <div className="route-list-card" key={key}>
+          <div className='route-list-card' key={key}>
             <Row>
-              <Col className="route-maintitle" span={24}>
-                <h3 className="route-name-h3">
+              <Col className='route-maintitle' span={24}>
+                <h3 className='route-name-h3'>
                   {designatedCharityName}'s Travel Route
                 </h3>
               </Col>
               <Col span={12}>
                 <div>
-                  <h4 className="route-title mt-0-5">{routeName}</h4>
-                  <div className="list-name-imp mt-0-5">
+                  <h4 className='route-title mt-0-5'>{routeName}</h4>
+                  <div className='list-name-imp mt-0-5'>
                     <i
                       className={
                         isPrivate
-                          ? "fas fa-user-lock color-g"
-                          : "fas fa-globe-asia color-r"
+                          ? 'fas fa-user-lock color-g'
+                          : 'fas fa-globe-asia color-r'
                       }
                     />
-                    {isPrivate ? "Is Private" : "Is Public"}
+                    {isPrivate ? 'Is Private' : 'Is Public'}
                   </div>
-                  <div className="list-name-imp mt-0-5">
+                  <div className='list-name-imp mt-0-5'>
                     <h4>
                       Comments :
                       <span>
-                        <Tooltip placement="top" title={comments}>
+                        <Tooltip placement='top' title={comments}>
                           <span>
                             <Icon
-                              className="commands-info"
-                              type="info-circle"
+                              className='commands-info'
+                              type='info-circle'
                             />
                           </span>
                         </Tooltip>
@@ -86,18 +90,18 @@ class Routes extends Component {
                     })} */}
                   </div>
                   <Link to={`/admin/viewRoute/${routeId}`}>
-                    <button className="cus-btn f-r">
-                      <span className="circle">
-                        <span className="icon arrow"></span>
+                    <button className='cus-btn f-r'>
+                      <span className='circle'>
+                        <span className='icon arrow'></span>
                       </span>
-                      <span className="button-text">View</span>
+                      <span className='button-text'>View</span>
                     </button>
                   </Link>
                 </div>
               </Col>
               <Col span={12}>
-                <div className="route-card-map">
-                  <img src="https://miro.medium.com/max/5334/1*qYUvh-EtES8dtgKiBRiLsA.png" />
+                <div className='route-card-map'>
+                  <RouteMap routePoints={routePoints} />
                 </div>
               </Col>
             </Row>
@@ -110,14 +114,14 @@ class Routes extends Component {
       <Fragment>
         <PageHeader
           style={{
-            border: "1px solid rgb(235, 237, 240)"
+            border: '1px solid rgb(235, 237, 240)'
           }}
-          title="List of Routes"
+          title='List of Routes'
         />
         <Spin spinning={loading}>
           <List
-            itemLayout="vertical"
-            size="large"
+            itemLayout='vertical'
+            size='large'
             pagination={{
               onChange: page => {
                 console.log(page);
