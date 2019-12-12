@@ -44,7 +44,7 @@ export default class AdminLayout extends Component {
         {/* Sidebar */}
         <Sidebar collapseFlag={collapsed} />
         {/* Sidebar */}
-        <Layout>
+        <Layout className="layout-left">
           {/* Navbar */}
           <Navbar
             collapseFlag={collapsed}
@@ -62,7 +62,7 @@ export default class AdminLayout extends Component {
           >
             <Fragment>
               <Switch>
-                <Route exact path='/' component={Dashboard} />
+                <Route exact path="/" component={Dashboard} />
                 <Route exact path={url + "/dashboard"} component={Dashboard} />
                 <Route exact path={url + "/display"} component={Display} />
                 <Route
@@ -73,7 +73,7 @@ export default class AdminLayout extends Component {
                 <Route path={url + "/viewRoute/:id"} component={ViewRoute} />
                 <Route exact path={url + "/users"} component={Users} />
                 <Route path={url + "/viewUser/:id"} component={ViewUser} />
-                <Route path='*' component={Unauthorized} />
+                <Route path="*" component={Unauthorized} />
               </Switch>
             </Fragment>
           </Content>

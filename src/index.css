@@ -25,22 +25,24 @@ code {
 .ant-layout-sider {
   position: relative;
   min-width: 0;
-  background: #ffffff !important;
+  background: #001529 !important;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
 .login-bg {
-  background-image: url("assets/img/login-bg.jpg");
-  background-color: #cccccc;
+  /* background-image: url("assets/img/login-bg.jpg"); */
+  background-color: #fff;
   height: 100vh;
   background-size: cover;
 }
 
 .login-form-div {
-  margin-top: 8rem;
-  border-radius: 17px;
-  background: #001a35c7;
+  margin-top: 10rem;
+  border-radius: 0px;
+  background: #ffffff;
+  /* border: 1px #001529 solid; */
+  box-shadow: 0 0 24px gainsboro;
 }
 .text-center {
   text-align: center;
@@ -136,7 +138,7 @@ code {
 }
 
 .login-form .ant-input-prefix i {
-  color: #fff !important;
+  color: #081529 !important;
 }
 .login-form {
   width: 75%;
@@ -150,21 +152,22 @@ code {
 }
 
 .login-title {
-  font-size: 26px;
-  color: #1890ff;
-  font-weight: 700;
+  font-size: 24px;
+  color: #001529;
+  font-weight: 600;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .login-form-forgot {
   float: right;
+  color: #5a5a5d;
 }
 .login-button-style {
   width: 25%;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: #001a3559 !important;
+  background-color: #244769 !important;
 }
 .ant-menu-item-selected {
   color: #001a35 !important;
@@ -173,7 +176,7 @@ code {
 }
 .ant-menu-item > a {
   display: block;
-  color: rgb(0, 26, 53) !important;
+  color: #fff !important;
 }
 .ant-menu-vertical .ant-menu-item,
 .ant-menu-vertical-left .ant-menu-item,
@@ -305,6 +308,9 @@ button {
 button.cus-btn {
   width: 6rem;
   height: auto;
+  border: 2px #282936 solid;
+  border-radius: 30px;
+  margin-right: 10px;
 }
 button.cus-btn .circle {
   transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
@@ -312,7 +318,7 @@ button.cus-btn .circle {
   display: block;
   margin: 0;
   width: 2rem;
-  height: 1.5rem;
+  height: 2rem;
   background: #282936;
   border-radius: 1.625rem;
 }
@@ -352,7 +358,7 @@ button.cus-btn .button-text {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0.1rem 0;
+  padding: 0.34rem 0;
   margin: 0 0 0 1.85rem;
   color: #282936;
   font-weight: 700;
@@ -482,9 +488,10 @@ button:hover .button-text {
   color: orange !important;
 }
 .routes .ant-tag {
-  font-size: 13px;
+  font-size: 15px;
   margin-right: 10px;
-  border-radius: 0px;
+  border-radius: 5px;
+  padding: 6px;
 }
 .routes span {
   font-weight: 600;
@@ -636,4 +643,121 @@ button:hover .button-text {
 }
 .mr-2 {
   margin-right: 2rem;
+}
+.ant-menu {
+  background: #001529 !important;
+}
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-right: 3px solid #2196f3 !important;
+  transform: scaleY(0.0001);
+  opacity: 0;
+  transition: transform 0.15s cubic-bezier(0.215, 0.61, 0.355, 1),
+    opacity 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+  content: "";
+}
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+  border-right: none !important;
+}
+.logo img {
+  width: 100px !important;
+  margin: auto;
+  display: block;
+  padding: 1rem;
+}
+.layout-left {
+  margin-left: 200px;
+}
+.ant-layout-sider-collapsed .layout-left {
+  margin-left: 80px !important;
+}
+.ant-layout-sider {
+  overflow-x: hidden !important;
+}
+
+.ant-list-item .route-list-card {
+  margin-top: 0rem;
+}
+.ant-tabs .ant-tabs-left-bar .ant-tabs-tab,
+.ant-tabs .ant-tabs-right-bar .ant-tabs-tab {
+  display: block;
+  float: none;
+  margin: 0px 4px 16px 0 !important;
+  padding: 5px 24px !important;
+  text-align: center !important;
+}
+.pr-0-5 {
+  padding-right: 0.5rem;
+}
+.map-datails {
+  padding: 1rem;
+  border: 1px #e6e4e4 solid;
+}
+
+.map-datails p {
+  margin: 0;
+  font-weight: 400;
+  font-size: 13px;
+  margin-top: 7px;
+  color: #8c8c8c;
+}
+.map-datails .left {
+  width: 70%;
+  float: left;
+}
+.map-datails .right {
+  width: 30%;
+  float: left;
+}
+.map-datails .right img {
+  width: 100%;
+  margin: auto;
+  display: block;
+  object-fit: contain;
+}
+.map-datails .right .fixed-img {
+  width: 150px;
+  height: 120px;
+  background: #f0f2f5;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  margin-left: auto;
+  margin-right: 0;
+}
+.ant-input-affix-wrapper .ant-input {
+  min-height: 100%;
+  color: #545454 !important;
+}
+.ml-1 {
+  margin-left: 1rem !important;
+}
+
+.ant-pagination-item-active {
+  font-weight: 500;
+  background: #fff;
+  border-color: #001529 !important;
+}
+.ant-pagination-item-active a {
+  color: #001529 !important;
+}
+
+.login-left-bg {
+  background: #001529;
+  height: 100vh;
+  display: flex !important;
+  align-items: center;
+}
+.login-left-bg img {
+  width: 150px;
+  margin: auto;
+  display: block;
 }
