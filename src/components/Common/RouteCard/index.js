@@ -3,7 +3,11 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Icon, Row, Col, Tooltip, Button, Modal } from "antd";
 import RouteMap from "../googleMap/RouteMap";
-import { getLatLng, getWayPoints } from "../../../Redux/_helpers/Functions";
+import {
+  getLatLng,
+  getWayPoints,
+  getMilesFromLegs
+} from "../../../Redux/_helpers/Functions";
 import LinkButton from "../LinkButton";
 import PropTypes from "prop-types";
 import RoutePreview from "../../Routes/RoutePreview";
@@ -67,6 +71,7 @@ class RouteCard extends Component {
       routePoints
     } = this.props.data;
     const { showPreviewModal, data } = this.props;
+
     const { directions } = this.state;
     routePoints = JSON.parse(routePoints || null) || [];
     routePoints = routePoints[0];
@@ -80,10 +85,12 @@ class RouteCard extends Component {
 
     let pathsToTravel = [];
     let totalPaths = 0;
-
+    let miles = 0;
     if (directions) {
       pathsToTravel = directions.routes[0].legs;
       totalPaths = pathsToTravel.length;
+      miles = getMilesFromLegs(directions.routes[0].legs);
+      miles = miles.toFixed(2);
     }
     return (
       <div>
@@ -142,6 +149,7 @@ class RouteCard extends Component {
                         </div>
                       );
                   })}
+                  <h4>Total Miles : {miles} miles </h4>
                 </div>
 
                 {showPreviewModal ? (
@@ -158,6 +166,7 @@ class RouteCard extends Component {
                       previewData={data}
                       routesData={pathsToTravel}
                       directionsData={directions}
+                      totalMiles={miles}
                     />
                   </Fragment>
                 ) : (

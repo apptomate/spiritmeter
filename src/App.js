@@ -6,22 +6,34 @@ import {
   PublicRoute,
   ProtectedRoute
 } from "./Redux/_service/AuthenticationService";
+import { Spin, Icon } from "antd";
 //Gateway Routes
 const Login = React.lazy(() => import("./components/Login"));
 const AdminLayout = React.lazy(() => import("./components/AdminLayout"));
 const Unauthorized = React.lazy(() => import("./components/Unauthorizrd"));
 //Store
 const store = configureStore();
+
+const antIcon = (
+  <Icon type="loading" style={{ fontSize: 24, marginTop: 30 }} spin />
+);
+
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <center>
+              <Spin indicator={antIcon} />
+            </center>
+          }
+        >
           <Switch>
-            <PublicRoute path='/login' component={Login} />
-            <ProtectedRoute exact path='/' component={AdminLayout} />
-            <ProtectedRoute path='/admin' component={AdminLayout} />
-            <Route path='*' component={Unauthorized} />
+            <PublicRoute path="/login" component={Login} />
+            <ProtectedRoute exact path="/" component={AdminLayout} />
+            <ProtectedRoute path="/admin" component={AdminLayout} />
+            <Route path="*" component={Unauthorized} />
           </Switch>
         </Suspense>
       </BrowserRouter>

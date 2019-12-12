@@ -102,8 +102,8 @@ class ViewRoute extends Component {
                     </div>
 
                     <div className="mb-2">
-                      <span className="route-title">Total Miles :</span>
-                      <Badge count={totalMiles} />
+                      <span className="route-title">Distance :</span>
+                      <Badge count={totalMiles} /> Miles
                     </div>
                   </Col>
                 </Row>
