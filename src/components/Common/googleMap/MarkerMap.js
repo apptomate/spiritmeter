@@ -6,16 +6,14 @@ import {
   Marker
 } from 'react-google-maps';
 
-const MarkerMap = withScriptjs(
-  withGoogleMap(props => {
-    const { lat, lng } = props;
-    return (
-      <GoogleMap defaultZoom={8} center={{ lat: lat, lng: lng }}>
-        <Marker position={{ lat: lat, lng: lng }} />
-      </GoogleMap>
-    );
-  })
-);
+const MarkerMap = withGoogleMap(props => {
+  const { lat, lng } = props;
+  return (
+    <GoogleMap defaultZoom={8} center={{ lat: lat, lng: lng }}>
+      <Marker position={{ lat: lat, lng: lng }} />
+    </GoogleMap>
+  );
+});
 
 MarkerMap.defaultProps = {
   loadingElement: <div style={{ height: `100%` }} />,
