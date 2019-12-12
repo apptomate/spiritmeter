@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Form, Icon, Input, Button, Row, Col } from "antd";
+import { Form, Icon, Input, Row, Col, Button } from "antd";
 import { connect } from "react-redux";
 import { authLogin } from "../../Redux/_actions";
 import { Redirect } from "react-router-dom";
@@ -89,7 +89,9 @@ class LoginForm extends Component {
                     <span class="button-text">Login</span>
                   </button>
 
-                  <a className="login-form-forgot">Forgot password</a>
+                  <Button type="link" className="login-form-forgot">
+                    Forgot password
+                  </Button>
                 </Form.Item>
 
                 {/* <Form.Item>

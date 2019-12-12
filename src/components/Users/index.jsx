@@ -179,19 +179,7 @@ class Users extends Component {
         <div>
           <Spin spinning={loading}>
             <br />
-            <Table columns={columns} dataSource={data}>
-              <Column
-                title="Action"
-                key="action"
-                render={(text, record) => (
-                  <span>
-                    <a>Invite {record.lastName}</a>
-                    <Divider type="vertical" />
-                    <a>Delete</a>
-                  </span>
-                )}
-              />
-            </Table>
+            <Table columns={columns} dataSource={data}></Table>
           </Spin>
         </div>
       </Fragment>

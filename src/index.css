@@ -638,8 +638,9 @@ button:hover .button-text {
 .logout-btn {
   float: right;
   padding-right: 10px;
-  color: #7d7d7d;
-  font-size: 13px;
+  color: #7d7d7d !important;
+  font-size: 13px !important;
+  margin-top: 0.9rem !important;
 }
 .mr-2 {
   margin-right: 2rem;
