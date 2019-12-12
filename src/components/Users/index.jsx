@@ -1,35 +1,86 @@
 import React, { Component, Fragment } from "react";
 import { getAllListUsers } from "../../Redux/_actions";
 import { connect } from "react-redux";
-import { Icon, Spin, PageHeader, Table, Input, Button, Divider } from "antd";
+import {
+  Icon,
+  Spin,
+  PageHeader,
+  Table,
+  Input,
+  Button,
+  Divider,
+  Tag
+} from "antd";
 import Highlighter from "react-highlight-words";
+import DisplayAvatar from "../Common/DisplayAvatar";
+import { Link } from "react-router-dom";
 
 const { Column } = Table;
+
 const columns = [
+  {
+    title: "Profile",
+    dataIndex: "profileImage",
+    key: "profileImage",
+    render: profileImage => (
+      <span>
+        <DisplayAvatar srcPath={profileImage} />
+      </span>
+    )
+  },
   {
     title: "Name",
     dataIndex: "name",
-    key: "name",
-    width: "30%"
-  },
-  {
-    title: "Phone Number",
-    dataIndex: "age",
-    key: "age",
-    width: "20%"
+    key: "name"
   },
   {
     title: "Gender",
-    dataIndex: "age",
-    key: "age",
-    width: "20%"
+    dataIndex: "gender",
+    key: "gender"
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address"
+    title: "Phone Number",
+    dataIndex: "phoneNumber",
+    key: "phoneNumber"
+  },
+  {
+    title: "Role",
+    dataIndex: "role",
+    key: "role",
+    render: role => (
+      <span>
+        <Tag color={role === "Admin" ? "volcano" : "geekblue"}>{role}</Tag>
+      </span>
+    )
+  },
+  {
+    title: "Action",
+    dataIndex: "userId",
+    key: "userId",
+    render: userId => (
+      <span>
+        <Link to={`/admin/viewUser/${userId}`}>
+          <Button
+            type="primary"
+            shape="circle"
+            icon="eye"
+            size="small"
+            title="View"
+          />
+        </Link>
+        <Divider type="vertical" />
+        <Button
+          type="danger"
+          shape="circle"
+          icon="delete"
+          size="small"
+          title="Delete"
+        />
+      </span>
+    )
   }
 ];
+
 class Users extends Component {
   componentDidMount() {
     this.props.getAllListUsers();
@@ -116,41 +167,6 @@ class Users extends Component {
     const {
       UsersResponse: { data = [], loading }
     } = this.props;
-    //let dataToDisplay = [];
-
-    // data.forEach((element, key) => {
-    //   dataToDisplay.push({
-    //     imgPath: element.profileImage,
-    //     title: element.name,
-    //     gender: element,
-    //     content: (
-    //       <Fragment key={key}>
-    //         <span>
-    //           <span className="color-g">{element.gender}</span>{" "}
-    //           <Icon type="user" theme="filled" /> {element.role}
-    //         </span>
-    //         <div>
-    //           <p>
-    //             <Icon type="mobile" theme="twoTone" /> {element.phoneNumber}{" "}
-    //             <br />
-    //             <Icon type="environment" /> {element.country} , {element.state}{" "}
-    //             , {element.cityName} , {element.address}
-    //           </p>
-    //           <div>
-    //             <Link to={"/admin/viewUser/1"}>
-    //               <button className="cus-btn f-r mt--2">
-    //                 <span className="circle">
-    //                   <span className="icon arrow"></span>
-    //                 </span>
-    //                 <span className="button-text">View</span>
-    //               </button>
-    //             </Link>
-    //           </div>
-    //         </div>
-    //       </Fragment>
-    //     )
-    //   });
-    // });
 
     return (
       <Fragment>
@@ -160,42 +176,24 @@ class Users extends Component {
           }}
           title="List of Users"
         />
-
-        <Spin spinning={loading}>
-          <Table columns={columns} dataSource={data}>
-            <Column
-              title="Action"
-              key="action"
-              render={(text, record) => (
-                <span>
-                  <a>Invite {record.lastName}</a>
-                  <Divider type="vertical" />
-                  <a>Delete</a>
-                </span>
-              )}
-            />
-          </Table>
-          {/* <List
-            itemLayout="horizontal"
-            size="large"
-            pagination={{
-              onChange: page => {
-                console.log(page);
-              },
-              pageSize: 5
-            }}
-            dataSource={dataToDisplay}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta
-                  avatar={<DisplayAvatar srcPath={item.imgPath} />}
-                  title={<a href="#">{item.title}</a>}
-                  description={item.content}
-                />
-              </List.Item>
-            )}
-          /> */}
-        </Spin>
+        <div>
+          <Spin spinning={loading}>
+            <br />
+            <Table columns={columns} dataSource={data}>
+              <Column
+                title="Action"
+                key="action"
+                render={(text, record) => (
+                  <span>
+                    <a>Invite {record.lastName}</a>
+                    <Divider type="vertical" />
+                    <a>Delete</a>
+                  </span>
+                )}
+              />
+            </Table>
+          </Spin>
+        </div>
       </Fragment>
     );
   }

@@ -1,9 +1,9 @@
 /* global google */
-import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { Icon, Row, Col, Tooltip } from 'antd';
-import RouteMap from '../googleMap/RouteMap';
-import { getLatLng, getWayPoints } from '../../../Redux/_helpers/Functions';
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
+import { Icon, Row, Col, Tooltip } from "antd";
+import RouteMap from "../googleMap/RouteMap";
+import { getLatLng, getWayPoints } from "../../../Redux/_helpers/Functions";
 
 class RouteCard extends Component {
   static propTypes = {
@@ -74,33 +74,33 @@ class RouteCard extends Component {
     }
     return (
       <div>
-        <div className='route-list-card'>
+        <div className="route-list-card">
           <Row>
-            <Col className='route-maintitle' span={24}>
-              <h3 className='route-name-h3'>
+            <Col className="route-maintitle" span={24}>
+              <h3 className="route-name-h3">
                 {designatedCharityName}'s Travel Route
               </h3>
             </Col>
             <Col span={12}>
               <div>
-                <h4 className='route-title mt-0-5'>{routeName}</h4>
-                <div className='list-name-imp mt-0-5'>
+                <h4 className="route-title mt-0-5">{routeName}</h4>
+                <div className="list-name-imp mt-0-5">
                   <i
                     className={
                       isPrivate
-                        ? 'fas fa-user-lock color-g'
-                        : 'fas fa-globe-asia color-r'
+                        ? "fas fa-user-lock color-g"
+                        : "fas fa-globe-asia color-r"
                     }
                   />
-                  {isPrivate ? 'Is Private' : 'Is Public'}
+                  {isPrivate ? "Is Private" : "Is Public"}
                 </div>
-                <div className='list-name-imp mt-0-5'>
+                <div className="list-name-imp mt-0-5">
                   <h4>
                     Comments :
                     <span>
-                      <Tooltip placement='top' title={comments}>
+                      <Tooltip placement="top" title={comments}>
                         <span>
-                          <Icon className='commands-info' type='info-circle' />
+                          <Icon className="commands-info" type="info-circle" />
                         </span>
                       </Tooltip>
                     </span>
@@ -112,36 +112,36 @@ class RouteCard extends Component {
                     if (totalPaths === key + 1)
                       return (
                         <Fragment key={`path_${key}`}>
-                          <div className='route-name'>
-                            <Icon type='swap' />
-                            {travelPath.start_address}{' '}
+                          <div className="route-name">
+                            <Icon type="swap" />
+                            {travelPath.start_address}{" "}
                           </div>
-                          <div className='route-name' key={`path_${key}`}>
-                            <Icon type='swap' />
-                            {travelPath.end_address}{' '}
+                          <div className="route-name" key={`path_${key}`}>
+                            <Icon type="swap" />
+                            {travelPath.end_address}{" "}
                           </div>
                         </Fragment>
                       );
                     else
                       return (
-                        <div className='route-name' key={`path_${key}`}>
-                          <Icon type='swap' /> {travelPath.start_address}{' '}
+                        <div className="route-name" key={`path_${key}`}>
+                          <Icon type="swap" /> {travelPath.start_address}{" "}
                         </div>
                       );
                   })}
                 </div>
                 <Link to={`/admin/viewRoute/${routeId}`}>
-                  <button className='cus-btn f-r'>
-                    <span className='circle'>
-                      <span className='icon arrow'></span>
+                  <button className="cus-btn f-r">
+                    <span className="circle">
+                      <span className="icon arrow"></span>
                     </span>
-                    <span className='button-text'>View</span>
+                    <span className="button-text">View</span>
                   </button>
                 </Link>
               </div>
             </Col>
             <Col span={12}>
-              <div className='route-card-map'>
+              <div className="route-card-map">
                 <RouteMap srclat={2} srclng={2} directions={directions} />
               </div>
             </Col>

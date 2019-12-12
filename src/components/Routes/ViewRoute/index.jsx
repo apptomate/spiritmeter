@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Tabs, Spin, Tag, Icon, Badge, Avatar, Row, Col } from "antd";
 import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
+import DisplayCard from "../../Display/DisplayCard";
 
 const { TabPane } = Tabs;
 
@@ -20,7 +21,13 @@ class ViewRoute extends Component {
   render() {
     const RouteDetails = this.props.RouteDetails.data || "{}";
     const { loading } = this.props.RouteDetails;
-    let { routeName, totalMiles, designatedCharityName } = RouteDetails;
+    let {
+      routeName,
+      totalMiles,
+      designatedCharityName,
+      ridePoints
+    } = RouteDetails;
+    console.log(ridePoints);
 
     // let filePathJson = RouteDetails.path || "[]";
     // let filePathParsed = JSON.parse(filePathJson);
@@ -95,7 +102,10 @@ class ViewRoute extends Component {
               </div>
             </TabPane>
             <TabPane tab="Display List" key="2">
-              <div className="p-1">
+              {ridePoints && (
+                <DisplayCard listData={ridePoints} hideViewButton={false} />
+              )}
+              {/* <div className="p-1">
                 <div className="list-card mb-1">
                   <div className="list-img">
                     <img
@@ -121,19 +131,19 @@ class ViewRoute extends Component {
 
                     <div className="list-name-imp">
                       <i className="fas fa-user-lock color-g"></i> Is Private /{" "}
-                      <i class="fas fa-globe-asia color-r"></i>Is Public
+                      <i className="fas fa-globe-asia color-r"></i>Is Public
                     </div>
 
                     <div className="item-center list-username mt-2">
                       <Avatar icon="user" />
                       <span>User Name</span>
                       <span>
-                        {/* <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link> */}
+                        <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link>
                       </span>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </TabPane>
             <TabPane tab="Near By" key="3">
               Tab3
