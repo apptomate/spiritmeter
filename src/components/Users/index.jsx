@@ -1,70 +1,33 @@
-import React, { Component, Fragment } from "react";
-import { getAllListUsers } from "../../Redux/_actions";
-import { connect } from "react-redux";
-import {
-  List,
-  Icon,
-  Spin,
-  PageHeader,
-  Table,
-  Input,
-  Button,
-  Divider
-} from "antd";
-import { Link } from "react-router-dom";
-import DisplayAvatar from "../Common/DisplayAvatar";
-import Highlighter from "react-highlight-words";
+import React, { Component, Fragment } from 'react';
+import { getAllListUsers } from '../../Redux/_actions';
+import { connect } from 'react-redux';
+import { Icon, Spin, PageHeader, Table, Input, Button, Divider } from 'antd';
+import Highlighter from 'react-highlight-words';
 
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    width: "30%"
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    width: '30%'
   },
   {
-    title: "Phone Number",
-    dataIndex: "age",
-    key: "age",
-    width: "20%"
+    title: 'Phone Number',
+    dataIndex: 'age',
+    key: 'age',
+    width: '20%'
   },
   {
-    title: "Gender",
-    dataIndex: "age",
-    key: "age",
-    width: "20%"
+    title: 'Gender',
+    dataIndex: 'age',
+    key: 'age',
+    width: '20%'
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address"
-  }
-];
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park"
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park"
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 32,
-    address: "Sidney No. 1 Lake Park"
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park"
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address'
   }
 ];
 class Users extends Component {
@@ -91,20 +54,20 @@ class Users extends Component {
           onPressEnter={() =>
             this.handleSearch(selectedKeys, confirm, dataIndex)
           }
-          style={{ width: 188, marginBottom: 8, display: "block" }}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
-          type="primary"
+          type='primary'
           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          icon="search"
-          size="small"
+          icon='search'
+          size='small'
           style={{ width: 90, marginRight: 8 }}
         >
           Search
         </Button>
         <Button
           onClick={() => this.handleReset(clearFilters)}
-          size="small"
+          size='small'
           style={{ width: 90 }}
         >
           Reset
@@ -112,7 +75,7 @@ class Users extends Component {
       </div>
     ),
     filterIcon: filtered => (
-      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
+      <Icon type='search' style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -127,7 +90,7 @@ class Users extends Component {
     render: text =>
       this.state.searchedColumn === dataIndex ? (
         <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
           searchWords={[this.state.searchText]}
           autoEscape
           textToHighlight={text.toString()}
@@ -147,13 +110,12 @@ class Users extends Component {
 
   handleReset = clearFilters => {
     clearFilters();
-    this.setState({ searchText: "" });
+    this.setState({ searchText: '' });
   };
   render() {
     const {
       UsersResponse: { data = [], loading }
     } = this.props;
-    let dataToDisplay = [];
 
     // data.forEach((element, key) => {
     //   dataToDisplay.push({
@@ -193,20 +155,20 @@ class Users extends Component {
       <Fragment>
         <PageHeader
           style={{
-            border: "1px solid rgb(235, 237, 240)"
+            border: '1px solid rgb(235, 237, 240)'
           }}
-          title="List of Users"
+          title='List of Users'
         />
 
         <Spin spinning={loading}>
           <Table columns={columns} dataSource={data}>
             <Column
-              title="Action"
-              key="action"
+              title='Action'
+              key='action'
               render={(text, record) => (
                 <span>
                   <a>Invite {record.lastName}</a>
-                  <Divider type="vertical" />
+                  <Divider type='vertical' />
                   <a>Delete</a>
                 </span>
               )}
