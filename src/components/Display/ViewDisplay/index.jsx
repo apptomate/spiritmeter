@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Tabs, Row, Col, Spin, Icon, Avatar } from "antd";
+import { Tabs, Row, Col, Spin, Icon, Avatar, Empty } from "antd";
 import { getDisplayDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
 import DisplaySlider from "../../Common/DisplaySlider";
@@ -104,9 +104,9 @@ class ViewDisplay extends Component {
               </Row>
             </TabPane>
             <TabPane tab="Maping Routes" key="2">
-              {!parsedRoutes.length && <p>No routes found</p>}
+              {!parsedRoutes.length && <Empty description="No Routes Found" />}
               {parsedRoutes.map((route, key) => (
-                <RouteCard key={key} data={route} />
+                <RouteCard key={key} data={route} showPreviewModal />
               ))}
             </TabPane>
           </Tabs>

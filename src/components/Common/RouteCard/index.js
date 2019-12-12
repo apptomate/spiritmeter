@@ -1,20 +1,31 @@
 /* global google */
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Icon, Row, Col, Tooltip } from "antd";
+import { Icon, Row, Col, Tooltip, Button, Modal } from "antd";
 import RouteMap from "../googleMap/RouteMap";
 import { getLatLng, getWayPoints } from "../../../Redux/_helpers/Functions";
+import LinkButton from "../LinkButton";
+import PropTypes from "prop-types";
+import RoutePreview from "../../Routes/RoutePreview";
 
 class RouteCard extends Component {
   static propTypes = {
-    data: {}
+    data: PropTypes.object.isRequired,
+    showPreviewModal: PropTypes.bool
   };
   state = {
-    directions: null
+    directions: null,
+    toggleFlag: false
   };
   constructor(props) {
     super(props);
     this.getRoute = this.getRoute.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+  toggleModal() {
+    this.setState(prevState => ({
+      toggleFlag: !prevState.toggleFlag
+    }));
   }
   getRoute(srclat, srclng, destlat, destlng, waypoints = []) {
     const DirectionsService = new google.maps.DirectionsService();
@@ -46,6 +57,7 @@ class RouteCard extends Component {
     );
   }
   render() {
+    let { toggleFlag } = this.state;
     let {
       routeName,
       isPrivate,
@@ -54,6 +66,7 @@ class RouteCard extends Component {
       routeId,
       routePoints
     } = this.props.data;
+    const { showPreviewModal, data } = this.props;
     const { directions } = this.state;
     routePoints = JSON.parse(routePoints || null) || [];
     routePoints = routePoints[0];
@@ -130,14 +143,29 @@ class RouteCard extends Component {
                       );
                   })}
                 </div>
-                <Link to={`/admin/viewRoute/${routeId}`}>
-                  <button className="cus-btn f-r">
-                    <span className="circle">
-                      <span className="icon arrow"></span>
-                    </span>
-                    <span className="button-text">View</span>
-                  </button>
-                </Link>
+
+                {showPreviewModal ? (
+                  <Fragment>
+                    <Button
+                      className="f-r mt--2 mr-2"
+                      onClick={this.toggleModal}
+                    >
+                      Preview
+                    </Button>
+                    <RoutePreview
+                      toggleFlag={toggleFlag}
+                      toggleFunc={this.toggleModal}
+                      previewData={data}
+                      routesData={pathsToTravel}
+                      directionsData={directions}
+                    />
+                  </Fragment>
+                ) : (
+                  <LinkButton
+                    linkPath={`/admin/viewRoute/${routeId}`}
+                    linkText="View"
+                  />
+                )}
               </div>
             </Col>
             <Col span={12}>

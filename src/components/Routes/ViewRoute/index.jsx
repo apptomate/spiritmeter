@@ -68,7 +68,8 @@ class ViewRoute extends Component {
                     <div className="mb-2">
                       <span className="route-title">Map Routes Names :</span>
                       <div className="mt-1 route-list">
-                        <Icon type="right-square" />{" "}
+                        <Icon type="right-square" /> <Icon type="swap" />{" "}
+                        <Tag color="blue">dummy</Tag>
                         {/* {pathsToTravel &&
                       pathsToTravel.map((travelPath, key) => {
                         if (totalPaths === key + 1) {
