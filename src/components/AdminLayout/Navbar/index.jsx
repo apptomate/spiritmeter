@@ -51,11 +51,11 @@ export default class Navbar extends Component {
     const { collapseFlag, collapseToggleFunc } = this.props;
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
-        <Icon
+        {/* <Icon
           className="trigger pl-0-5"
           type={collapseFlag ? "menu-unfold" : "menu-fold"}
           onClick={collapseToggleFunc}
-        />
+        /> */}
         <Search
           className="ml-1"
           placeholder="search..."
