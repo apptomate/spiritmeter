@@ -10,9 +10,14 @@ const { Search } = Input;
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <a target="_blank" rel="noopener noreferrer" onClick={() => logout()}>
+      <Button
+        type="link"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => logout()}
+      >
         Logout
-      </a>
+      </Button>
     </Menu.Item>
   </Menu>
 );
@@ -22,10 +27,10 @@ function SignoutButton() {
   const { firstName } = loggedUserDetails();
   return (
     <Dropdown className="logout-btn" overlay={menu}>
-      <a className="ant-dropdown-link" href="#">
+      <Button type="link" className="ant-dropdown-link">
         <Icon type="user" />
         {firstName} <Icon type="down" />
-      </a>
+      </Button>
     </Dropdown>
 
     // <Button
