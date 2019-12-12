@@ -79,7 +79,6 @@ class RouteCard extends Component {
       const [srclat, srclng] = getLatLng(routePoints.origin);
       const [destlat, destlng] = getLatLng(routePoints.destination);
       const waypoints = getWayPoints(routePoints.waypoints);
-
       this.getRoute(srclat, srclng, destlat, destlng, waypoints);
     }
 
@@ -149,7 +148,7 @@ class RouteCard extends Component {
                         </div>
                       );
                   })}
-                  <h4>Total Miles : {miles} miles </h4>
+                  <h4>Distance : {miles} miles </h4>
                 </div>
 
                 {showPreviewModal ? (

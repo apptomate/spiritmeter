@@ -3,7 +3,6 @@ import DisplayCard from "../../Display/DisplayCard";
 export default class UserDisplay extends Component {
   render() {
     const { displayData } = this.props;
-    console.log(displayData);
     return (
       <Fragment>
         <div className="user-total-poits">

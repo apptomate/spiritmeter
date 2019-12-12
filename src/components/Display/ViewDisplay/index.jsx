@@ -108,7 +108,7 @@ class ViewDisplay extends Component {
             <TabPane tab="Maping Routes" key="2">
               {!parsedRoutes.length && <Empty description="No Routes Found" />}
               {parsedRoutes.map((route, key) => (
-                <RouteCard key={key} data={route} showPreviewModal />
+                <RouteCard key={key} data={route} showPreviewModal /> 
               ))}
             </TabPane>
           </Tabs>

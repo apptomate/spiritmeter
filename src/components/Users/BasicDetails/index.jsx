@@ -17,7 +17,7 @@ export default class BasicDetails extends Component {
       gender,
       role
     } = basicData;
-    console.log(meterData);
+
     let meterPoints = 0;
     let percentage = 0;
     if (meterData) {
