@@ -20,12 +20,7 @@ class ViewRoute extends Component {
   render() {
     const RouteDetails = this.props.RouteDetails.data || "{}";
     const { loading } = this.props.RouteDetails;
-    let {
-      routeName,
-      totalMiles,
-      designatedCharityName
-      //ridePoints
-    } = RouteDetails;
+    let { routeName, totalMiles, designatedCharityName } = RouteDetails;
 
     // let filePathJson = RouteDetails.path || "[]";
     // let filePathParsed = JSON.parse(filePathJson);

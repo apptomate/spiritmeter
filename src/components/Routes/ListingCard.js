@@ -3,12 +3,10 @@ import { Icon, Row, Col, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 // import MyMapComponent from '../Common/googleMap/Routing';
 // import { DirectionsRenderer } from 'react-google-maps';
-import RoutingCheck from '../Common/googleMap/RoutingCheck';
+import RouteMap from '../Common/googleMap/RouteMap';
 
 function ListingCard(props) {
   const { data } = props;
-  const routeData = JSON.parse(data.path || null);
-  console.log(routeData);
   return (
     <Fragment>
       <div className='route-list-card'>
@@ -63,7 +61,7 @@ function ListingCard(props) {
           </Col>
           <Col span={12}>
             <div className='route-card-map'>
-              <RoutingCheck data={data} />
+              <RouteMap data={data} />
               {/* <MyMapComponent>
                 {routeData && (
                   <DirectionsRenderer
