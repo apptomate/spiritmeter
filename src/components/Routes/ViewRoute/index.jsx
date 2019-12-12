@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Tabs, Spin, Tag, Icon, Badge, Avatar, Row, Col } from "antd";
 import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
-import GaugeChart from "react-gauge-chart";
 
 const { TabPane } = Tabs;
 
@@ -24,8 +23,8 @@ class ViewRoute extends Component {
     let {
       routeName,
       totalMiles,
-      designatedCharityName,
-      ridePoints
+      designatedCharityName
+      //ridePoints
     } = RouteDetails;
 
     // let filePathJson = RouteDetails.path || "[]";
@@ -57,6 +56,7 @@ class ViewRoute extends Component {
                       <span className="route-title">Map Points :</span>
                       <div className="route-map">
                         <img
+                          alt="no data"
                           className="w-100"
                           src="https://unitednewsdesk.com/wp-content/uploads/2019/02/Wired.jpg"
                         />

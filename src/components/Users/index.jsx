@@ -1,21 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { getAllListUsers } from "../../Redux/_actions";
 import { connect } from "react-redux";
-import {
-  List,
-  Icon,
-  Spin,
-  PageHeader,
-  Table,
-  Input,
-  Button,
-  Divider
-} from "antd";
-import { Link } from "react-router-dom";
-import DisplayAvatar from "../Common/DisplayAvatar";
+import { Icon, Spin, PageHeader, Table, Input, Button, Divider } from "antd";
 import Highlighter from "react-highlight-words";
 
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 const columns = [
   {
     title: "Name",
@@ -153,7 +142,7 @@ class Users extends Component {
     const {
       UsersResponse: { data = [], loading }
     } = this.props;
-    let dataToDisplay = [];
+    //let dataToDisplay = [];
 
     // data.forEach((element, key) => {
     //   dataToDisplay.push({

@@ -34,14 +34,14 @@ class ViewDisplay extends Component {
       cityName,
       address,
       filePath,
-      routes,
+      //routes,
       latitude,
       longitude,
       notes
     } = DisplayDetails;
-    let routesData = routes || "[]";
-    let parsedRoutes = JSON.parse(routesData);
-    parsedRoutes = parsedRoutes[0] || {};
+    // let routesData = routes || "[]";
+    // let parsedRoutes = JSON.parse(routesData);
+    // parsedRoutes = parsedRoutes[0] || {};
 
     let defaultCenter = {};
     if (latitude && longitude) {
