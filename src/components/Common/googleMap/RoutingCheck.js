@@ -1,6 +1,7 @@
 /*global google*/
 import React from 'react';
-const { compose, withProps, lifecycle } = require('recompose');
+import { getLatLng, getWayPoints } from '../../../Redux/_helpers/Functions';
+const { compose, withProps } = require('recompose');
 const {
   withScriptjs,
   withGoogleMap,
@@ -88,18 +89,3 @@ const RouteMap = compose(
 )(RoutingCheck);
 
 export default RouteMap;
-
-export const getLatLng = (data = '') => {
-  const [lat, lng] = data.split(',');
-  return [parseFloat(lat), parseFloat(lng)];
-};
-
-export const getWayPoints = (data = '') => {
-  let result = [];
-  const points = data.split('|');
-  result = points.map(point => ({
-    stopover: true,
-    location: new google.maps.LatLng(...getLatLng(point))
-  }));
-  return result;
-};
