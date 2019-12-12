@@ -68,8 +68,7 @@ class ViewRoute extends Component {
                     <div className="mb-2">
                       <span className="route-title">Map Routes Names :</span>
                       <div className="mt-1 route-list">
-                        <Icon type="right-square" /> <Icon type="swap" />{" "}
-                        <Tag color="blue">dummy</Tag>
+                        <Icon type="right-square" />{" "}
                         {/* {pathsToTravel &&
                       pathsToTravel.map((travelPath, key) => {
                         if (totalPaths === key + 1) {
@@ -104,7 +103,11 @@ class ViewRoute extends Component {
             </TabPane>
             <TabPane tab="Display List" key="2">
               {ridePoints && (
-                <DisplayCard listData={ridePoints} hideViewButton={false} />
+                <DisplayCard
+                  listData={ridePoints}
+                  hideViewButton={false}
+                  showPreviewModal
+                />
               )}
               {/* <div className="p-1">
                 <div className="list-card mb-1">
