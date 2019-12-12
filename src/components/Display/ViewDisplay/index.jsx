@@ -1,13 +1,15 @@
-import React, { Component, Fragment } from "react";
-import { Tabs, Row, Col, Spin, Icon, Avatar } from "antd";
-import { getDisplayDetails } from "../../../Redux/_actions";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import { Tabs, Row, Col, Spin, Icon, Avatar } from 'antd';
+import { getDisplayDetails } from '../../../Redux/_actions';
+import { connect } from 'react-redux';
 
-import GoogleMapReact from "google-map-react";
-import CustomMapMarker from "../../Common/CustomMapMarker";
-import DisplaySlider from "../../Common/DisplaySlider";
+import GoogleMapReact from 'google-map-react';
+import CustomMapMarker from '../../Common/CustomMapMarker';
+import DisplaySlider from '../../Common/DisplaySlider';
+import MarkerMap from '../../Common/googleMap/MarkerMap';
 
-const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
+const GOOGLE_MAP_API_KEY =
+  'AIzaSyCSTfXlm6bBFV5-o5RawVMKvhOd4foWnw4' || process.env.GOOGLE_MAP_API_KEY;
 
 const { TabPane } = Tabs;
 
@@ -21,7 +23,7 @@ class ViewDisplay extends Component {
     this.props.getDisplayDetails(id);
   }
   render() {
-    const DisplayDetails = this.props.DisplayDetails.data || "{}";
+    const DisplayDetails = this.props.DisplayDetails.data || '{}';
     const { loading } = this.props.DisplayDetails;
     let {
       name,
@@ -39,7 +41,7 @@ class ViewDisplay extends Component {
       longitude,
       notes
     } = DisplayDetails;
-    let routesData = routes || "[]";
+    let routesData = routes || '[]';
     let parsedRoutes = JSON.parse(routesData);
     parsedRoutes = parsedRoutes[0] || {};
 
@@ -57,44 +59,44 @@ class ViewDisplay extends Component {
     return (
       <Fragment>
         <Spin spinning={loading}>
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="Display Details" key="1">
+          <Tabs defaultActiveKey='1'>
+            <TabPane tab='Display Details' key='1'>
               <Row>
                 <Col span={12}>
                   <div>
-                    <h4 className="list-name">{categoryName}</h4>
-                    <div className="list-name-imp">
-                      <Icon type="home" /> {categoryName}
+                    <h4 className='list-name'>{categoryName}</h4>
+                    <div className='list-name-imp'>
+                      <Icon type='home' /> {categoryName}
                     </div>
-                    <div className="list-name-imp">
-                      <Icon type="radar-chart" /> {type}
+                    <div className='list-name-imp'>
+                      <Icon type='radar-chart' /> {type}
                     </div>
 
-                    <div className="list-name-imp">
-                      <Icon type="environment" /> {country}
+                    <div className='list-name-imp'>
+                      <Icon type='environment' /> {country}
                       {state && ` , ${state}`}
                       {cityName && ` , ${cityName}`}
                       {address && ` , ${address}`}
                     </div>
 
-                    <div className="list-name-imp">
+                    <div className='list-name-imp'>
                       <i
                         className={
                           isPrivate
-                            ? "fas fa-user-lock color-g"
-                            : "fas fa-globe-asia color-r"
+                            ? 'fas fa-user-lock color-g'
+                            : 'fas fa-globe-asia color-r'
                         }
                       />
-                      {isPrivate ? "Is Private" : "Is Public"}
+                      {isPrivate ? 'Is Private' : 'Is Public'}
                     </div>
 
-                    <p className="mt-1">
+                    <p className='mt-1'>
                       <h4>Note :</h4>
                       {notes}
                     </p>
 
-                    <div className="item-center list-username mt-2">
-                      <Avatar icon="user" />
+                    <div className='item-center list-username mt-2'>
+                      <Avatar icon='user' />
                       <span>{createdByName}</span>
                       <span>
                         {/* <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link> */}
@@ -107,78 +109,58 @@ class ViewDisplay extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col className="mt-2">
-                  <div className="listing-map-div my-card">
-                    <img
-                      src="https://miro.medium.com/max/5334/1*qYUvh-EtES8dtgKiBRiLsA.png"
-                      alt="no data"
-                    />
+                <Col className='mt-2'>
+                  <div className='listing-map-div my-card'>
+                    <MarkerMap lat={latitude} lng={longitude} />
                   </div>
                 </Col>
               </Row>
-              {latitude && longitude && (
-                <div style={{ height: "100vh", width: "100%" }}>
-                  <GoogleMapReact
-                    bootstrapURLKeys={{
-                      key: GOOGLE_MAP_API_KEY
-                    }}
-                    defaultCenter={defaultCenter}
-                    defaultZoom={defaultZoom}
-                  >
-                    <CustomMapMarker
-                      lat={latitude}
-                      lng={longitude}
-                      text={name}
-                    />
-                  </GoogleMapReact>
-                </div>
-              )}
             </TabPane>
-            <TabPane tab="Maping Routes" key="2">
-              <div className="route-card">
+            <TabPane tab='Maping Routes' key='2'>
+              <div className='route-card'>
                 <Row>
-                  <Col className="route-maintitle" span={24}>
-                    <h3 className="route-name-h3">'s Travel Route</h3>
+                  <Col className='route-maintitle' span={24}>
+                    <h3 className='route-name-h3'>'s Travel Route</h3>
                   </Col>
                   <Col span={12}>
                     <div>
-                      <h4 className="route-title">Route names</h4>
-                      <h4 className="route-title">
+                      <h4 className='route-title'>Route names</h4>
+                      <h4 className='route-title'>
                         Cathedral of Saint Paul, St. Paul, Minnesota
                       </h4>
-                      <div className="item-center list-username mt-1 mb-1">
-                        <Avatar icon="user" />
+                      <div className='item-center list-username mt-1 mb-1'>
+                        <Avatar icon='user' />
                         <span>User Name</span>
                       </div>
                       <div>
                         <h4>Routes :</h4>
-                        <div className="route-name">
-                          <Icon type="swap" />
+                        <div className='route-name'>
+                          <Icon type='swap' />
                           Oklahoma City
                         </div>
 
-                        <div className="route-name">
-                          <Icon type="swap" />
+                        <div className='route-name'>
+                          <Icon type='swap' />
                           Lake Aluma
                         </div>
 
-                        <div className="route-name">
-                          <Icon type="swap" />
+                        <div className='route-name'>
+                          <Icon type='swap' />
                           Forest Park
                         </div>
 
-                        <div className="route-name">
-                          <Icon type="swap" />
+                        <div className='route-name'>
+                          <Icon type='swap' />
                           McLoud
                         </div>
                       </div>
                     </div>
                   </Col>
                   <Col span={12}>
-                    <div className="route-card-map">
+                    <div className='route-card-map'>
                       <img
-                        src="https://miro.medium.com/max/5334/1*qYUvh-EtES8dtgKiBRiLsA.png"
-                        alt="no data"
+                        src='https://miro.medium.com/max/5334/1*qYUvh-EtES8dtgKiBRiLsA.png'
+                        alt='no data'
                       />
                     </div>
                   </Col>
