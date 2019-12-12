@@ -105,10 +105,9 @@ class ViewDisplay extends Component {
             </TabPane>
             <TabPane tab='Maping Routes' key='2'>
               {!parsedRoutes.length && <p>No routes found</p>}
-              {parsedRoutes.map((route, key) => {
-                console.log(route);
-                return <RouteCard key={key} data={route} />;
-              })}
+              {parsedRoutes.map((route, key) => (
+                <RouteCard key={key} data={route} />
+              ))}
             </TabPane>
           </Tabs>
         </Spin>

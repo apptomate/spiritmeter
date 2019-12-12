@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Layout, Icon, Button, Menu, Dropdown } from "antd";
+import React, { Component } from 'react';
+import { Layout, Icon, Menu, Dropdown } from 'antd';
 import {
   loggedUserDetails,
   logout
-} from "../../../Redux/_service/AuthenticationService";
+} from '../../../Redux/_service/AuthenticationService';
 
 const { Header } = Layout;
 const menu = (
   <Menu>
-    <Menu.Item key="0">
-      <a target="_blank" rel="noopener noreferrer" onClick={() => logout()}>
+    <Menu.Item key='0'>
+      <a target='_blank' rel='noopener noreferrer' onClick={() => logout()}>
         Logout
       </a>
     </Menu.Item>
@@ -20,10 +20,10 @@ const menu = (
 function SignoutButton() {
   const { firstName } = loggedUserDetails();
   return (
-    <Dropdown className="logout-btn" overlay={menu}>
-      <a className="ant-dropdown-link" href="#">
-        <Icon type="user" />
-        {firstName} <Icon type="down" />
+    <Dropdown className='logout-btn' overlay={menu}>
+      <a className='ant-dropdown-link' href='#'>
+        <Icon type='user' />
+        {firstName} <Icon type='down' />
       </a>
     </Dropdown>
 
@@ -44,10 +44,10 @@ export default class Navbar extends Component {
   render() {
     const { collapseFlag, collapseToggleFunc } = this.props;
     return (
-      <Header style={{ background: "#fff", padding: 0 }}>
+      <Header style={{ background: '#fff', padding: 0 }}>
         <Icon
-          className="trigger"
-          type={collapseFlag ? "menu-unfold" : "menu-fold"}
+          className='trigger'
+          type={collapseFlag ? 'menu-unfold' : 'menu-fold'}
           onClick={collapseToggleFunc}
         />
         <SignoutButton />

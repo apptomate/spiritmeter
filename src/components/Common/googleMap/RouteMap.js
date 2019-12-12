@@ -1,9 +1,7 @@
 /*global google*/
 import React from 'react';
-import { getLatLng, getWayPoints } from '../../../Redux/_helpers/Functions';
 const { compose, withProps } = require('recompose');
 const {
-  withScriptjs,
   withGoogleMap,
   GoogleMap,
   DirectionsRenderer
@@ -28,9 +26,6 @@ const RouteMap = compose(
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />
-    // directions: {}
-    // srclat ,
-    // srclng
   }),
   withGoogleMap
 )(RouteMapCore);

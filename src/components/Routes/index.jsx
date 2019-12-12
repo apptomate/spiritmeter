@@ -1,9 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { List, Icon, Spin, PageHeader, Row, Col, Tooltip } from 'antd';
+import { List, Spin, PageHeader } from 'antd';
 import { getAllListRoutes } from '../../Redux/_actions';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
-// import RouteMap from '../Common/googleMap/RouteMap';
 import RouteCard from '../Common/RouteCard';
 class Routes extends Component {
   componentDidMount() {

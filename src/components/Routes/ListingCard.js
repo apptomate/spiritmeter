@@ -7,8 +7,6 @@ import RouteMap from '../Common/googleMap/RouteMap';
 
 function ListingCard(props) {
   const { data } = props;
-  const routeData = JSON.parse(data.path || null);
-  console.log(routeData);
   return (
     <Fragment>
       <div className='route-list-card'>
