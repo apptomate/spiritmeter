@@ -5,6 +5,10 @@ import { getAllListUsers } from "./UsersReducers/GetAllListUsers";
 import { getDisplayDetails } from "./DisplayReducers/GetDisplayDetails";
 import { authLogin } from "./LoginReducers/AuthLogin";
 import { getRouteDetails } from "./RouteReducers/GetRouteDetails";
+import { getUserDetails } from "./UsersReducers/GetUserDetails";
+import { getUserSpiritMeter } from "./UsersReducers/GetUserSpiritMeter";
+import { getUserDisplay } from "./UsersReducers/GetUserDisplay";
+import { getUserRoute } from "./UsersReducers/GetUserRoute";
 
 const RootReducer = combineReducers({
   authLogin,
@@ -12,7 +16,11 @@ const RootReducer = combineReducers({
   getAllListRoutes,
   getAllListUsers,
   getDisplayDetails,
-  getRouteDetails
+  getRouteDetails,
+  getUserDetails,
+  getUserSpiritMeter,
+  getUserDisplay,
+  getUserRoute
 });
 
 export default RootReducer;

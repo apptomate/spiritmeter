@@ -762,3 +762,6 @@ button:hover .button-text {
   margin: auto;
   display: block;
 }
+.back-button {
+  float: right;
+}

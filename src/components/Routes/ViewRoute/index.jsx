@@ -3,7 +3,7 @@ import { Tabs, Spin, Tag, Icon, Badge, Row, Col, Rate } from "antd";
 import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
 import DisplayCard from "../../Display/DisplayCard";
-import {} from "antd";
+import BackButton from "../../Common/BackButton";
 
 const { TabPane } = Tabs;
 const desc = ["terrible", "bad", "normal", "good", "wonderful"];
@@ -41,17 +41,11 @@ class ViewRoute extends Component {
       designatedCharityName,
       ridePoints
     } = RouteDetails;
-    console.log(ridePoints);
-
-    // let filePathJson = RouteDetails.path || "[]";
-    // let filePathParsed = JSON.parse(filePathJson);
-    // filePathParsed = filePathParsed.routes || "[]";
-    // let pathsToTravel = filePathParsed[0].legs || [];
-    // let totalPaths = pathsToTravel.length;
 
     return (
       <Fragment>
         <Spin spinning={loading}>
+          <BackButton linkPath="/admin/routes" linkText="Back" />
           <Tabs defaultActiveKey="1">
             <TabPane tab="Routes" key="1">
               <div className="routes">
@@ -123,45 +117,6 @@ class ViewRoute extends Component {
                   showPreviewModal
                 />
               )}
-              {/* <div className="p-1">
-                <div className="list-card mb-1">
-                  <div className="list-img">
-                    <img
-                      alt="example"
-                      src="https://images.unsplash.com/photo-1508985307703-52d13b2b06b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-                    />
-                  </div>
-                  <div className="listing-contant">
-                    <h4 className="list-name">
-                      Cathedral of Saint Paul, St. Paul, Minnesota
-                    </h4>
-                    <div className="list-name-imp">
-                      <Icon type="home" /> Home
-                    </div>
-                    <div className="list-name-imp">
-                      <Icon type="radar-chart" /> Charity
-                    </div>
-
-                    <div className="list-name-imp">
-                      <Icon type="environment" /> United States , Texas ,
-                      Houston , Apartment1
-                    </div>
-
-                    <div className="list-name-imp">
-                      <i className="fas fa-user-lock color-g"></i> Is Private /{" "}
-                      <i className="fas fa-globe-asia color-r"></i>Is Public
-                    </div>
-
-                    <div className="item-center list-username mt-2">
-                      <Avatar icon="user" />
-                      <span>User Name</span>
-                      <span>
-                        <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             </TabPane>
             <TabPane tab="Near By" key="3">
               <div>
