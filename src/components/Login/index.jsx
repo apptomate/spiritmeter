@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, Row, Col } from "antd";
 import { connect } from "react-redux";
 import { authLogin } from "../../Redux/_actions";
 import { Redirect } from "react-router-dom";
+import logoimg from "../../assets/img/logo.png";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -26,11 +27,15 @@ class LoginForm extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Fragment>
-        <div className='login-bg'>
+        <div className="login-bg">
           <Row>
-            <Col span={10} offset={7} className='login-form-div'>
-              <h4 className='text-center login-title'>Login</h4>
-              <Form onSubmit={this.validateLogin} className='login-form'>
+            <Col className="login-left-bg" span={12}>
+              <img className="w-100" src={logoimg} alt="no data" />
+            </Col>
+            <Col span={2}></Col>
+            <Col span={8} className="login-form-div">
+              <h4 className="text-center login-title">Login</h4>
+              <Form onSubmit={this.validateLogin} className="login-form">
                 <Form.Item>
                   {getFieldDecorator("phoneNo", {
                     rules: [
@@ -47,11 +52,11 @@ class LoginForm extends Component {
                     <Input
                       prefix={
                         <Icon
-                          type='mobile'
+                          type="mobile"
                           style={{ color: "rgba(0,0,0,.25)" }}
                         />
                       }
-                      placeholder='Phone Number'
+                      placeholder="Phone Number"
                     />
                   )}
                 </Form.Item>
@@ -67,25 +72,24 @@ class LoginForm extends Component {
                     <Input
                       prefix={
                         <Icon
-                          type='lock'
+                          type="lock"
                           style={{ color: "rgba(0,0,0,.25)" }}
                         />
                       }
-                      type='password'
-                      placeholder='Password'
+                      type="password"
+                      placeholder="Password"
                     />
                   )}
                 </Form.Item>
                 <Form.Item>
-                  <Button
-                    type='primary'
-                    htmlType='submit'
-                    shape='round'
-                    className='login-button-style'
-                  >
-                    Login
-                  </Button>
-                  <a className='login-form-forgot'>Forgot password</a>
+                  <button class="cus-btn ml-a">
+                    <span class="circle">
+                      <span class="icon arrow"></span>
+                    </span>
+                    <span class="button-text">Login</span>
+                  </button>
+
+                  <a className="login-form-forgot">Forgot password</a>
                 </Form.Item>
 
                 {/* <Form.Item>
@@ -133,6 +137,7 @@ class LoginForm extends Component {
                 </Button> */}
               </Form>
             </Col>
+            <Col span={2}></Col>
           </Row>
         </div>
       </Fragment>

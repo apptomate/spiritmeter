@@ -39,11 +39,21 @@ export default class Sidebar extends Component {
     let currentMenuToActive = window.location.pathname.split("/")[2] || "/";
     const { collapseFlag } = this.props;
     return (
-      <Sider trigger={null} collapsible collapsed={collapseFlag}>
+      <Sider
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0
+        }}
+        trigger={null}
+        collapsible
+        collapsed={collapseFlag}
+      >
         <Logo />
         <Menu
-          theme='light'
-          mode='inline'
+          theme="light"
+          mode="inline"
           defaultSelectedKeys={getCurrentActiveMenu(currentMenuToActive)}
         >
           {menuList.map(list => (

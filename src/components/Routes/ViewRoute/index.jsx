@@ -1,12 +1,35 @@
 import React, { Component, Fragment } from "react";
-import { Tabs, Spin, Tag, Icon, Badge, Avatar, Row, Col } from "antd";
+import {
+  Tabs,
+  Spin,
+  Tag,
+  Icon,
+  Badge,
+  Avatar,
+  Row,
+  Col,
+  Select,
+  Rate
+} from "antd";
 import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
-import GaugeChart from "react-gauge-chart";
 
 const { TabPane } = Tabs;
+const { Option } = Select;
+const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
 class ViewRoute extends Component {
+  state = {
+    value: 3
+  };
+
+  handleChange = value => {
+    this.setState({ value });
+  };
+
+  state = {
+    tabPosition: "left"
+  };
   componentDidMount() {
     const {
       match: {
@@ -19,6 +42,7 @@ class ViewRoute extends Component {
     }
   }
   render() {
+    const { value } = this.state;
     const RouteDetails = this.props.RouteDetails.data || "{}";
     const { loading } = this.props.RouteDetails;
     let {
@@ -141,7 +165,59 @@ class ViewRoute extends Component {
               </div>
             </TabPane>
             <TabPane tab="Near By" key="3">
-              Tab3
+              <div>
+                <Tabs tabPosition={this.state.tabPosition}>
+                  <TabPane tab="Church" key="1">
+                    <Row className="map-datails">
+                      <Col>
+                        <div className="left">
+                          <h4>
+                            Mar Gregorious Orthodox Syrian Church - Pilgrim
+                            Centre
+                          </h4>
+                          <span>
+                            <span className="pr-0-5">4.8</span>
+                            <Rate
+                              tooltips={desc}
+                              onChange={this.handleChange}
+                              value={value}
+                            />
+                            {value ? (
+                              <span className="ant-rate-text">
+                                {desc[value - 1]}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </span>
+                          <p>
+                            248, Bharathamadha St, Railway Colony, Tambaram
+                            East, Tambaram, Chennai, Tamil Nadu 600059
+                          </p>
+                          <p>Open at 6:00 pm</p>
+                        </div>
+                        <div className="right">
+                          <div className="fixed-img">
+                            <img src="https://lh5.googleusercontent.com/p/AF1QipOWNgzHzwr002QUS_0gSMKoQglSys_QtVpAKCuw=w408-h306-k-no" />
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tab="Hotel" key="2">
+                    Content of Tab 2
+                  </TabPane>
+                  <TabPane tab="Petrol" key="3">
+                    Content of Tab 3
+                  </TabPane>
+                  <TabPane tab="Coffee Shop" key="4">
+                    Content of Tab 3
+                  </TabPane>
+                  <TabPane tab="Events" key="5">
+                    Content of Tab 3
+                  </TabPane>
+                </Tabs>
+              </div>
             </TabPane>
           </Tabs>
         </Spin>
