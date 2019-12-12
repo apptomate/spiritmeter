@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Icon, Button, Menu, Dropdown, Input } from "antd";
+import { Layout, Icon, Menu, Dropdown, Input, Button } from "antd";
 import {
   loggedUserDetails,
   logout
@@ -32,17 +32,6 @@ function SignoutButton() {
         {firstName} <Icon type="down" />
       </Button>
     </Dropdown>
-
-    // <Button
-    //
-    //   type="default"
-    //   shape="round"
-    //   icon="logout"
-    //   size="default"
-    //   onClick={() => logout()}
-    // >
-    //   {firstName}
-    // </Button>
   );
 }
 

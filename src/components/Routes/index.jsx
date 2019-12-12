@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { List, Spin, PageHeader } from 'antd';
-import { getAllListRoutes } from '../../Redux/_actions';
-import { connect } from 'react-redux';
-import RouteCard from '../Common/RouteCard';
+import React, { Component, Fragment } from "react";
+import { List, Spin, PageHeader } from "antd";
+import { getAllListRoutes } from "../../Redux/_actions";
+import { connect } from "react-redux";
+import RouteCard from "../Common/RouteCard";
 class Routes extends Component {
   componentDidMount() {
     this.props.getAllListRoutes();
@@ -22,17 +22,17 @@ class Routes extends Component {
       <Fragment>
         <PageHeader
           style={{
-            border: '1px solid rgb(235, 237, 240)'
+            border: "1px solid rgb(235, 237, 240)"
           }}
-          title='List of Routes'
+          title="List of Routes"
         />
         <Spin spinning={loading}>
           <List
-            itemLayout='vertical'
-            size='large'
+            itemLayout="vertical"
+            size="large"
             pagination={{
               onChange: page => {
-                console.log(page);
+                //console.log(page);
               },
               pageSize: 5
             }}

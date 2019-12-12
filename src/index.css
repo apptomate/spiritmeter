@@ -642,7 +642,9 @@ button:hover .button-text {
   font-size: 13px !important;
   margin-top: 0.9rem !important;
 }
-
+.mr-2 {
+  margin-right: 2rem;
+}
 .ant-menu {
   background: #001529 !important;
 }

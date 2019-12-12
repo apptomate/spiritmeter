@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { Tabs, Row, Col, Spin, Icon, Avatar } from 'antd';
-import { getDisplayDetails } from '../../../Redux/_actions';
-import { connect } from 'react-redux';
-import DisplaySlider from '../../Common/DisplaySlider';
-import MarkerMap from '../../Common/googleMap/MarkerMap';
-import RouteCard from '../../Common/RouteCard';
+import React, { Component, Fragment } from "react";
+import { Tabs, Row, Col, Spin, Icon, Avatar, Empty } from "antd";
+import { getDisplayDetails } from "../../../Redux/_actions";
+import { connect } from "react-redux";
+import DisplaySlider from "../../Common/DisplaySlider";
+import MarkerMap from "../../Common/googleMap/MarkerMap";
+import RouteCard from "../../Common/RouteCard";
 
 const { TabPane } = Tabs;
 
@@ -18,7 +18,7 @@ class ViewDisplay extends Component {
     this.props.getDisplayDetails(id);
   }
   render() {
-    const DisplayDetails = this.props.DisplayDetails.data || '{}';
+    const DisplayDetails = this.props.DisplayDetails.data || "{}";
     const { loading } = this.props.DisplayDetails;
     let {
       categoryName,
@@ -35,7 +35,7 @@ class ViewDisplay extends Component {
       longitude,
       notes
     } = DisplayDetails;
-    let routesData = routes || '[]';
+    let routesData = routes || "[]";
     let parsedRoutes = JSON.parse(routesData);
 
     if (latitude && longitude) {
@@ -46,44 +46,44 @@ class ViewDisplay extends Component {
     return (
       <Fragment>
         <Spin spinning={loading}>
-          <Tabs defaultActiveKey='1'>
-            <TabPane tab='Display Details' key='1'>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="Display Details" key="1">
               <Row>
                 <Col span={12}>
                   <div>
-                    <h4 className='list-name'>{categoryName}</h4>
-                    <div className='list-name-imp'>
-                      <Icon type='home' /> {categoryName}
+                    <h4 className="list-name">{categoryName}</h4>
+                    <div className="list-name-imp">
+                      <Icon type="home" /> {categoryName}
                     </div>
-                    <div className='list-name-imp'>
-                      <Icon type='radar-chart' /> {type}
+                    <div className="list-name-imp">
+                      <Icon type="radar-chart" /> {type}
                     </div>
 
-                    <div className='list-name-imp'>
-                      <Icon type='environment' /> {country}
+                    <div className="list-name-imp">
+                      <Icon type="environment" /> {country}
                       {state && ` , ${state}`}
                       {cityName && ` , ${cityName}`}
                       {address && ` , ${address}`}
                     </div>
 
-                    <div className='list-name-imp'>
+                    <div className="list-name-imp">
                       <i
                         className={
                           isPrivate
-                            ? 'fas fa-user-lock color-g'
-                            : 'fas fa-globe-asia color-r'
+                            ? "fas fa-user-lock color-g"
+                            : "fas fa-globe-asia color-r"
                         }
                       />
-                      {isPrivate ? 'Is Private' : 'Is Public'}
+                      {isPrivate ? "Is Private" : "Is Public"}
                     </div>
 
-                    <p className='mt-1'>
+                    <p className="mt-1">
                       <h4>Note :</h4>
                       {notes}
                     </p>
 
-                    <div className='item-center list-username mt-2'>
-                      <Avatar icon='user' />
+                    <div className="item-center list-username mt-2">
+                      <Avatar icon="user" />
                       <span>{createdByName}</span>
                       <span>
                         {/* <Link to={"/admin/viewDisplay/" + element.displayId}>View</Link> */}
@@ -96,17 +96,17 @@ class ViewDisplay extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col className='mt-2'>
-                  <div className='listing-map-div my-card'>
+                <Col className="mt-2">
+                  <div className="listing-map-div my-card">
                     <MarkerMap lat={latitude} lng={longitude} />
                   </div>
                 </Col>
               </Row>
             </TabPane>
-            <TabPane tab='Maping Routes' key='2'>
-              {!parsedRoutes.length && <p>No routes found</p>}
+            <TabPane tab="Maping Routes" key="2">
+              {!parsedRoutes.length && <Empty description="No Routes Found" />}
               {parsedRoutes.map((route, key) => (
-                <RouteCard key={key} data={route} />
+                <RouteCard key={key} data={route} showPreviewModal />
               ))}
             </TabPane>
           </Tabs>
