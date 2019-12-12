@@ -15,11 +15,6 @@ class Routes extends Component {
     } = this.props;
     let dataToDisplay = [];
     data.forEach((element, key) => {
-      // let filePathJson = element.path || "[]";
-      // let filePathParsed = JSON.parse(filePathJson);
-      // let pathsToTravel = filePathParsed.routes[0].legs;
-      // let totalPaths = pathsToTravel.length;
-
       dataToDisplay.push({
         content: <RouteCard key={key} data={element} />
       });

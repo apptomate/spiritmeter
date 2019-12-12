@@ -1,5 +1,5 @@
 /* global google */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Row, Col, Tooltip } from 'antd';
 import RouteMap from '../googleMap/RouteMap';
@@ -65,6 +65,13 @@ class RouteCard extends Component {
       this.getRoute(srclat, srclng, destlat, destlng, waypoints);
     }
 
+    let pathsToTravel = [];
+    let totalPaths = 0;
+
+    if (directions) {
+      pathsToTravel = directions.routes[0].legs;
+      totalPaths = pathsToTravel.length;
+    }
     return (
       <div>
         <div className='route-list-card'>
@@ -101,27 +108,27 @@ class RouteCard extends Component {
                 </div>
                 <div>
                   <h4>Routes :</h4>
-                  {/* {pathsToTravel.map((travelPath, key) => {
-                      if (totalPaths === key + 1)
-                        return (
-                          <Fragment key={`path_${key}`}>
-                            <div className="route-name">
-                              <Icon type="swap" />
-                              {travelPath.start_address}{" "}
-                            </div>
-                            <div className="route-name" key={`path_${key}`}>
-                              <Icon type="swap" />
-                              {travelPath.end_address}{" "}
-                            </div>
-                          </Fragment>
-                        );
-                      else
-                        return (
-                          <div className="route-name" key={`path_${key}`}>
-                            <Icon type="swap" /> {travelPath.start_address}{" "}
+                  {pathsToTravel.map((travelPath, key) => {
+                    if (totalPaths === key + 1)
+                      return (
+                        <Fragment key={`path_${key}`}>
+                          <div className='route-name'>
+                            <Icon type='swap' />
+                            {travelPath.start_address}{' '}
                           </div>
-                        );
-                    })} */}
+                          <div className='route-name' key={`path_${key}`}>
+                            <Icon type='swap' />
+                            {travelPath.end_address}{' '}
+                          </div>
+                        </Fragment>
+                      );
+                    else
+                      return (
+                        <div className='route-name' key={`path_${key}`}>
+                          <Icon type='swap' /> {travelPath.start_address}{' '}
+                        </div>
+                      );
+                  })}
                 </div>
                 <Link to={`/admin/viewRoute/${routeId}`}>
                   <button className='cus-btn f-r'>
