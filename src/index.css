@@ -765,3 +765,7 @@ button:hover .button-text {
 .back-button {
   float: right;
 }
+.user-add-btn {
+  margin: 10px;
+  margin-left: 78rem;
+}

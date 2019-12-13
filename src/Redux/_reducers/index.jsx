@@ -9,6 +9,7 @@ import { getUserDetails } from "./UsersReducers/GetUserDetails";
 import { getUserSpiritMeter } from "./UsersReducers/GetUserSpiritMeter";
 import { getUserDisplay } from "./UsersReducers/GetUserDisplay";
 import { getUserRoute } from "./UsersReducers/GetUserRoute";
+import { uploadFile } from "./FileUploadReducer";
 
 const RootReducer = combineReducers({
   authLogin,
@@ -20,7 +21,8 @@ const RootReducer = combineReducers({
   getUserDetails,
   getUserSpiritMeter,
   getUserDisplay,
-  getUserRoute
+  getUserRoute,
+  uploadFile
 });
 
 export default RootReducer;
