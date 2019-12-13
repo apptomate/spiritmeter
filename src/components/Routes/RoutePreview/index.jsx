@@ -7,10 +7,10 @@ export default function RoutePreview(props) {
     toggleFunc,
     previewData,
     routesData,
-    directionsData
+    directionsData,
+    totalMiles
   } = props;
   let totalPaths = routesData.length;
-  console.log("PR", previewData);
   let { routeName, comments, designatedCharityName, isPrivate } = previewData;
   return (
     <Fragment>
@@ -76,10 +76,11 @@ export default function RoutePreview(props) {
         <div className="route-card-map">
           <RouteMap srclat={2} srclng={2} directions={directionsData} />
         </div>
-        {/* <div className="mb-2">
-                      <span className="route-title">Total Miles :</span>
-                      <Badge count={totalMiles} />
-                    </div> */}
+        <div className="mb-2">
+          <br />
+          <span className="route-title">Distance :</span>
+          <Badge count={totalMiles} /> Miles
+        </div>
       </Modal>
     </Fragment>
   );

@@ -7,7 +7,11 @@ import {
   ALL_LIST_ROUTES_URL,
   ALL_LIST_USERS_URL,
   GET_DISPLAY_DETAILS_URL,
-  GET_ROUTE_DETAILS_URL
+  GET_ROUTE_DETAILS_URL,
+  GET_USER_DETAILS_URL,
+  GET_USER_SPIRITMETER_URL,
+  GET_USER_DISPLAY_URL,
+  GET_USER_ROUTE_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
@@ -27,7 +31,16 @@ import {
   GET_DISPLAY_DETAILS_ERROR,
   GET_ROUTE_DETAILS_LOADING,
   GET_ROUTE_DETAILS_SUCCESS,
-  GET_ROUTE_DETAILS_ERROR
+  GET_ROUTE_DETAILS_ERROR,
+  GET_USER_DETAILS_LOADING,
+  GET_USER_DETAILS_SUCCESS,
+  GET_USER_DETAILS_ERROR,
+  GET_USER_SPIRITMETER_SUCCESS,
+  GET_USER_SPIRITMETER_ERROR,
+  GET_USER_DISPLAY_SUCCESS,
+  GET_USER_DISPLAY_ERROR,
+  GET_USER_ROUTE_SUCCESS,
+  GET_USER_ROUTE_ERROR
 } from "./ActionTypes";
 
 import { message } from "antd";
@@ -188,6 +201,102 @@ export function getAllListUsers() {
         if (error.response) {
           dispatch({
             type: ALL_LIST_USERS_ERROR,
+            payload: error.response.data
+          });
+        }
+      });
+  };
+}
+
+//Get User Details
+export function getUserDetails(userId) {
+  return dispatch => {
+    dispatch({
+      type: GET_USER_DETAILS_LOADING
+    });
+    API.get(GET_USER_DETAILS_URL + "/" + userId, {
+      headers: authHeader()
+    })
+      .then(response => {
+        dispatch({
+          type: GET_USER_DETAILS_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch({
+            type: GET_USER_DETAILS_ERROR,
+            payload: error.response.data
+          });
+        }
+      });
+  };
+}
+
+//Get User Spirit Meter
+export function getUserSpiritMeter(userId) {
+  return dispatch => {
+    API.get(GET_USER_SPIRITMETER_URL + "/" + userId, {
+      headers: authHeader()
+    })
+      .then(response => {
+        dispatch({
+          type: GET_USER_SPIRITMETER_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch({
+            type: GET_USER_SPIRITMETER_ERROR,
+            payload: error.response.data
+          });
+        }
+      });
+  };
+}
+
+//Get User Display
+export function getUserDisplay(userId) {
+  return dispatch => {
+    API.get(GET_USER_DISPLAY_URL + "/" + userId, {
+      headers: authHeader()
+    })
+      .then(response => {
+        dispatch({
+          type: GET_USER_DISPLAY_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch({
+            type: GET_USER_DISPLAY_ERROR,
+            payload: error.response.data
+          });
+        }
+      });
+  };
+}
+
+//Get User Route
+export function getUserRoute(paramData) {
+  return dispatch => {
+    API.get(GET_USER_ROUTE_URL, {
+      headers: authHeader(),
+      params: paramData
+    })
+      .then(response => {
+        dispatch({
+          type: GET_USER_ROUTE_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch({
+            type: GET_USER_ROUTE_ERROR,
             payload: error.response.data
           });
         }

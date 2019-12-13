@@ -14,3 +14,7 @@ export const GET_ROUTE_DETAILS_URL = BASE_URL + "Route/selectRouteById";
 
 //Users
 export const ALL_LIST_USERS_URL = BASE_URL + "User/listUser";
+export const GET_USER_DETAILS_URL = BASE_URL + "User/selectUserById";
+export const GET_USER_SPIRITMETER_URL = BASE_URL + "User/spiritMeter";
+export const GET_USER_DISPLAY_URL = BASE_URL + "Display/listDisplayByUserId";
+export const GET_USER_ROUTE_URL = BASE_URL + "Route/listRoutesByUserId";

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import DisplaySlider from "../../Common/DisplaySlider";
 import MarkerMap from "../../Common/googleMap/MarkerMap";
 import RouteCard from "../../Common/RouteCard";
+import BackButton from "../../Common/BackButton";
 
 const { TabPane } = Tabs;
 
@@ -46,6 +47,7 @@ class ViewDisplay extends Component {
     return (
       <Fragment>
         <Spin spinning={loading}>
+          <BackButton linkPath="/admin/display" linkText="Back" />
           <Tabs defaultActiveKey="1">
             <TabPane tab="Display Details" key="1">
               <Row>
@@ -106,7 +108,7 @@ class ViewDisplay extends Component {
             <TabPane tab="Maping Routes" key="2">
               {!parsedRoutes.length && <Empty description="No Routes Found" />}
               {parsedRoutes.map((route, key) => (
-                <RouteCard key={key} data={route} showPreviewModal />
+                <RouteCard key={key} data={route} showPreviewModal /> 
               ))}
             </TabPane>
           </Tabs>
