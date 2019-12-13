@@ -37,14 +37,14 @@ export default class RouteDetails extends Component {
               <div className="mb-2">
                 <span className="route-title">Map Routes Names :</span>
                 <div className="mt-1 route-list">
-                  <Icon type="right-square" />{" "}
+                  <Icon type="right-square" />
                   {pathsToTravel.map((travelPath, key) => {
                     if (totalPaths === key + 1)
                       return (
                         <Fragment key={`path_${key}`}>
-                          <Icon type="swap" />{" "}
+                          <Icon type="swap" />
                           <Tag color="blue">{travelPath.start_address}</Tag>
-                          <Icon type="swap" />{" "}
+                          <Icon type="swap" />
                           <Tag color="blue">{travelPath.end_address}</Tag>
                         </Fragment>
                       );

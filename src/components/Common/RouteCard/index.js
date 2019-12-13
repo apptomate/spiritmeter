@@ -129,18 +129,18 @@ class RouteCard extends Component {
                         <Fragment key={`path_${key}`}>
                           <div className="route-name">
                             <Icon type="swap" />
-                            {travelPath.start_address}{" "}
+                            {travelPath.start_address}
                           </div>
                           <div className="route-name" key={`path_${key}`}>
                             <Icon type="swap" />
-                            {travelPath.end_address}{" "}
+                            {travelPath.end_address}
                           </div>
                         </Fragment>
                       );
                     else
                       return (
                         <div className="route-name" key={`path_${key}`}>
-                          <Icon type="swap" /> {travelPath.start_address}{" "}
+                          <Icon type="swap" /> {travelPath.start_address}
                         </div>
                       );
                   })}

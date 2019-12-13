@@ -18,7 +18,11 @@ const { TabPane } = Tabs;
 
 class ViewRoute extends Component {
   state = {
-    directions: null
+    directions: null,
+    srclat: "",
+    srclng: "",
+    destlat: "",
+    destlng: ""
   };
 
   getRoute(srclat, srclng, destlat, destlng, waypoints = []) {
@@ -38,9 +42,16 @@ class ViewRoute extends Component {
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          this.setState({
-            directions: result
-          });
+          this.setState(
+            {
+              directions: result,
+              srclat: srclat,
+              srclng: srclng,
+              destlat: destlat,
+              destlng: destlng
+            },
+            () => console.log(this.state, result)
+          );
         } else {
           console.error(`error fetching directions ${result}`);
         }
@@ -60,7 +71,7 @@ class ViewRoute extends Component {
     }
   }
   render() {
-    const { directions } = this.state;
+    const { directions, srclat, srclng, destlat, destlng } = this.state;
     const RouteData = this.props.RouteDetailsData.data || "{}";
     const { loading } = this.props.RouteDetailsData;
 
@@ -121,7 +132,12 @@ class ViewRoute extends Component {
                 ))}
             </TabPane>
             <TabPane tab="Near By" key="3">
-              <NearBy />
+              <NearBy
+                srclat={srclat}
+                srclng={srclng}
+                destlat={destlat}
+                destlng={destlng}
+              />
             </TabPane>
           </Tabs>
         </Spin>

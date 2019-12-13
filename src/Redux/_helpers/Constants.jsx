@@ -22,3 +22,4 @@ export const GET_USER_ROUTE_URL = BASE_URL + "Route/listRoutesByUserId";
 //Common
 //File Upload
 export const FILE_UPLOAD_URL = BASE_URL + "UploadFile/UploadFileBase64";
+export const GOOGLE_MAPS_API_KEY = "AIzaSyCSTfXlm6bBFV5-o5RawVMKvhOd4foWnw4";
