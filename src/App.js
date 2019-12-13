@@ -11,6 +11,7 @@ import "./index.css";
 
 //Gateway Routes
 const Login = React.lazy(() => import("./components/Login"));
+const PasswordReset = React.lazy(() => import("./components/PasswordReset"));
 const AdminLayout = React.lazy(() => import("./components/AdminLayout"));
 const Unauthorized = React.lazy(() => import("./components/Unauthorizrd"));
 //Store
@@ -33,6 +34,11 @@ function App() {
         >
           <Switch>
             <PublicRoute path="/login" component={Login} />
+            <PublicRoute
+              exact
+              path="/forgot-password"
+              component={PasswordReset}
+            />
             <ProtectedRoute exact path="/" component={AdminLayout} />
             <ProtectedRoute path="/admin" component={AdminLayout} />
             <Route path="*" component={Unauthorized} />
