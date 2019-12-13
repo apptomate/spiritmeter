@@ -65,7 +65,7 @@ export function authLogin(formData) {
           });
           message.success("Login Success");
         } else {
-          message.warning("You are not an admin");
+          message.warning("Invalid User");
         }
       })
       .catch(error => {

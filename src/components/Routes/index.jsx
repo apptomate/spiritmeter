@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { List, Spin, PageHeader } from "antd";
+import { Spin, PageHeader } from "antd";
 import { getAllListRoutes } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import RouteCard from "../Common/RouteCard";
@@ -11,12 +11,6 @@ class Routes extends Component {
     const {
       RoutesResponseData: { data = [], loading }
     } = this.props;
-    let dataToDisplay = [];
-    data.forEach((element, key) => {
-      dataToDisplay.push({
-        content: <RouteCard key={key} data={element} />
-      });
-    });
 
     return (
       <Fragment>
@@ -26,24 +20,11 @@ class Routes extends Component {
           }}
           title="List of Routes"
         />
+        <br />
         <Spin spinning={loading}>
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: page => {
-                //console.log(page);
-              },
-              pageSize: 5
-            }}
-            dataSource={dataToDisplay}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta />
-                {item.content}
-              </List.Item>
-            )}
-          />
+          {data.map((list, key) => (
+            <RouteCard key={key} data={list} />
+          ))}
         </Spin>
       </Fragment>
     );
