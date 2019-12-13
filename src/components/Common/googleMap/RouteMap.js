@@ -1,11 +1,11 @@
 /*global google*/
-import React from 'react';
-const { compose, withProps } = require('recompose');
+import React from "react";
+const { compose, withProps } = require("recompose");
 const {
   withGoogleMap,
   GoogleMap,
   DirectionsRenderer
-} = require('react-google-maps');
+} = require("react-google-maps");
 
 class RouteMapCore extends React.PureComponent {
   render() {
@@ -23,9 +23,9 @@ class RouteMapCore extends React.PureComponent {
 
 const RouteMap = compose(
   withProps({
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />
+    loadingElement: <div style={{ height: "100%" }} />,
+    containerElement: <div style={{ height: "400px" }} />,
+    mapElement: <div style={{ height: "100%" }} />
   }),
   withGoogleMap
 )(RouteMapCore);

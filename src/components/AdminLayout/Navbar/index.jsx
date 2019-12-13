@@ -48,7 +48,6 @@ export default class Navbar extends Component {
         <Search
           className="ml-1"
           placeholder="search..."
-          onSearch={value => console.log(value)}
           style={{ width: 200 }}
         />
 

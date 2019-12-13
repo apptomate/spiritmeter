@@ -47,12 +47,9 @@ class RouteCard extends Component {
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          this.setState(
-            {
-              directions: result
-            },
-            () => console.log(result)
-          );
+          this.setState({
+            directions: result
+          });
         } else {
           console.error(`error fetching directions ${result}`);
         }

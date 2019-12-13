@@ -5,9 +5,7 @@ import { Statistic, Row, Col } from "antd";
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
-function onFinish() {
-  //console.log("finished!");
-}
+function onFinish() {}
 
 class Dashboard extends Component {
   render() {
