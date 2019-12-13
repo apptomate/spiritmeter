@@ -1,7 +1,6 @@
 /* global google */
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { Icon, Row, Col, Tooltip, Button, Modal } from "antd";
+import { Icon, Row, Col, Tooltip, Button } from "antd";
 import RouteMap from "../googleMap/RouteMap";
 import {
   getLatLng,
