@@ -18,3 +18,4 @@ export const GET_USER_DETAILS_URL = BASE_URL + "User/selectUserById";
 export const GET_USER_SPIRITMETER_URL = BASE_URL + "User/spiritMeter";
 export const GET_USER_DISPLAY_URL = BASE_URL + "Display/listDisplayByUserId";
 export const GET_USER_ROUTE_URL = BASE_URL + "Route/listRoutesByUserId";
+export const GOOGLE_MAPS_API_KEY = "AIzaSyCSTfXlm6bBFV5-o5RawVMKvhOd4foWnw4";
