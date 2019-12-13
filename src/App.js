@@ -7,6 +7,8 @@ import {
   ProtectedRoute
 } from "./Redux/_service/AuthenticationService";
 import { Spin, Icon } from "antd";
+import "./index.css";
+
 //Gateway Routes
 const Login = React.lazy(() => import("./components/Login"));
 const AdminLayout = React.lazy(() => import("./components/AdminLayout"));
