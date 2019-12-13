@@ -1,6 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fd643f271ca94575b98fb7b3a0039692)](https://www.codacy.com/manual/popthehood/spiritmeter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=apptomate/spiritmeter&amp;utm_campaign=Badge_Grade)
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/53cf9a98-03cb-469e-84b8-066ea1f02817/deploy-status)](https://app.netlify.com/sites/spiritmeter/deploys)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fd643f271ca94575b98fb7b3a0039692)](https://www.codacy.com/manual/popthehood/spiritmeter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=apptomate/spiritmeter&amp;utm_campaign=Badge_Grade) [![Netlify Status](https://api.netlify.com/api/v1/badges/53cf9a98-03cb-469e-84b8-066ea1f02817/deploy-status)](https://app.netlify.com/sites/spiritmeter/deploys)
 
 ## Available Scripts
 
