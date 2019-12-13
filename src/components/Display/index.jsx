@@ -23,7 +23,10 @@ class Display extends Component {
         />
         <br />
         <Spin spinning={loading}>
-          <DisplayCard listData={data} hideViewButton={false} />
+          {data &&
+            data.map((list, key) => (
+              <DisplayCard listData={list} hideViewButton={false} key={key} />
+            ))}
         </Spin>
       </Fragment>
     );

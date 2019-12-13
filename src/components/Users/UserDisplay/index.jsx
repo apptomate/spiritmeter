@@ -11,7 +11,9 @@ export default class UserDisplay extends Component {
           </h4>
         </div>
         <br />
-        <DisplayCard listData={displayData} showPreviewModal={true} />
+        {displayData.map((list, key) => (
+          <DisplayCard listData={list} showPreviewModal={true} key={key} />
+        ))}
       </Fragment>
     );
   }
