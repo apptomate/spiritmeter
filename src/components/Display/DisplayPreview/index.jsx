@@ -20,6 +20,7 @@ export default function DisplayPreview(props) {
   return (
     <Fragment>
       <Modal
+        style={{ width: "80%" }}
         title="Display Preview"
         visible={toggleFlag}
         footer={null}
@@ -29,8 +30,9 @@ export default function DisplayPreview(props) {
         <div>
           <DisplayImage srcPath={filePathParsed} />
         </div>
-
-        <h4 className="list-name">{name}</h4>
+        <div className="list-name-imp">
+          <h4 className="list-name">{name}</h4>
+        </div>
         <div className="list-name-imp">
           <Icon type="home" /> {categoryName}
         </div>
