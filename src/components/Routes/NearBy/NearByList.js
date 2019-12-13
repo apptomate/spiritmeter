@@ -10,7 +10,7 @@ class NearByList extends Component {
     super(props);
     this.googleServiceCallback = this.googleServiceCallback.bind(this);
   }
-  async componentDidMount() {
+  componentDidMount() {
     const { srclat, srclng, keyword } = this.props;
     this.fetchNearByPlace(srclat, srclng, keyword);
   }
@@ -24,11 +24,28 @@ class NearByList extends Component {
     var service = new google.maps.places.PlacesService(
       document.createElement("div")
     );
-    service.nearbySearch(request, this.googleServiceCallback);
+    service.nearbySearch(request, data =>
+      this.googleServiceCallback(data, service)
+    );
   }
 
-  googleServiceCallback(data) {
-    console.log(data);
+  googleServiceCallback(data, service) {
+    data.map(place => {
+      service.getDetails(
+        {
+          placeId: "ChIJAUKRDWz2wokRxngAavG2TD8",
+          fields: ["photo"]
+        },
+        function(place, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log(121212121212121212, place);
+          }
+        }
+      );
+
+      const placeImg = "";
+      return [...place, placeImg];
+    });
     this.setState({ results: data });
   }
 
