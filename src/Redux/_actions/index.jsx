@@ -11,7 +11,8 @@ import {
   GET_USER_DETAILS_URL,
   GET_USER_SPIRITMETER_URL,
   GET_USER_DISPLAY_URL,
-  GET_USER_ROUTE_URL
+  GET_USER_ROUTE_URL,
+  FILE_UPLOAD_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
@@ -40,7 +41,9 @@ import {
   GET_USER_DISPLAY_SUCCESS,
   GET_USER_DISPLAY_ERROR,
   GET_USER_ROUTE_SUCCESS,
-  GET_USER_ROUTE_ERROR
+  GET_USER_ROUTE_ERROR,
+  FILE_UPLOAD_SUCCESS,
+  FILE_UPLOAD_ERROR
 } from "./ActionTypes";
 
 import { message } from "antd";
@@ -297,6 +300,30 @@ export function getUserRoute(paramData) {
         if (error.response) {
           dispatch({
             type: GET_USER_ROUTE_ERROR,
+            payload: error.response.data
+          });
+        }
+      });
+  };
+}
+
+//Common
+//File Upload
+export function uploadFile(formData) {
+  // let headersData = authHeader();
+  // headersData["content-type"] = "multipart/form-data";
+  return dispatch => {
+    API.post(FILE_UPLOAD_URL, formData, { headers: authHeader() })
+      .then(response => {
+        dispatch({
+          type: FILE_UPLOAD_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          dispatch({
+            type: FILE_UPLOAD_ERROR,
             payload: error.response.data
           });
         }

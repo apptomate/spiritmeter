@@ -791,3 +791,7 @@ button:hover .button-text {
   border: none;
   border-radius: 64px;
 }
+.user-add-btn {
+  margin: 10px;
+  margin-left: 78rem;
+}
