@@ -287,8 +287,9 @@ code {
 .list-card {
   width: 100%;
   display: inline-block;
-  margin-top: 0rem;
+  margin-top: 1rem;
   box-shadow: 0 0 10px #e2e2e2;
+  border: 1px #e4e4e4 solid;
 }
 @import url("https://fonts.googleapis.com/css?family=Mukta:700");
 
@@ -509,6 +510,7 @@ button:hover .button-text {
   font-size: 13px;
   border-radius: 3px;
   padding: 4px;
+  margin-bottom: 1rem;
 }
 .route-list i {
   font-size: 17px;
@@ -701,6 +703,7 @@ button:hover .button-text {
 .map-datails {
   padding: 1rem;
   border: 1px #e6e4e4 solid;
+  margin-bottom: 1rem;
 }
 
 .map-datails p {
@@ -733,6 +736,7 @@ button:hover .button-text {
   margin: auto;
   margin-left: auto;
   margin-right: 0;
+  overflow: hidden;
 }
 .ant-input-affix-wrapper .ant-input {
   min-height: 100%;
@@ -764,6 +768,28 @@ button:hover .button-text {
 }
 .back-button {
   float: right;
+}
+.ant-tabs-nav-wrap {
+  margin-bottom: 0px !important;
+  overflow: hidden;
+}
+.ant-tabs {
+  display: inline;
+}
+
+.ant-btn-background-ghost.ant-btn-primary {
+  z-index: 1000 !important;
+  color: #ffffff !important;
+  background-color: #ff9800 !important;
+  border-color: #ff9800 !important;
+}
+
+.preview-btn {
+  background: #3366ff;
+  border-color: #3366ff;
+  color: #fff;
+  border: none;
+  border-radius: 64px;
 }
 .user-add-btn {
   margin: 10px;

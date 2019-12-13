@@ -9,7 +9,7 @@ export default class NearBy extends PureComponent {
     return (
       <Fragment>
         <div>
-          <Tabs tabPosition="left">
+          <Tabs tabPosition="top">
             <TabPane tab="Church" key="1">
               <NearByList srclat={srclat} srclng={srclng} keyword="church" />
             </TabPane>
