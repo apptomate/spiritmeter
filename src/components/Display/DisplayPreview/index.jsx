@@ -20,6 +20,7 @@ export default function DisplayPreview(props) {
   return (
     <Fragment>
       <Modal
+        style={{ width: "80%" }}
         title="Display Preview"
         visible={toggleFlag}
         footer={null}

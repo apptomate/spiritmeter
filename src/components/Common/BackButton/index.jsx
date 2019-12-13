@@ -5,7 +5,7 @@ export default function BackButton(props) {
   const { linkPath, linkText } = props;
   return (
     <Link to={linkPath}>
-      <Button type="dashed " className="back-button">
+      <Button type="primary" className="back-button" ghost>
         <Icon type="left" />
         {linkText}
       </Button>
