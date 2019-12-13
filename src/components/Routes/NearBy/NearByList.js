@@ -1,57 +1,34 @@
-/* global google */
 import React, { Component, Fragment } from "react";
 import NearByListCard from "./NearByListCard";
+import { GOOGLE_MAPS_API_KEY } from "../../../Redux/_helpers/Constants";
+import Axios from "axios";
 
 class NearByList extends Component {
   state = {
-    results: []
+    results: [],
+    loading: false
   };
-  constructor(props) {
-    super(props);
-    this.googleServiceCallback = this.googleServiceCallback.bind(this);
-  }
-  componentDidMount() {
+  async componentDidMount() {
     const { srclat, srclng, keyword } = this.props;
-    this.fetchNearByPlace(srclat, srclng, keyword);
-  }
-  async fetchNearByPlace(srclat, srclng, keyword) {
-    var request = {
-      location: new google.maps.LatLng(srclat, srclng),
-      radius: 5000,
-      types: [keyword]
-    };
-
-    var service = new google.maps.places.PlacesService(
-      document.createElement("div")
-    );
-    service.nearbySearch(request, data =>
-      this.googleServiceCallback(data, service)
-    );
+    this.fetchNearByPlaces(srclat, srclng, keyword);
   }
 
-  googleServiceCallback(data, service) {
-    data.map(place => {
-      service.getDetails(
-        {
-          placeId: "ChIJAUKRDWz2wokRxngAavG2TD8",
-          fields: ["photo"]
-        },
-        function(place, status) {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            console.log(121212121212121212, place);
-          }
-        }
-      );
-
-      const placeImg = "";
-      return [...place, placeImg];
-    });
-    this.setState({ results: data });
+  async fetchNearByPlaces(srclat, srclng, keyword) {
+    this.setState({ loading: true });
+    const response = await Axios.get(
+      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${srclat},${srclng}&radius=1500&field=&type=${keyword}&keyword=${keyword}&key=${GOOGLE_MAPS_API_KEY}`
+    );
+    this.setState({ loading: false, results: response.data.results });
   }
 
   render() {
-    const results = this.state.results;
-    console.log(this.state, this.props);
+    const { results, loading } = this.state;
+    if (loading) {
+      return <p>Loading...</p>;
+    }
+    if (!results.length) {
+      return <p>No results found</p>;
+    }
     return (
       <Fragment>
         {results.map((data, i) => (

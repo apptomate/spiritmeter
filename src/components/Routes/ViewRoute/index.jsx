@@ -50,7 +50,7 @@ class ViewRoute extends Component {
               destlat: destlat,
               destlng: destlng
             },
-            () => console.log(result)
+            () => console.log(this.state, result)
           );
         } else {
           console.error(`error fetching directions ${result}`);

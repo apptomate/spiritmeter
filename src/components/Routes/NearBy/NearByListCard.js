@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { Row, Col, Rate } from "antd";
 import { GOOGLE_MAPS_API_KEY } from "../../../Redux/_helpers/Constants";
-import Axios from "axios";
 const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
 class NearByListCard extends PureComponent {
@@ -13,10 +12,12 @@ class NearByListCard extends PureComponent {
         user_ratings_total,
         vicinity,
         opening_hours,
-        place_id
+        photos = [],
+        icon
       }
     } = this.props;
-    getRefFromPlaceId(place_id);
+    console.log(this.props);
+    const imgRef = (photos[0] || {}).photo_reference;
     return (
       <div>
         <Row className="map-datails">
@@ -43,7 +44,7 @@ class NearByListCard extends PureComponent {
             </div>
             <div className="right">
               <div className="fixed-img">
-                {/* <img src={getImgFromRef(place_id)} alt={name} /> */}
+                <img src={imgRef ? getImgFromRef(imgRef) : icon} alt={name} />
               </div>
             </div>
           </Col>
@@ -55,14 +56,6 @@ class NearByListCard extends PureComponent {
 
 export default NearByListCard;
 
-export function getImgFromRef(photos) {
-  const imgRef = (photos[0] || {}).photo_reference;
+export function getImgFromRef(imgRef) {
   return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imgRef}&key=${GOOGLE_MAPS_API_KEY}`;
-}
-
-export async function getRefFromPlaceId(placeId) {
-  let response = await Axios.get(
-    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=photo&key=${GOOGLE_MAPS_API_KEY}`
-  );
-  console.log(response);
 }
