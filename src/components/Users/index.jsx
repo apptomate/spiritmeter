@@ -105,11 +105,12 @@ function beforeUpload(file) {
   return isJpgOrPng && isLt2M;
 }
 
-class UserModel extends Component {
+class UserGrid extends Component {
   state = {
     modalFlag: false,
     uploadLoading: false,
-    imageUrl: ""
+    imageUrl: "",
+    confirmDirty: ""
   };
   constructor(props) {
     super(props);
@@ -118,7 +119,14 @@ class UserModel extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.validateToNextPassword = this.validateToNextPassword.bind(this);
     this.compareToFirstPassword = this.compareToFirstPassword.bind(this);
+    this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
   }
+  handleConfirmBlur = e => {
+    const { value } = e.target;
+    this.setState(prevState => ({
+      confirmDirty: prevState.confirmDirty || !!value
+    }));
+  };
   //Compare with password
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
@@ -175,9 +183,11 @@ class UserModel extends Component {
       modalFlag: !prevState.modalFlag
     }));
   }
+
   componentDidMount() {
     this.props.getAllListUsers();
   }
+
   getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -256,6 +266,7 @@ class UserModel extends Component {
     clearFilters();
     this.setState({ searchText: "" });
   };
+
   render() {
     const {
       UsersResponse: { data = [], loading },
@@ -264,21 +275,22 @@ class UserModel extends Component {
     const { modalFlag, imageUrl, uploadLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
 
-    const uploadButton = (
-      <div>
-        <Icon type={uploadLoading ? "loading" : "plus"} />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
-
     console.log("Res", FileUploadData);
+
     //Modal Props
-    // const modalProps = {
-    //   modalFlag,
-    //   modalToggleFunc: this.userModalToggle,
-    //   addNewUser: this.addNewUser,
-    //   getFieldDecorator
-    // };
+    const modalProps = {
+      modalToggleFunc: this.userModalToggle,
+      addNewUser: this.addNewUser,
+      handleChange: this.handleChange,
+      validateToNextPassword: this.validateToNextPassword,
+      compareToFirstPassword: this.compareToFirstPassword,
+      handleConfirmBlur: this.handleConfirmBlur,
+      getFieldDecorator,
+      modalFlag,
+      uploadLoading,
+      beforeUpload,
+      imageUrl
+    };
 
     return (
       <Fragment>
@@ -303,173 +315,15 @@ class UserModel extends Component {
               <Table columns={columns} dataSource={data}></Table>
             </div>
             <div>
-              <Modal
-                footer={null}
-                title="User"
-                visible={modalFlag}
-                onCancel={this.userModalToggle}
-              >
-                <Form onSubmit={this.addNewUser}>
-                  <div>
-                    <center>
-                      <Upload
-                        name="avatar"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        beforeUpload={beforeUpload}
-                        onChange={this.handleChange}
-                      >
-                        {imageUrl ? (
-                          <img
-                            src={imageUrl}
-                            alt="avatar"
-                            style={{ width: "100%" }}
-                          />
-                        ) : (
-                          uploadButton
-                        )}
-                      </Upload>
-                    </center>
-                  </div>
-                  <Form.Item label="First Name">
-                    {getFieldDecorator("firstName", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your first name"
-                        }
-                      ]
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="First Name"
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Last Name">
-                    {getFieldDecorator("lastName", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your last name"
-                        }
-                      ]
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="Last Name"
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Phone Number">
-                    {getFieldDecorator("phoneNumber", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your phone number"
-                        },
-                        {
-                          pattern: /^[0-9]+$/,
-                          message: "input must be a valid phone number"
-                        }
-                      ]
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="mobile"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="Phone Number"
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Gender">
-                    {getFieldDecorator("gender", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select anyone"
-                        }
-                      ]
-                    })(
-                      <Radio.Group>
-                        <Radio value="male">Male</Radio>
-                        <Radio value="female">Female</Radio>
-                      </Radio.Group>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Role">
-                    {getFieldDecorator("role", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please select anyone"
-                        }
-                      ]
-                    })(
-                      <Radio.Group>
-                        <Radio value="user">User</Radio>
-                        <Radio value="admin">Admin</Radio>
-                      </Radio.Group>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Password" hasFeedback>
-                    {getFieldDecorator("password", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your password!"
-                        },
-                        {
-                          validator: this.validateToNextPassword
-                        }
-                      ]
-                    })(<Input.Password />)}
-                  </Form.Item>
-                  <Form.Item label="Confirm Password" hasFeedback>
-                    {getFieldDecorator("confirmPassword", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please confirm your password!"
-                        },
-                        {
-                          validator: this.compareToFirstPassword
-                        }
-                      ]
-                    })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-                  </Form.Item>
-                  <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </Modal>
+              <UserCRUDModal modalProps={modalProps} />
             </div>
-
-            {/* <UserCRUDModal modalProps={modalProps} /> */}
           </Spin>
         </div>
       </Fragment>
     );
   }
 }
-const Users = Form.create({ name: "normal_login" })(UserModel);
+const Users = Form.create({ name: "normal_login" })(UserGrid);
 const getState = state => {
   return {
     UsersResponse: state.getAllListUsers,
