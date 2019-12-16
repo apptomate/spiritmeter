@@ -10,6 +10,7 @@ import { getUserSpiritMeter } from "./UsersReducers/GetUserSpiritMeter";
 import { getUserDisplay } from "./UsersReducers/GetUserDisplay";
 import { getUserRoute } from "./UsersReducers/GetUserRoute";
 import { uploadFile } from "./FileUploadReducer";
+import { addUser } from "./UsersReducers/AddUser";
 
 const RootReducer = combineReducers({
   authLogin,
@@ -22,7 +23,8 @@ const RootReducer = combineReducers({
   getUserSpiritMeter,
   getUserDisplay,
   getUserRoute,
-  uploadFile
+  uploadFile,
+  addUser
 });
 
 export default RootReducer;

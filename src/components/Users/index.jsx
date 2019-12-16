@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { getAllListUsers, uploadFile } from "../../Redux/_actions";
+import { getAllListUsers, uploadFile, addUser } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import {
   Icon,
@@ -171,9 +171,17 @@ class UserGrid extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        let { FileUploadData } = this.props;
         delete values.confirmPassword;
-        console.log(values);
-        // this.props.authLogin(values);
+        values["profileImage"] = FileUploadData ? FileUploadData.fileurl : "";
+        values["latitude"] = "0.111";
+        values["longitude"] = "0.111";
+        values["country"] = "USA";
+        values["state"] = " TX 77040";
+        values["cityName"] = "Houston";
+        values["address"] = "1/1 Fourth Car Street";
+        this.props.addUser(values);
+        this.setState({ modalFlag: false });
       }
     });
   };
@@ -270,12 +278,13 @@ class UserGrid extends Component {
   render() {
     const {
       UsersResponse: { data = [], loading },
-      FileUploadData
+      FileUploadData,
+      AddUserData
     } = this.props;
     const { modalFlag, imageUrl, uploadLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
 
-    console.log("Res", FileUploadData);
+    console.log("Res", AddUserData);
 
     //Modal Props
     const modalProps = {
@@ -327,10 +336,12 @@ const Users = Form.create({ name: "normal_login" })(UserGrid);
 const getState = state => {
   return {
     UsersResponse: state.getAllListUsers,
-    FileUploadData: state.uploadFile.data
+    FileUploadData: state.uploadFile.data,
+    AddUserData: state.addUser.data
   };
 };
 export default connect(getState, {
   getAllListUsers,
-  uploadFile
+  uploadFile,
+  addUser
 })(Users);
