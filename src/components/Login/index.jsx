@@ -82,11 +82,11 @@ class LoginForm extends Component {
                   )}
                 </Form.Item>
                 <Form.Item>
-                  <button class="cus-btn ml-a">
-                    <span class="circle">
-                      <span class="icon arrow"></span>
+                  <button className="cus-btn ml-a">
+                    <span className="circle">
+                      <span className="icon arrow"></span>
                     </span>
-                    <span class="button-text">Login</span>
+                    <span className="button-text">Login</span>
                   </button>
 
                   <Button type="link" className="login-form-forgot">
