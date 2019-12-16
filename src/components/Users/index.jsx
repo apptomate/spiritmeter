@@ -1,5 +1,11 @@
 import React, { Component, Fragment } from "react";
-import { getAllListUsers, uploadFile } from "../../Redux/_actions";
+import {
+  getAllListUsers,
+  uploadFile,
+  addUser,
+  getUserDetails,
+  deleteUser
+} from "../../Redux/_actions";
 import { connect } from "react-redux";
 import {
   Icon,
@@ -11,6 +17,7 @@ import {
   Divider,
   Tag,
   Form,
+  Popconfirm,
   Modal,
   Radio,
   Upload,
@@ -20,70 +27,6 @@ import Highlighter from "react-highlight-words";
 import DisplayAvatar from "../Common/DisplayAvatar";
 import { Link } from "react-router-dom";
 import UserCRUDModal from "./UserCRUDModal";
-
-const columns = [
-  {
-    title: "Profile",
-    dataIndex: "profileImage",
-    key: "profileImage",
-    render: profileImage => (
-      <span>
-        <DisplayAvatar srcPath={profileImage} />
-      </span>
-    )
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name"
-  },
-  {
-    title: "Gender",
-    dataIndex: "gender",
-    key: "gender"
-  },
-  {
-    title: "Phone Number",
-    dataIndex: "phoneNumber",
-    key: "phoneNumber"
-  },
-  {
-    title: "Role",
-    dataIndex: "role",
-    key: "role",
-    render: role => (
-      <span>
-        <Tag color={role === "Admin" ? "volcano" : "geekblue"}>{role}</Tag>
-      </span>
-    )
-  },
-  {
-    title: "Action",
-    dataIndex: "userId",
-    key: "userId",
-    render: userId => (
-      <span>
-        <Link to={`/admin/viewUser/${userId}`}>
-          <Button
-            type="primary"
-            shape="circle"
-            icon="eye"
-            size="small"
-            title="View"
-          />
-        </Link>
-        <Divider type="vertical" />
-        <Button
-          type="danger"
-          shape="circle"
-          icon="delete"
-          size="small"
-          title="Delete"
-        />
-      </span>
-    )
-  }
-];
 
 //Base64
 function getBase64(img, callback) {
@@ -120,7 +63,106 @@ class UserGrid extends Component {
     this.validateToNextPassword = this.validateToNextPassword.bind(this);
     this.compareToFirstPassword = this.compareToFirstPassword.bind(this);
     this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
+    this.editUser = this.editUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+
+    //Table Columns
+    this.columns = [
+      {
+        title: "Profile",
+        dataIndex: "profileImage",
+        key: "profileImage",
+        render: profileImage => (
+          <span>
+            <DisplayAvatar srcPath={profileImage} />
+          </span>
+        )
+      },
+      {
+        title: "Name",
+        dataIndex: "name",
+        key: "name"
+      },
+      {
+        title: "Gender",
+        dataIndex: "gender",
+        key: "gender"
+      },
+      {
+        title: "Phone Number",
+        dataIndex: "phoneNumber",
+        key: "phoneNumber"
+      },
+      {
+        title: "Role",
+        dataIndex: "role",
+        key: "role",
+        render: role => (
+          <span>
+            <Tag color={role === "Admin" ? "volcano" : "geekblue"}>{role}</Tag>
+          </span>
+        )
+      },
+      {
+        title: "Action",
+        dataIndex: "userId",
+        key: "userId",
+        render: userId => (
+          <span>
+            <Link to={`/admin/viewUser/${userId}`}>
+              <Button
+                type="primary"
+                shape="circle"
+                icon="eye"
+                size="small"
+                title="View"
+              />
+            </Link>
+            <Divider type="vertical" />
+            <Button
+              data-user_id={userId}
+              type="default"
+              shape="circle"
+              icon="edit"
+              size="small"
+              title="Update"
+              onClick={this.editUser}
+            />
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Are you sure delete this user?"
+              onConfirm={this.deleteUser}
+              okText="Yes"
+              cancelText="No"
+              data-user_id={userId}
+            >
+              <Button
+                type="danger"
+                shape="circle"
+                icon="delete"
+                size="small"
+                title="Remove"
+              />
+            </Popconfirm>
+          </span>
+        )
+      }
+    ];
   }
+
+  //Delete User
+  deleteUser = e => {
+    let userId = e.currentTarget.dataset.user_id;
+    let formData = { UserID: parseInt(userId) };
+    console.log(formData);
+    //this.props.deleteUser(formData);
+  };
+
+  //Edit User
+  editUser = e => {
+    let userId = e.currentTarget.dataset.user_id;
+    this.props.getUserDetails(userId);
+  };
   handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState(prevState => ({
@@ -171,9 +213,17 @@ class UserGrid extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        let { FileUploadData } = this.props;
         delete values.confirmPassword;
-        console.log(values);
-        // this.props.authLogin(values);
+        values["profileImage"] = FileUploadData ? FileUploadData.fileurl : "";
+        values["latitude"] = "0.111";
+        values["longitude"] = "0.111";
+        values["country"] = "USA";
+        values["state"] = " TX 77040";
+        values["cityName"] = "Houston";
+        values["address"] = "1/1 Fourth Car Street";
+        this.props.addUser(values);
+        //this.setState({ modalFlag: false });
       }
     });
   };
@@ -270,12 +320,14 @@ class UserGrid extends Component {
   render() {
     const {
       UsersResponse: { data = [], loading },
-      FileUploadData
+      FileUploadData,
+      AddUserData,
+      UserDetails
     } = this.props;
     const { modalFlag, imageUrl, uploadLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
 
-    console.log("Res", FileUploadData);
+    console.log("Res", UserDetails);
 
     //Modal Props
     const modalProps = {
@@ -312,7 +364,7 @@ class UserGrid extends Component {
               />
             </div>
             <div>
-              <Table columns={columns} dataSource={data}></Table>
+              <Table columns={this.columns} dataSource={data}></Table>
             </div>
             <div>
               <UserCRUDModal modalProps={modalProps} />
@@ -327,10 +379,15 @@ const Users = Form.create({ name: "normal_login" })(UserGrid);
 const getState = state => {
   return {
     UsersResponse: state.getAllListUsers,
-    FileUploadData: state.uploadFile.data
+    FileUploadData: state.uploadFile.data,
+    AddUserData: state.addUser.data,
+    UserDetails: state.getUserDetails.data
   };
 };
 export default connect(getState, {
   getAllListUsers,
-  uploadFile
+  uploadFile,
+  addUser,
+  getUserDetails,
+  deleteUser
 })(Users);

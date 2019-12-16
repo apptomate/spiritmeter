@@ -12,7 +12,9 @@ import {
   GET_USER_SPIRITMETER_URL,
   GET_USER_DISPLAY_URL,
   GET_USER_ROUTE_URL,
-  FILE_UPLOAD_URL
+  FILE_UPLOAD_URL,
+  ADD_USER_URL,
+  DELETE_USER_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
@@ -43,7 +45,11 @@ import {
   GET_USER_ROUTE_SUCCESS,
   GET_USER_ROUTE_ERROR,
   FILE_UPLOAD_SUCCESS,
-  FILE_UPLOAD_ERROR
+  FILE_UPLOAD_ERROR,
+  ADD_USER_SUCCESS,
+  ADD_USER_ERROR,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_ERROR
 } from "./ActionTypes";
 
 import { message } from "antd";
@@ -237,6 +243,56 @@ export function getUserDetails(userId) {
   };
 }
 
+//Create User
+export function addUser(formData) {
+  return dispatch => {
+    API.post(ADD_USER_URL, formData, { headers: authHeader() })
+      .then(response => {
+        dispatch(getAllListUsers());
+        dispatch({
+          type: ADD_USER_SUCCESS,
+          payload: response.data
+        });
+        message.success(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: ADD_USER_ERROR,
+            payload: data
+          });
+          message.error(data.errorMessage);
+        }
+      });
+  };
+}
+
+//Delete User
+export function deleteUser(formData) {
+  return dispatch => {
+    API.delete(DELETE_USER_URL, formData, { headers: authHeader() })
+      .then(response => {
+        dispatch(getAllListUsers());
+        dispatch({
+          type: DELETE_USER_SUCCESS,
+          payload: response.data
+        });
+        message.success(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: DELETE_USER_ERROR,
+            payload: data
+          });
+          message.error(data);
+        }
+      });
+  };
+}
+
 //Get User Spirit Meter
 export function getUserSpiritMeter(userId) {
   return dispatch => {
@@ -310,8 +366,6 @@ export function getUserRoute(paramData) {
 //Common
 //File Upload
 export function uploadFile(formData) {
-  // let headersData = authHeader();
-  // headersData["content-type"] = "multipart/form-data";
   return dispatch => {
     API.post(FILE_UPLOAD_URL, formData, { headers: authHeader() })
       .then(response => {

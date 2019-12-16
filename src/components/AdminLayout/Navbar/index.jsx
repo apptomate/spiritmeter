@@ -37,7 +37,6 @@ function SignoutButton() {
 
 export default class Navbar extends Component {
   render() {
-    const { collapseFlag, collapseToggleFunc } = this.props;
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
         {/* <Icon
@@ -47,10 +46,9 @@ export default class Navbar extends Component {
         /> */}
         <Search
           className="ml-1"
-          placeholder="search..."
+          placeholder="Search..."
           style={{ width: 200 }}
         />
-
         <SignoutButton />
       </Header>
     );
