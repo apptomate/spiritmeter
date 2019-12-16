@@ -13,7 +13,8 @@ import {
   GET_USER_DISPLAY_URL,
   GET_USER_ROUTE_URL,
   FILE_UPLOAD_URL,
-  ADD_USER_URL
+  ADD_USER_URL,
+  DELETE_USER_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
@@ -46,7 +47,9 @@ import {
   FILE_UPLOAD_SUCCESS,
   FILE_UPLOAD_ERROR,
   ADD_USER_SUCCESS,
-  ADD_USER_ERROR
+  ADD_USER_ERROR,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_ERROR
 } from "./ActionTypes";
 
 import { message } from "antd";
@@ -254,11 +257,37 @@ export function addUser(formData) {
       })
       .catch(error => {
         if (error.response) {
+          let { data } = error.response;
           dispatch({
             type: ADD_USER_ERROR,
-            payload: error.response.data
+            payload: data
           });
-          message.error(error.response.data);
+          message.error(data.errorMessage);
+        }
+      });
+  };
+}
+
+//Delete User
+export function deleteUser(formData) {
+  return dispatch => {
+    API.delete(DELETE_USER_URL, formData, { headers: authHeader() })
+      .then(response => {
+        dispatch(getAllListUsers());
+        dispatch({
+          type: DELETE_USER_SUCCESS,
+          payload: response.data
+        });
+        message.success(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: DELETE_USER_ERROR,
+            payload: data
+          });
+          message.error(data);
         }
       });
   };
