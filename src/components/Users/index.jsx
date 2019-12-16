@@ -53,7 +53,8 @@ class UserGrid extends Component {
     modalFlag: false,
     uploadLoading: false,
     imageUrl: "",
-    confirmDirty: ""
+    confirmDirty: "",
+    popupToAdd: true
   };
   constructor(props) {
     super(props);
@@ -131,10 +132,9 @@ class UserGrid extends Component {
             <Divider type="vertical" />
             <Popconfirm
               title="Are you sure delete this user?"
-              onConfirm={this.deleteUser}
+              onConfirm={() => this.deleteUser(userId)}
               okText="Yes"
               cancelText="No"
-              data-user_id={userId}
             >
               <Button
                 type="danger"
@@ -151,17 +151,19 @@ class UserGrid extends Component {
   }
 
   //Delete User
-  deleteUser = e => {
-    let userId = e.currentTarget.dataset.user_id;
+  deleteUser = userId => {
     let formData = { UserID: parseInt(userId) };
-    console.log(formData);
-    //this.props.deleteUser(formData);
+    this.props.deleteUser(formData);
   };
 
   //Edit User
   editUser = e => {
     let userId = e.currentTarget.dataset.user_id;
     this.props.getUserDetails(userId);
+    this.setState(prevState => ({
+      modalFlag: !prevState.modalFlag,
+      popupToAdd: false
+    }));
   };
   handleConfirmBlur = e => {
     const { value } = e.target;
@@ -222,7 +224,7 @@ class UserGrid extends Component {
         values["state"] = " TX 77040";
         values["cityName"] = "Houston";
         values["address"] = "1/1 Fourth Car Street";
-        this.props.addUser(values);
+        //this.props.addUser(values);
         //this.setState({ modalFlag: false });
       }
     });
@@ -230,7 +232,8 @@ class UserGrid extends Component {
   //User Modal
   userModalToggle() {
     this.setState(prevState => ({
-      modalFlag: !prevState.modalFlag
+      modalFlag: !prevState.modalFlag,
+      popupToAdd: true
     }));
   }
 
@@ -324,10 +327,8 @@ class UserGrid extends Component {
       AddUserData,
       UserDetails
     } = this.props;
-    const { modalFlag, imageUrl, uploadLoading } = this.state;
+    const { modalFlag, imageUrl, uploadLoading, popupToAdd } = this.state;
     const { getFieldDecorator } = this.props.form;
-
-    console.log("Res", UserDetails);
 
     //Modal Props
     const modalProps = {
@@ -341,7 +342,9 @@ class UserGrid extends Component {
       modalFlag,
       uploadLoading,
       beforeUpload,
-      imageUrl
+      imageUrl,
+      popupToAdd,
+      UserDetails
     };
 
     return (

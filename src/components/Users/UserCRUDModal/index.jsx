@@ -14,7 +14,9 @@ class UserCRUDModal extends Component {
         uploadLoading,
         beforeUpload,
         handleChange,
-        imageUrl
+        imageUrl,
+        popupToAdd,
+        UserDetails
       }
     } = this.props;
 
@@ -29,7 +31,7 @@ class UserCRUDModal extends Component {
       <Fragment>
         <Modal
           footer={null}
-          title="User"
+          title={popupToAdd ? "New User" : "Update User"}
           visible={modalFlag}
           onCancel={modalToggleFunc}
         >
@@ -119,7 +121,8 @@ class UserCRUDModal extends Component {
                     required: true,
                     message: "Please select anyone"
                   }
-                ]
+                ],
+                initialValue: "male"
               })(
                 <Radio.Group>
                   <Radio value="male">Male</Radio>
@@ -134,7 +137,8 @@ class UserCRUDModal extends Component {
                     required: true,
                     message: "Please select anyone"
                   }
-                ]
+                ],
+                initialValue: "user"
               })(
                 <Radio.Group>
                   <Radio value="user">User</Radio>
@@ -169,8 +173,11 @@ class UserCRUDModal extends Component {
               })(<Input.Password onBlur={handleConfirmBlur} />)}
             </Form.Item>
             <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+              <Button type="default" onClick={modalToggleFunc}>
+                Cancel
+              </Button>{" "}
               <Button type="primary" htmlType="submit">
-                Submit
+                {popupToAdd ? "Create" : "Update"}
               </Button>
             </Form.Item>
           </Form>
