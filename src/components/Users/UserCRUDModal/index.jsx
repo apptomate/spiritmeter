@@ -168,11 +168,11 @@ class UserCRUDModal extends Component {
                 ]
               })(<Input.Password onBlur={handleConfirmBlur} />)}
             </Form.Item>
-            <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
+            {/* <Form.Item wrapperCol={{ span: 12, offset: 6 }}> */}
+            <Button className="btn-center" type="primary" htmlType="submit">
+              Submit
+            </Button>
+            {/* </Form.Item> */}
           </Form>
         </Modal>
       </Fragment>

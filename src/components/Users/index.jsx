@@ -162,6 +162,9 @@ class UserGrid extends Component {
   editUser = e => {
     let userId = e.currentTarget.dataset.user_id;
     this.props.getUserDetails(userId);
+    this.setState(prevState => ({
+      modalFlag: !prevState.modalFlag
+    }));
   };
   handleConfirmBlur = e => {
     const { value } = e.target;
@@ -326,6 +329,7 @@ class UserGrid extends Component {
     } = this.props;
     const { modalFlag, imageUrl, uploadLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
+    const { Search } = Input;
 
     console.log("Res", UserDetails);
 
@@ -346,23 +350,26 @@ class UserGrid extends Component {
 
     return (
       <Fragment>
-        <PageHeader
-          style={{
-            border: "1px solid rgb(235, 237, 240)"
-          }}
-          title="List of Users"
-        />
+        <div className="dis-center">
+          <PageHeader title="List of Users" className="title-header-left" />
+          <div className="title-header-right">
+            <Search
+              className="f-r"
+              placeholder="Search..."
+              style={{ width: 200 }}
+            />
+            <Button
+              className="f-r user-add-btn"
+              type="primary"
+              icon="user-add"
+              title="Add User"
+              ghost
+              onClick={this.userModalToggle}
+            />
+          </div>
+        </div>
         <div>
           <Spin spinning={loading}>
-            <div className="user-add-btn">
-              <Button
-                type="primary"
-                icon="user-add"
-                title="Add User"
-                ghost
-                onClick={this.userModalToggle}
-              />
-            </div>
             <div>
               <Table columns={this.columns} dataSource={data}></Table>
             </div>

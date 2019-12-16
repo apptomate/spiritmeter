@@ -791,7 +791,42 @@ button:hover .button-text {
   border: none;
   border-radius: 64px;
 }
-.user-add-btn {
+/* .user-add-btn {
   margin: 10px;
   margin-left: 78rem;
+} */
+
+.title-header-left {
+  width: 50%;
+  float: left;
+}
+.title-header-right {
+  width: 50%;
+  float: left;
+}
+
+.dis-center {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  border: 1px solid rgb(235, 237, 240);
+  padding: 5px;
+}
+.user-add-btn {
+  margin-top: 0.3rem;
+  margin-right: 1rem;
+}
+
+.ant-upload.ant-upload-select-picture-card {
+  display: table;
+  float: left;
+  width: 100px;
+  height: 104px;
+  margin-left: 38% !important;
+  margin-right: 50% !important;
+}
+
+.btn-center {
+  display: block !important;
+  margin: auto;
 }

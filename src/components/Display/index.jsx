@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Spin, PageHeader } from "antd";
+import { Spin, PageHeader, Input } from "antd";
 import { getAllListDisplay } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import DisplayCard from "./DisplayCard";
@@ -12,16 +12,21 @@ class Display extends Component {
     const {
       DisplayResponseData: { data = [], loading }
     } = this.props;
+    const { Search } = Input;
 
     return (
       <Fragment>
-        <PageHeader
-          style={{
-            border: "1px solid rgb(235, 237, 240)"
-          }}
-          title="List of Display"
-        />
-        <br />
+        <div className="dis-center">
+          <PageHeader className="title-header-left" title="List of Display" />
+          <div className="title-header-right">
+            <Search
+              className="f-r"
+              placeholder="Search..."
+              style={{ width: 200 }}
+            />
+          </div>
+        </div>
+
         <Spin spinning={loading}>
           {data &&
             data.map((list, key) => (
