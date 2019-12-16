@@ -830,3 +830,17 @@ button:hover .button-text {
   display: block !important;
   margin: auto;
 }
+
+.d-fr {
+  display: flow-root;
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
+
+#components-layout-demo-responsive .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
