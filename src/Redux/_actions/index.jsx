@@ -65,18 +65,18 @@ export function authLogin(formData) {
     API.post(AUTHLOGIN_URL, formData)
       .then(response => {
         const {
-          token,
+          accessToken: { token },
           user: { userId, firstName, profileImage, role }
         } = response.data;
         if (role === "Admin") {
           let loggedUserData = { userId, firstName, profileImage };
           localStorage.setItem("authToken", token);
           localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
+          message.success("Login Success");
           dispatch({
             type: AUTHLOGIN_SUCCESS,
-            payload: response.data
+            payload: token
           });
-          message.success("Login Success");
         } else {
           message.warning("Invalid User");
         }
@@ -120,23 +120,28 @@ export function generateOtp(formData) {
 }
 
 //Password Update
-export function forgetPassword(formData) {
+export function forgetPassword(formData, history) {
   return dispatch => {
     API.put(FORGET_PASSWORD_URL, formData)
       .then(response => {
-        //let { smsStatus } = response.data;
+        let { message: updateMsg } = response.data;
+        // dispatch({
+        //   type: FORGET_PASSWORD_SUCCESS,
+        //   payload: message
+        // });
+        message.success(updateMsg);
         dispatch({
-          type: FORGET_PASSWORD_SUCCESS,
-          payload: response.data
+          type: GENERATE_OTP_SUCCESS,
+          payload: null
         });
-        message.success(response.data);
+        history.push("/login");
       })
       .catch(error => {
         if (error.response) {
           let { data } = error.response;
           dispatch({
             type: FORGET_PASSWORD_ERROR,
-            payload: data
+            payload: data.errorMessage
           });
           message.error(data.errorMessage);
         }

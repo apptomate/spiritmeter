@@ -22,7 +22,7 @@ class LoginForm extends Component {
 
   render() {
     let { LoginProps } = this.props;
-    if (LoginProps && LoginProps.token) {
+    if (LoginProps) {
       return <Redirect to={{ pathname: "/" }} />;
     }
     const { getFieldDecorator } = this.props.form;

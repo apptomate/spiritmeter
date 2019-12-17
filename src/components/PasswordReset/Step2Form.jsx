@@ -99,9 +99,9 @@ class PasswordResetStep2 extends Component {
                 <span className="button-text">Save</span>
               </button>
 
-              <Button type="link" className="login-form-forgot">
+              {/* <Button type="link" className="login-form-forgot">
                 <Link to="/login">Login</Link>
-              </Button>
+              </Button> */}
             </Form.Item>
           </Form>
         </Col>
