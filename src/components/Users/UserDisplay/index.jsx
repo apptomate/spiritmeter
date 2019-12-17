@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import DisplayCard from "../../Display/DisplayCard";
+import { Empty } from "antd";
 export default class UserDisplay extends Component {
   render() {
     const { displayData } = this.props;
@@ -14,6 +15,7 @@ export default class UserDisplay extends Component {
         {displayData.map((list, key) => (
           <DisplayCard listData={list} showPreviewModal={true} key={key} />
         ))}
+        {!displayData.length && <Empty description="No display found" />}
       </Fragment>
     );
   }

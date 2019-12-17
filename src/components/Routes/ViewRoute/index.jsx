@@ -1,6 +1,6 @@
 /* global google */
 import React, { Component, Fragment } from "react";
-import { Tabs, Spin } from "antd";
+import { Tabs, Spin, Empty } from "antd";
 import { getRouteDetails } from "../../../Redux/_actions";
 import { connect } from "react-redux";
 import DisplayCard from "../../Display/DisplayCard";
@@ -109,6 +109,8 @@ class ViewRoute extends Component {
       totalPaths
     };
 
+    ridePoints = [];
+
     return (
       <Fragment>
         <Spin spinning={loading}>
@@ -127,6 +129,7 @@ class ViewRoute extends Component {
                     key={key}
                   />
                 ))}
+              {!ridePoints.length && <Empty description="No display found" />}
             </TabPane>
             <TabPane tab="Near By" key="3">
               <NearBy
