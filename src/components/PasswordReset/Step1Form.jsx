@@ -38,7 +38,7 @@ const PasswordResetStep1 = props => {
               <span className="button-text">Get OTP</span>
             </button>
 
-            <Button type="link" className="login-form-forgot">
+            <Button type="link" className="f-r my-link-btn">
               <Link to="/login">Login</Link>
             </Button>
           </Form.Item>

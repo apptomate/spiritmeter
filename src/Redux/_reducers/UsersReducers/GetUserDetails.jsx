@@ -6,6 +6,8 @@ export function getUserDetails(state = arrayInitial, action) {
   switch (type) {
     case types.GET_USER_DETAILS_LOADING:
       return { data: {}, loading: true };
+    case types.CLEAR_USER_DETAILS:
+      return { data: {}, loading: false };
     case types.GET_USER_DETAILS_SUCCESS:
       return { data: payload, loading: false };
     case types.GET_USER_DETAILS_ERROR:
