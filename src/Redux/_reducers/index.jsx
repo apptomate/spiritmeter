@@ -9,7 +9,6 @@ import { getUserDetails } from "./UsersReducers/GetUserDetails";
 import { getUserSpiritMeter } from "./UsersReducers/GetUserSpiritMeter";
 import { getUserDisplay } from "./UsersReducers/GetUserDisplay";
 import { getUserRoute } from "./UsersReducers/GetUserRoute";
-import { uploadFile } from "./FileUploadReducer";
 import { addUser } from "./UsersReducers/AddUser";
 import { deleteUser } from "./UsersReducers/DeleteUser";
 import { generateOtp } from "./LoginReducers/GenerateOtp";
@@ -26,7 +25,6 @@ const RootReducer = combineReducers({
   getUserSpiritMeter,
   getUserDisplay,
   getUserRoute,
-  uploadFile,
   addUser,
   deleteUser,
   generateOtp,

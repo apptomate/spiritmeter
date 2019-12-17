@@ -56,7 +56,6 @@ class UserCRUDModal extends Component {
 
   componentDidUpdate(prevProp) {
     if (!this.props.addMode) {
-      console.log("step 1");
       const {
         mapData: { latitude, longitude }
       } = this.state;
@@ -64,9 +63,6 @@ class UserCRUDModal extends Component {
         UserDetails: { latitude: userlatitude, longitude: userlongitude }
       } = this.props;
       if (!latitude && !longitude) {
-        console.log("step 2");
-
-        console.log(this.props.UserDetails);
         this.setState(({ mapData }) => ({
           mapData: {
             ...mapData,
@@ -97,12 +93,8 @@ class UserCRUDModal extends Component {
     }
   }
   handleAutoCompleteSelect(value) {
-    console.log(value);
-
     var map = new google.maps.Map(document.createElement("div"));
-
     var service = new google.maps.places.PlacesService(map);
-
     service.getDetails(
       {
         placeId: value
@@ -151,7 +143,6 @@ class UserCRUDModal extends Component {
     }
   }
   render() {
-    console.log(this.state, this.props);
     const {
       modalFlag,
       modalToggleFunc,
@@ -163,10 +154,15 @@ class UserCRUDModal extends Component {
       uploadLoading,
       beforeUpload,
       handleChange,
-      imageUrl,
       addMode,
-      UserDetails
+      UserDetails,
+      UserDetails: { profileImage }
     } = this.props;
+    let { imageUrl } = this.props;
+
+    if (!addMode) {
+      imageUrl = imageUrl || profileImage;
+    }
 
     const uploadButton = (
       <div>
@@ -184,7 +180,8 @@ class UserCRUDModal extends Component {
     const additionalData = {
       latitude,
       longitude,
-      userId: UserDetails && UserDetails.userId
+      userId: UserDetails && UserDetails.userId,
+      profileImage: imageUrl
     };
 
     return (

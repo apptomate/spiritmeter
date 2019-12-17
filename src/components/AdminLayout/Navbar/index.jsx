@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Icon, Menu, Dropdown, Input, Button } from "antd";
+import { Layout, Icon, Menu, Dropdown, Button } from "antd";
 import {
   loggedUserDetails,
   logout

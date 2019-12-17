@@ -42,16 +42,13 @@ class ViewRoute extends Component {
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          this.setState(
-            {
-              directions: result,
-              srclat: srclat,
-              srclng: srclng,
-              destlat: destlat,
-              destlng: destlng
-            },
-            () => console.log(this.state, result)
-          );
+          this.setState({
+            directions: result,
+            srclat: srclat,
+            srclng: srclng,
+            destlat: destlat,
+            destlng: destlng
+          });
         } else {
           console.error(`error fetching directions ${result}`);
         }

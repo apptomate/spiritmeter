@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Avatar, Icon } from "antd";
+import { Row, Col, Icon } from "antd";
 import GaugeChart from "react-gauge-chart";
 import DisplayAvatar from "../../Common/DisplayAvatar";
 
