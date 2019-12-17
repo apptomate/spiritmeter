@@ -2,7 +2,11 @@
 export const BASE_URL = "https://spiritmeter.azurewebsites.net/api/";
 
 //Login
-export const LOGIN_URL = BASE_URL + "Login/Login";
+export const AUTHLOGIN_URL = BASE_URL + "Login/Login";
+//Generate OTP
+export const GENERATE_OTP_URL = BASE_URL + "User/generateOTP";
+//Forget Password
+export const FORGET_PASSWORD_URL = BASE_URL + "User/forgetPassword";
 
 //Display
 export const ALL_LIST_DISPLAY_URL = BASE_URL + "Display/listDisplay";
