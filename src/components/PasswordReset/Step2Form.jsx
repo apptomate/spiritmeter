@@ -1,6 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { Form, Icon, Input, Col, Button, Alert } from "antd";
-import { Link } from "react-router-dom";
+import { Form, Icon, Input, Col, Alert } from "antd";
 
 class PasswordResetStep2 extends Component {
   render() {
