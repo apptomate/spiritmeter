@@ -225,7 +225,6 @@ class UserGrid extends Component {
         if (addMode) {
           this.props.addUser(values);
         } else {
-          console.log(values);
           values.userID = additional.userId;
           this.props.updateUser(values);
         }

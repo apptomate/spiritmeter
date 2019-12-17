@@ -56,7 +56,6 @@ class UserCRUDModal extends Component {
 
   componentDidUpdate(prevProp) {
     if (!this.props.addMode) {
-      console.log("step 1");
       const {
         mapData: { latitude, longitude }
       } = this.state;
@@ -64,9 +63,6 @@ class UserCRUDModal extends Component {
         UserDetails: { latitude: userlatitude, longitude: userlongitude }
       } = this.props;
       if (!latitude && !longitude) {
-        console.log("step 2");
-
-        console.log(this.props.UserDetails);
         this.setState(({ mapData }) => ({
           mapData: {
             ...mapData,
@@ -97,8 +93,6 @@ class UserCRUDModal extends Component {
     }
   }
   handleAutoCompleteSelect(value) {
-    console.log(value);
-
     var map = new google.maps.Map(document.createElement("div"));
 
     var service = new google.maps.places.PlacesService(map);
@@ -151,7 +145,6 @@ class UserCRUDModal extends Component {
     }
   }
   render() {
-    console.log(this.state, this.props);
     const {
       modalFlag,
       modalToggleFunc,

@@ -72,7 +72,6 @@ class PasswordReset extends Component {
 
   render() {
     let { generateOtpProps } = this.props;
-    console.log("Prp", generateOtpProps);
 
     let { otpSentPhone } = this.state;
 

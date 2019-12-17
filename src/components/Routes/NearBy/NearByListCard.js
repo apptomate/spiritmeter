@@ -16,7 +16,6 @@ class NearByListCard extends PureComponent {
         icon
       }
     } = this.props;
-    console.log(this.props);
     const imgRef = (photos[0] || {}).photo_reference;
     return (
       <div>
