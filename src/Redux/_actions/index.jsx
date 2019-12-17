@@ -16,7 +16,8 @@ import {
   GET_USER_ROUTE_URL,
   FILE_UPLOAD_URL,
   ADD_USER_URL,
-  DELETE_USER_URL
+  DELETE_USER_URL,
+  UPDATE_USER_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
@@ -310,6 +311,30 @@ export function getUserDetails(userId) {
 export function addUser(formData) {
   return dispatch => {
     API.post(ADD_USER_URL, formData, { headers: authHeader() })
+      .then(response => {
+        dispatch(getAllListUsers());
+        dispatch({
+          type: ADD_USER_SUCCESS,
+          payload: response.data
+        });
+        message.success(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: ADD_USER_ERROR,
+            payload: data
+          });
+          message.error(data.errorMessage);
+        }
+      });
+  };
+}
+
+export function updateUser(formData) {
+  return dispatch => {
+    API.put(UPDATE_USER_URL, formData, { headers: authHeader() })
       .then(response => {
         dispatch(getAllListUsers());
         dispatch({
