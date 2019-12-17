@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { Form, Icon, Input, Col, Alert } from "antd";
+import { Form, Icon, Input, Col, Alert, Button } from "antd";
 
 class PasswordResetStep2 extends Component {
   render() {
