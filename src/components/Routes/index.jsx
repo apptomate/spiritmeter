@@ -4,14 +4,32 @@ import { getAllListRoutes } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import RouteCard from "../Common/RouteCard";
 class Routes extends Component {
+  state = { searchQuery: "" };
+  constructor(props) {
+    super(props);
+    this.filterRecord = this.filterRecord.bind(this);
+  }
+  //Search
+  filterRecord = (value = "") => {
+    this.setState({ searchQuery: value.trim() });
+  };
   componentDidMount() {
     this.props.getAllListRoutes();
   }
   render() {
-    const {
+    let {
       RoutesResponseData: { data = [], loading }
     } = this.props;
     const { Search } = Input;
+    const { searchQuery } = this.state;
+
+    if (searchQuery) {
+      data = data.filter(list => {
+        const { routeName, designatedCharityName, comments } = list;
+        const query = routeName + designatedCharityName + comments;
+        return query.toLowerCase().includes(searchQuery.toLowerCase());
+      });
+    }
 
     return (
       <Fragment>
@@ -22,6 +40,7 @@ class Routes extends Component {
               className="f-r"
               placeholder="Search..."
               style={{ width: 200 }}
+              onSearch={this.filterRecord}
             />
           </div>
         </div>
