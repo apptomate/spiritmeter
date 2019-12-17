@@ -122,23 +122,30 @@ export function generateOtp(formData) {
 }
 
 //Password Update
-export function forgetPassword(formData) {
+export function forgetPassword(formData, history) {
   return dispatch => {
     API.put(FORGET_PASSWORD_URL, formData)
       .then(response => {
-        //let { smsStatus } = response.data;
+        console.log(response.data);
+        let { message: updateMsg } = response.data;
+
+        // dispatch({
+        //   type: FORGET_PASSWORD_SUCCESS,
+        //   payload: message
+        // });
+        message.success(updateMsg);
         dispatch({
-          type: FORGET_PASSWORD_SUCCESS,
-          payload: response.data
+          type: GENERATE_OTP_SUCCESS,
+          payload: null
         });
-        message.success(response.data);
+        history.push("/login");
       })
       .catch(error => {
         if (error.response) {
           let { data } = error.response;
           dispatch({
             type: FORGET_PASSWORD_ERROR,
-            payload: data
+            payload: data.errorMessage
           });
           message.error(data.errorMessage);
         }

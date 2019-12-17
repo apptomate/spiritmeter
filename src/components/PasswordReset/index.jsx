@@ -51,9 +51,10 @@ class PasswordReset extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         let { otpSentPhone } = this.state;
+        let { history } = this.props;
         delete values.confirmPassword;
         values["phone"] = otpSentPhone;
-        this.props.forgetPassword(values);
+        this.props.forgetPassword(values, history);
       }
     });
   };
@@ -70,8 +71,8 @@ class PasswordReset extends Component {
   };
 
   render() {
-    let { generateOtpProps, forgetPasswordRes } = this.props;
-    console.log(forgetPasswordRes);
+    let { generateOtpProps } = this.props;
+    console.log("Prp", generateOtpProps);
 
     let { otpSentPhone } = this.state;
 
@@ -111,8 +112,7 @@ class PasswordReset extends Component {
 const Login = Form.create({ name: "PasswordReset" })(PasswordReset);
 const getState = state => {
   return {
-    generateOtpProps: state.generateOtp.data,
-    forgetPasswordRes: state.forgetPassword.data
+    generateOtpProps: state.generateOtp.data
   };
 };
 export default connect(getState, {
