@@ -263,7 +263,7 @@ class UserGrid extends Component {
     } = this.props;
     const { modalFlag, imageUrl, uploadLoading, addMode } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const { Search } = Input;
+    //const { Search } = Input;
 
     const columns = [
       {
