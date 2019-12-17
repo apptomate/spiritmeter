@@ -12,6 +12,8 @@ import { getUserRoute } from "./UsersReducers/GetUserRoute";
 import { uploadFile } from "./FileUploadReducer";
 import { addUser } from "./UsersReducers/AddUser";
 import { deleteUser } from "./UsersReducers/DeleteUser";
+import { generateOtp } from "./LoginReducers/GenerateOtp";
+import { forgetPassword } from "./LoginReducers/ForgetPassword";
 
 const RootReducer = combineReducers({
   authLogin,
@@ -26,7 +28,9 @@ const RootReducer = combineReducers({
   getUserRoute,
   uploadFile,
   addUser,
-  deleteUser
+  deleteUser,
+  generateOtp,
+  forgetPassword
 });
 
 export default RootReducer;

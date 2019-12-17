@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { authLogin } from "../../Redux/_actions";
 import { Redirect } from "react-router-dom";
 import logoimg from "../../assets/img/logo.png";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -88,10 +89,11 @@ class LoginForm extends Component {
                     </span>
                     <span className="button-text">Login</span>
                   </button>
-
-                  <Button type="link" className="login-form-forgot">
-                    Forgot password
-                  </Button>
+                  <Link to="/forgot-password">
+                    <Button type="link" className="login-form-forgot">
+                      Forgot password
+                    </Button>
+                  </Link>
                 </Form.Item>
               </Form>
             </Col>
