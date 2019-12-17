@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { Form, Icon, Input, Row, Col, Button } from "antd";
+import { Form, Row, Col } from "antd";
 import { connect } from "react-redux";
 import { authLogin } from "../../Redux/_actions";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import logoimg from "../../assets/img/logo.png";
 import PasswordResetStep1 from "./Step1Form";
 import PasswordResetStep2 from "./Step2Form";

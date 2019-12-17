@@ -18,9 +18,6 @@ import {
   Tag,
   Form,
   Popconfirm,
-  Modal,
-  Radio,
-  Upload,
   message
 } from "antd";
 import Highlighter from "react-highlight-words";
@@ -209,20 +206,21 @@ class UserGrid extends Component {
     }
   };
   //User Add
-  addNewUser = e => {
+  addNewUser = (e, latLng) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         let { FileUploadData } = this.props;
         delete values.confirmPassword;
         values["profileImage"] = FileUploadData ? FileUploadData.fileurl : "";
-        values["latitude"] = "0.111";
-        values["longitude"] = "0.111";
-        values["country"] = "USA";
-        values["state"] = " TX 77040";
-        values["cityName"] = "Houston";
-        values["address"] = "1/1 Fourth Car Street";
+        values["latitude"] = latLng.latitude;
+        values["longitude"] = latLng.longitude;
+        // values["country"] = "USA";
+        // values["state"] = " TX 77040";
+        // values["cityName"] = "Houston";
+        // values["address"] = "1/1 Fourth Car Street";
         this.props.addUser(values);
+        this.userModalToggle();
         //this.setState({ modalFlag: false });
       }
     });
@@ -366,9 +364,7 @@ class UserGrid extends Component {
             <div>
               <Table columns={this.columns} dataSource={data}></Table>
             </div>
-            <div>
-              <UserCRUDModal modalProps={modalProps} />
-            </div>
+            <div>{modalFlag && <UserCRUDModal modalProps={modalProps} />}</div>
           </Spin>
         </div>
       </Fragment>
