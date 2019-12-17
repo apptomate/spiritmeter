@@ -2,11 +2,18 @@ import React from "react";
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
 const Picker = withGoogleMap(props => {
-  const { centerLat, centerLng, markerLat, markerLng, handleMapClick } = props;
+  const {
+    centerLat,
+    centerLng,
+    markerLat,
+    markerLng,
+    handleMapClick,
+    zoom = 8
+  } = props;
   return (
     <GoogleMap
       onClick={handleMapClick}
-      defaultZoom={8}
+      defaultZoom={zoom}
       center={{ lat: centerLat, lng: centerLng }}
     >
       {markerLat && markerLng && (

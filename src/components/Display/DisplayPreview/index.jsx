@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Modal, Icon, Avatar, Row, Col } from "antd";
 import DisplayImage from "../../Common/DisplayImage";
+import MarkerMap from "../../Common/googleMap/MarkerMap";
 export default function DisplayPreview(props) {
   const { toggleFlag, toggleFunc, previewData } = props;
   let {
@@ -12,11 +13,15 @@ export default function DisplayPreview(props) {
     cityName,
     address,
     isPrivate,
-    createdByName
+    createdByName,
+    latitude,
+    longitude
   } = previewData;
   let filePathJson = previewData.filePath || "[]";
   let filePathParsed = JSON.parse(filePathJson);
   filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
+  latitude = parseFloat(latitude);
+  longitude = parseFloat(longitude);
   return (
     <Fragment>
       <Modal
@@ -61,6 +66,12 @@ export default function DisplayPreview(props) {
           <Avatar icon="user" />
           <span>{createdByName}</span>
         </div>
+        <MarkerMap
+          centerLat={latitude}
+          centerLng={longitude}
+          markerLat={latitude}
+          markerLng={longitude}
+        />
       </Modal>
     </Fragment>
   );

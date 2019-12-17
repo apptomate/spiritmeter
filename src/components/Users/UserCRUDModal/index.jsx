@@ -155,13 +155,12 @@ class UserCRUDModal extends Component {
       beforeUpload,
       handleChange,
       addMode,
-      UserDetails,
-      UserDetails: { profileImage }
+      UserDetails = {}
     } = this.props;
     let { imageUrl } = this.props;
 
     if (!addMode) {
-      imageUrl = imageUrl || profileImage;
+      imageUrl = imageUrl || (UserDetails && UserDetails.profileImage);
     }
 
     const uploadButton = (
@@ -350,6 +349,7 @@ class UserCRUDModal extends Component {
                   centerLng={longitude}
                   markerLat={latitude}
                   markerLng={longitude}
+                  zoom={4}
                   handleMapClick={this.handleMapClick}
                 />
               )}
