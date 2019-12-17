@@ -54,6 +54,30 @@ class UserCRUDModal extends Component {
     this.handleMapClick = this.handleMapClick.bind(this);
   }
 
+  componentDidUpdate(prevProp) {
+    if (!this.props.addMode) {
+      console.log("step 1");
+      const {
+        mapData: { latitude, longitude }
+      } = this.state;
+      const {
+        UserDetails: { latitude: userlatitude, longitude: userlongitude }
+      } = this.props;
+      if (!latitude && !longitude) {
+        console.log("step 2");
+
+        console.log(this.props.UserDetails);
+        this.setState(({ mapData }) => ({
+          mapData: {
+            ...mapData,
+            latitude: parseFloat(userlatitude),
+            longitude: parseFloat(userlongitude)
+          }
+        }));
+      }
+    }
+  }
+
   async handleAutoCompleteChange(value) {
     const {
       mapData: { sessionToken }
@@ -129,21 +153,19 @@ class UserCRUDModal extends Component {
   render() {
     console.log(this.state, this.props);
     const {
-      modalProps: {
-        modalFlag,
-        modalToggleFunc,
-        validateToNextPassword,
-        compareToFirstPassword,
-        handleConfirmBlur,
-        addNewUser,
-        getFieldDecorator,
-        uploadLoading,
-        beforeUpload,
-        handleChange,
-        imageUrl,
-        popupToAdd,
-        UserDetails
-      }
+      modalFlag,
+      modalToggleFunc,
+      validateToNextPassword,
+      compareToFirstPassword,
+      handleConfirmBlur,
+      handleAddEditUserFormSubmit,
+      getFieldDecorator,
+      uploadLoading,
+      beforeUpload,
+      handleChange,
+      imageUrl,
+      addMode,
+      UserDetails
     } = this.props;
 
     const uploadButton = (
@@ -159,20 +181,21 @@ class UserCRUDModal extends Component {
     const children = results.map(place => (
       <Option key={place.place_id}>{place.description}</Option>
     ));
-    const latLng = {
+    const additionalData = {
       latitude,
-      longitude
+      longitude,
+      userId: UserDetails && UserDetails.userId
     };
 
     return (
       <Fragment>
         <Modal
           footer={null}
-          title={popupToAdd ? "New User" : "Update User"}
+          title={addMode ? "New User" : "Update User"}
           visible={modalFlag}
           onCancel={modalToggleFunc}
         >
-          <Form onSubmit={e => addNewUser(e, latLng)}>
+          <Form onSubmit={e => handleAddEditUserFormSubmit(e, additionalData)}>
             <div>
               <center>
                 <Upload
@@ -203,7 +226,8 @@ class UserCRUDModal extends Component {
                     required: true,
                     message: "Please input your first name"
                   }
-                ]
+                ],
+                initialValue: UserDetails.firstName || ""
               })(
                 <Input
                   prefix={
@@ -220,7 +244,8 @@ class UserCRUDModal extends Component {
                     required: true,
                     message: "Please input your last name"
                   }
-                ]
+                ],
+                initialValue: UserDetails.lastName || ""
               })(
                 <Input
                   prefix={
@@ -241,7 +266,8 @@ class UserCRUDModal extends Component {
                     pattern: /^[0-9]+$/,
                     message: "input must be a valid phone number"
                   }
-                ]
+                ],
+                initialValue: UserDetails.phoneNumber || ""
               })(
                 <Input
                   prefix={
@@ -259,11 +285,11 @@ class UserCRUDModal extends Component {
                     message: "Please select anyone"
                   }
                 ],
-                initialValue: "male"
+                initialValue: UserDetails.gender || "Male"
               })(
                 <Radio.Group>
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
+                  <Radio value="Male">Male</Radio>
+                  <Radio value="Female">Female</Radio>
                 </Radio.Group>
               )}
             </Form.Item>
@@ -275,40 +301,44 @@ class UserCRUDModal extends Component {
                     message: "Please select anyone"
                   }
                 ],
-                initialValue: "user"
+                initialValue: UserDetails.role || "User"
               })(
                 <Radio.Group>
-                  <Radio value="user">User</Radio>
-                  <Radio value="admin">Admin</Radio>
+                  <Radio value="User">User</Radio>
+                  <Radio value="Admin">Admin</Radio>
                 </Radio.Group>
               )}
             </Form.Item>
-            <Form.Item label="Password" hasFeedback>
-              {getFieldDecorator("password", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input your password!"
-                  },
-                  {
-                    validator: validateToNextPassword
-                  }
-                ]
-              })(<Input.Password />)}
-            </Form.Item>
-            <Form.Item label="Confirm Password" hasFeedback>
-              {getFieldDecorator("confirmPassword", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please confirm your password!"
-                  },
-                  {
-                    validator: compareToFirstPassword
-                  }
-                ]
-              })(<Input.Password onBlur={handleConfirmBlur} />)}
-            </Form.Item>
+            {addMode && (
+              <Fragment>
+                <Form.Item label="Password" hasFeedback>
+                  {getFieldDecorator("password", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your password!"
+                      },
+                      {
+                        validator: validateToNextPassword
+                      }
+                    ]
+                  })(<Input.Password />)}
+                </Form.Item>
+                <Form.Item label="Confirm Password" hasFeedback>
+                  {getFieldDecorator("confirmPassword", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please confirm your password!"
+                      },
+                      {
+                        validator: compareToFirstPassword
+                      }
+                    ]
+                  })(<Input.Password onBlur={handleConfirmBlur} />)}
+                </Form.Item>
+              </Fragment>
+            )}
             <Form.Item label="Choose location">
               <AutoComplete
                 onChange={this.handleAutoCompleteChange}
@@ -332,7 +362,7 @@ class UserCRUDModal extends Component {
                 Cancel
               </Button>{" "}
               <Button type="primary" htmlType="submit">
-                {popupToAdd ? "Create" : "Update"}
+                {addMode ? "Create" : "Update"}
               </Button>
             </Form.Item>
           </Form>

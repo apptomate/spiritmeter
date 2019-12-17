@@ -19,6 +19,7 @@ export const GET_USER_SPIRITMETER_URL = BASE_URL + "User/spiritMeter";
 export const GET_USER_DISPLAY_URL = BASE_URL + "Display/listDisplayByUserId";
 export const GET_USER_ROUTE_URL = BASE_URL + "Route/listRoutesByUserId";
 export const ADD_USER_URL = BASE_URL + "User/createUser";
+export const UPDATE_USER_URL = BASE_URL + "User/updateUser";
 export const DELETE_USER_URL = BASE_URL + "User/deleteUser";
 
 //Common
