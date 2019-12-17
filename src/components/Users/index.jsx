@@ -18,8 +18,7 @@ import {
   Divider,
   Tag,
   Form,
-  Popconfirm,
-  message
+  Popconfirm
 } from "antd";
 import Highlighter from "react-highlight-words";
 import DisplayAvatar from "../Common/DisplayAvatar";
@@ -30,26 +29,16 @@ import { authHeader } from "../../Redux/_helpers/AuthHeaders";
 import API from "../../Redux/_actions/API";
 import { CLEAR_USER_DETAILS } from "../../Redux/_actions/ActionTypes";
 import { bindActionCreators } from "redux";
+import { getBase64, beforeUpload } from "../../Redux/_helpers/Functions";
 
 //Base64
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
+// function getBase64(img, callback) {
+//   const reader = new FileReader();
+//   reader.addEventListener("load", () => callback(reader.result));
+//   reader.readAsDataURL(img);
+// }
 
 //Before File Upload
-function beforeUpload(file) {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-}
 
 class UserGrid extends Component {
   state = {
