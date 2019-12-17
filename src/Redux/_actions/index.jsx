@@ -269,9 +269,9 @@ export function addUser(formData) {
 }
 
 //Delete User
-export function deleteUser(formData) {
+export function deleteUser(paramData) {
   return dispatch => {
-    API.delete(DELETE_USER_URL, formData, { headers: authHeader() })
+    API.delete(DELETE_USER_URL, { headers: authHeader(), params: paramData })
       .then(response => {
         dispatch(getAllListUsers());
         dispatch({
