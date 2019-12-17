@@ -173,6 +173,8 @@ export class Navbar extends Component {
     };
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
+        <h3>Holiday Drive</h3>
+
         <Dropdown className="logout-btn" overlay={this.getMenu}>
           <Button type="link" className="ant-dropdown-link">
             <Icon type="user" />
