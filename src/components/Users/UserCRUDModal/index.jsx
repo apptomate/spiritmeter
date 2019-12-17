@@ -349,6 +349,7 @@ class UserCRUDModal extends Component {
                   centerLng={longitude}
                   markerLat={latitude}
                   markerLng={longitude}
+                  zoom={4}
                   handleMapClick={this.handleMapClick}
                 />
               )}
