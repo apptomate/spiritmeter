@@ -40,15 +40,14 @@ export default class Sidebar extends Component {
     const { collapseFlag } = this.props;
     return (
       <Sider
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={broken => {
+          console.log(broken);
         }}
-        trigger={null}
-        collapsible
-        collapsed={collapseFlag}
+        onCollapse={(collapsed, type) => {
+          console.log(collapsed, type);
+        }}
       >
         <Logo />
         <Menu

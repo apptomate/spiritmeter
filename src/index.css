@@ -676,15 +676,15 @@ button:hover .button-text {
   display: block;
   padding: 1rem;
 }
-.layout-left {
+/* .layout-left {
   margin-left: 200px;
 }
 .ant-layout-sider-collapsed .layout-left {
   margin-left: 80px !important;
-}
-.ant-layout-sider {
+} */
+/* .ant-layout-sider {
   overflow-x: hidden !important;
-}
+} */
 
 .ant-list-item .route-list-card {
   margin-top: 0rem;
@@ -843,4 +843,11 @@ button:hover .button-text {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+}
+.ant-select-auto-complete.ant-select .ant-input {
+  color: #333 !important;
+}
+
+.ant-modal {
+  width: 80% !important;
 }
