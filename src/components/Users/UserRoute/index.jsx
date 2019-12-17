@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import RouteCard from "../../Common/RouteCard";
+import { Empty } from "antd";
 export default class UserRoute extends Component {
   render() {
     const { routeData } = this.props;
@@ -13,6 +14,7 @@ export default class UserRoute extends Component {
         {routeData.map((list, key) => (
           <RouteCard key={key} data={list} showPreviewModal />
         ))}
+        {!routeData.length && <Empty description="No route found" />}
       </Fragment>
     );
   }
