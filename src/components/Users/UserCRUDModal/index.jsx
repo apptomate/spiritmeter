@@ -190,6 +190,7 @@ class UserCRUDModal extends Component {
           title={addMode ? "New User" : "Update User"}
           visible={modalFlag}
           onCancel={modalToggleFunc}
+          maskClosable={false}
         >
           <Form onSubmit={e => handleAddEditUserFormSubmit(e, additionalData)}>
             <div>
@@ -349,7 +350,7 @@ class UserCRUDModal extends Component {
                   centerLng={longitude}
                   markerLat={latitude}
                   markerLng={longitude}
-                  zoom={4}
+                  zoom={14}
                   handleMapClick={this.handleMapClick}
                 />
               )}
