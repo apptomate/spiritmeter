@@ -68,18 +68,18 @@ export function authLogin(formData) {
     API.post(AUTHLOGIN_URL, formData)
       .then(response => {
         const {
-          token,
+          accessToken: { token },
           user: { userId, firstName, profileImage, role }
         } = response.data;
         if (role === "Admin") {
           let loggedUserData = { userId, firstName, profileImage };
           localStorage.setItem("authToken", token);
           localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
+          message.success("Login Success");
           dispatch({
             type: AUTHLOGIN_SUCCESS,
-            payload: response.data
+            payload: token
           });
-          message.success("Login Success");
         } else {
           message.warning("Invalid User");
         }
@@ -127,9 +127,7 @@ export function forgetPassword(formData, history) {
   return dispatch => {
     API.put(FORGET_PASSWORD_URL, formData)
       .then(response => {
-        console.log(response.data);
         let { message: updateMsg } = response.data;
-
         // dispatch({
         //   type: FORGET_PASSWORD_SUCCESS,
         //   payload: message
