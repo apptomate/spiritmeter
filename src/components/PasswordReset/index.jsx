@@ -18,8 +18,13 @@ class PasswordReset extends Component {
     this.validateToNextPassword = this.validateToNextPassword.bind(this);
     this.compareToFirstPassword = this.compareToFirstPassword.bind(this);
     this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
+    this.resendOtpFunc = this.resendOtpFunc.bind(this);
   }
-
+  //Resend OTP
+  resendOtpFunc() {
+    let paramData = { phone: this.state.otpSentPhone };
+    this.props.generateOtp(paramData);
+  }
   //Compare with password
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
@@ -83,7 +88,8 @@ class PasswordReset extends Component {
       otpSentPhone,
       validateToNextPassword: this.validateToNextPassword,
       compareToFirstPassword: this.compareToFirstPassword,
-      handleConfirmBlur: this.handleConfirmBlur
+      handleConfirmBlur: this.handleConfirmBlur,
+      resendOtpFunc: this.resendOtpFunc
     };
     return (
       <Fragment>

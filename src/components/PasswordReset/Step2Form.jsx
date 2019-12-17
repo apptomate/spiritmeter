@@ -11,7 +11,8 @@ class PasswordResetStep2 extends Component {
         otpSentPhone,
         validateToNextPassword,
         compareToFirstPassword,
-        handleConfirmBlur
+        handleConfirmBlur,
+        resendOtpFunc
       }
     } = this.props;
     const otpAlert = (
@@ -99,9 +100,13 @@ class PasswordResetStep2 extends Component {
                 <span className="button-text">Save</span>
               </button>
 
-              {/* <Button type="link" className="login-form-forgot">
-                <Link to="/login">Login</Link>
-              </Button> */}
+              <Button
+                type="link"
+                className="login-form-forgot"
+                onClick={resendOtpFunc}
+              >
+                Resend Code
+              </Button>
             </Form.Item>
           </Form>
         </Col>
