@@ -14,7 +14,6 @@ import {
   GET_USER_SPIRITMETER_URL,
   GET_USER_DISPLAY_URL,
   GET_USER_ROUTE_URL,
-  FILE_UPLOAD_URL,
   ADD_USER_URL,
   DELETE_USER_URL,
   UPDATE_USER_URL
@@ -25,7 +24,6 @@ import {
   AUTHLOGIN_ERROR,
   GENERATE_OTP_SUCCESS,
   GENERATE_OTP_ERROR,
-  FORGET_PASSWORD_SUCCESS,
   FORGET_PASSWORD_ERROR,
   ALL_LIST_DISPLAY_LOADING,
   ALL_LIST_DISPLAY_SUCCESS,
@@ -51,8 +49,6 @@ import {
   GET_USER_DISPLAY_ERROR,
   GET_USER_ROUTE_SUCCESS,
   GET_USER_ROUTE_ERROR,
-  FILE_UPLOAD_SUCCESS,
-  FILE_UPLOAD_ERROR,
   ADD_USER_SUCCESS,
   ADD_USER_ERROR,
   DELETE_USER_SUCCESS,
@@ -442,28 +438,6 @@ export function getUserRoute(paramData) {
         if (error.response) {
           dispatch({
             type: GET_USER_ROUTE_ERROR,
-            payload: error.response.data
-          });
-        }
-      });
-  };
-}
-
-//Common
-//File Upload
-export function uploadFile(formData) {
-  return dispatch => {
-    API.post(FILE_UPLOAD_URL, formData, { headers: authHeader() })
-      .then(response => {
-        dispatch({
-          type: FILE_UPLOAD_SUCCESS,
-          payload: response.data
-        });
-      })
-      .catch(error => {
-        if (error.response) {
-          dispatch({
-            type: FILE_UPLOAD_ERROR,
             payload: error.response.data
           });
         }

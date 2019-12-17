@@ -54,7 +54,3 @@ export const ADD_USER_ERROR = " ADD_USER_ERROR";
 //Delete User
 export const DELETE_USER_SUCCESS = " DELETE_USER_SUCCESS";
 export const DELETE_USER_ERROR = " DELETE_USER_ERROR";
-
-//File Upload
-export const FILE_UPLOAD_SUCCESS = " FILE_UPLOAD_SUCCESS";
-export const FILE_UPLOAD_ERROR = " FILE_UPLOAD_ERROR";

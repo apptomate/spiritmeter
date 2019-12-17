@@ -94,9 +94,7 @@ class UserCRUDModal extends Component {
   }
   handleAutoCompleteSelect(value) {
     var map = new google.maps.Map(document.createElement("div"));
-
     var service = new google.maps.places.PlacesService(map);
-
     service.getDetails(
       {
         placeId: value
@@ -156,10 +154,14 @@ class UserCRUDModal extends Component {
       uploadLoading,
       beforeUpload,
       handleChange,
-      imageUrl,
       addMode,
-      UserDetails
+      UserDetails = {}
     } = this.props;
+    let { imageUrl } = this.props;
+
+    if (!addMode) {
+      imageUrl = imageUrl || (UserDetails && UserDetails.profileImage);
+    }
 
     const uploadButton = (
       <div>
@@ -177,7 +179,8 @@ class UserCRUDModal extends Component {
     const additionalData = {
       latitude,
       longitude,
-      userId: UserDetails && UserDetails.userId
+      userId: UserDetails && UserDetails.userId,
+      profileImage: imageUrl
     };
 
     return (
@@ -346,6 +349,7 @@ class UserCRUDModal extends Component {
                   centerLng={longitude}
                   markerLat={latitude}
                   markerLng={longitude}
+                  zoom={4}
                   handleMapClick={this.handleMapClick}
                 />
               )}

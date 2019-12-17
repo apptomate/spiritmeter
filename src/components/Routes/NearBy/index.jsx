@@ -1,10 +1,10 @@
-import React, { Component, Fragment, PureComponent } from "react";
+import React, { Fragment, PureComponent } from "react";
 import { Tabs } from "antd";
 import NearByList from "./NearByList";
 const { TabPane } = Tabs;
 export default class NearBy extends PureComponent {
   render() {
-    const { srclat, srclng, destlat, destlng } = this.props;
+    const { srclat, srclng } = this.props;
 
     return (
       <Fragment>

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import {
   getAllListUsers,
-  uploadFile,
+  // uploadFile,
   addUser,
   updateUser,
   getUserDetails,
@@ -25,6 +25,9 @@ import Highlighter from "react-highlight-words";
 import DisplayAvatar from "../Common/DisplayAvatar";
 import { Link } from "react-router-dom";
 import UserCRUDModal from "./UserCRUDModal";
+import { FILE_UPLOAD_URL } from "../../Redux/_helpers/Constants";
+import { authHeader } from "../../Redux/_helpers/AuthHeaders";
+import API from "../../Redux/_actions/API";
 
 //Base64
 function getBase64(img, callback) {
@@ -66,6 +69,7 @@ class UserGrid extends Component {
     this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
     this.editUser = this.editUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.uploadFileToS3 = this.uploadFileToS3.bind(this);
 
     //Table Columns
     this.columns = [
@@ -195,27 +199,41 @@ class UserGrid extends Component {
     if (status === "done") {
       getBase64(originFileObj, imageUrl => {
         const processed_file_base64 = imageUrl.split(",")[1];
-        let formData = {
+        let fileData = {
           file: processed_file_base64,
           fileName: name
         };
-        this.props.uploadFile(formData);
-        this.setState({
-          imageUrl,
-          uploadLoading: false
-        });
+        this.uploadFileToS3(fileData);
       });
     }
   };
+
+  async uploadFileToS3(fileData) {
+    let imageUrl = "";
+    try {
+      const response = await API.post(FILE_UPLOAD_URL, fileData, {
+        headers: authHeader()
+      });
+      imageUrl = response.data.fileurl;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.setState({
+        imageUrl,
+        uploadLoading: false
+      });
+    }
+  }
+
   //User Add
   handleAddEditUserFormSubmit = (e, additional) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        let { FileUploadData } = this.props;
+        // let { FileUploadData } = this.props;
         let { addMode } = this.state;
         delete values.confirmPassword;
-        values["profileImage"] = FileUploadData ? FileUploadData.fileurl : "";
+        values["profileImage"] = additional.profileImage;
         values["latitude"] = additional.latitude;
         values["longitude"] = additional.longitude;
         // values["country"] = "USA";
@@ -385,14 +403,13 @@ const Users = Form.create({ name: "normal_login" })(UserGrid);
 const getState = state => {
   return {
     UsersResponse: state.getAllListUsers,
-    FileUploadData: state.uploadFile.data,
     AddUserData: state.addUser.data,
     UserDetails: state.getUserDetails.data
   };
 };
 export default connect(getState, {
   getAllListUsers,
-  uploadFile,
+  // uploadFile,
   addUser,
   updateUser,
   getUserDetails,
