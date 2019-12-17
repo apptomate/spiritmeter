@@ -357,14 +357,18 @@ class UserCRUDModal extends Component {
                 />
               )}
             </Form.Item>
-            <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-              <Button type="default" onClick={modalToggleFunc}>
-                Cancel
-              </Button>{" "}
-              <Button type="primary" htmlType="submit">
+            <div className="d-fr">
+              <Button className="f-r" type="primary" htmlType="submit">
                 {addMode ? "Create" : "Update"}
               </Button>
-            </Form.Item>
+              <Button
+                className="f-r mr-1"
+                type="default"
+                onClick={modalToggleFunc}
+              >
+                Cancel
+              </Button>
+            </div>
           </Form>
         </Modal>
       </Fragment>
