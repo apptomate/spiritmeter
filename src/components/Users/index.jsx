@@ -46,7 +46,8 @@ class UserGrid extends Component {
     uploadLoading: false,
     imageUrl: "",
     confirmDirty: "",
-    addMode: true
+    addMode: true,
+    searchText: ""
   };
   constructor(props) {
     super(props);
@@ -61,88 +62,6 @@ class UserGrid extends Component {
     this.editUser = this.editUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.uploadFileToS3 = this.uploadFileToS3.bind(this);
-
-    //Table Columns
-    this.columns = [
-      {
-        title: "Profile",
-        dataIndex: "profileImage",
-        key: "profileImage",
-        render: profileImage => (
-          <span>
-            <DisplayAvatar srcPath={profileImage} />
-          </span>
-        )
-      },
-      {
-        title: "Name",
-        dataIndex: "name",
-        key: "name"
-      },
-      {
-        title: "Gender",
-        dataIndex: "gender",
-        key: "gender"
-      },
-      {
-        title: "Phone Number",
-        dataIndex: "phoneNumber",
-        key: "phoneNumber"
-      },
-      {
-        title: "Role",
-        dataIndex: "role",
-        key: "role",
-        render: role => (
-          <span>
-            <Tag color={role === "Admin" ? "volcano" : "geekblue"}>{role}</Tag>
-          </span>
-        )
-      },
-      {
-        title: "Action",
-        dataIndex: "userId",
-        key: "userId",
-        render: userId => (
-          <span>
-            <Link to={`/admin/viewUser/${userId}`}>
-              <Button
-                type="primary"
-                shape="circle"
-                icon="eye"
-                size="small"
-                title="View"
-              />
-            </Link>
-            <Divider type="vertical" />
-            <Button
-              data-user_id={userId}
-              type="default"
-              shape="circle"
-              icon="edit"
-              size="small"
-              title="Update"
-              onClick={this.editUser}
-            />
-            <Divider type="vertical" />
-            <Popconfirm
-              title="Are you sure delete this user?"
-              onConfirm={() => this.deleteUser(userId)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button
-                type="danger"
-                shape="circle"
-                icon="delete"
-                size="small"
-                title="Remove"
-              />
-            </Popconfirm>
-          </span>
-        )
-      }
-    ];
   }
 
   //Delete User
@@ -157,12 +76,14 @@ class UserGrid extends Component {
     this.props.getUserDetails(userId);
     this.userModalToggle(false);
   };
+
   handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState(prevState => ({
       confirmDirty: prevState.confirmDirty || !!value
     }));
   };
+
   //Compare with password
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
@@ -297,7 +218,7 @@ class UserGrid extends Component {
       </div>
     ),
     filterIcon: filtered => (
-      <Icon type="search" style={{ color: filtered ? "#1890ff" : "" }} />
+      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -342,7 +263,90 @@ class UserGrid extends Component {
     } = this.props;
     const { modalFlag, imageUrl, uploadLoading, addMode } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const { Search } = Input;
+    //const { Search } = Input;
+
+    const columns = [
+      {
+        title: "Profile",
+        dataIndex: "profileImage",
+        key: "profileImage",
+        render: profileImage => (
+          <span>
+            <DisplayAvatar srcPath={profileImage} />
+          </span>
+        )
+      },
+      {
+        title: "Name",
+        dataIndex: "name",
+        key: "name",
+        ...this.getColumnSearchProps("name")
+      },
+      {
+        title: "Gender",
+        dataIndex: "gender",
+        key: "gender"
+      },
+      {
+        title: "Phone Number",
+        dataIndex: "phoneNumber",
+        key: "phoneNumber",
+        ...this.getColumnSearchProps("phoneNumber")
+      },
+      {
+        title: "Role",
+        dataIndex: "role",
+        key: "role",
+        render: role => (
+          <span>
+            <Tag color={role === "Admin" ? "volcano" : "geekblue"}>{role}</Tag>
+          </span>
+        )
+      },
+      {
+        title: "Action",
+        dataIndex: "userId",
+        key: "userId",
+        render: userId => (
+          <span>
+            <Link to={`/admin/viewUser/${userId}`}>
+              <Button
+                type="primary"
+                shape="circle"
+                icon="eye"
+                size="small"
+                title="View"
+              />
+            </Link>
+            <Divider type="vertical" />
+            <Button
+              data-user_id={userId}
+              type="default"
+              shape="circle"
+              icon="edit"
+              size="small"
+              title="Update"
+              onClick={this.editUser}
+            />
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Are you sure delete this user?"
+              onConfirm={() => this.deleteUser(userId)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                type="danger"
+                shape="circle"
+                icon="delete"
+                size="small"
+                title="Remove"
+              />
+            </Popconfirm>
+          </span>
+        )
+      }
+    ];
 
     //Modal Props
     const modalProps = {
@@ -366,11 +370,6 @@ class UserGrid extends Component {
         <div className="dis-center">
           <PageHeader title="List of Users" className="title-header-left" />
           <div className="title-header-right">
-            <Search
-              className="f-r"
-              placeholder="Search..."
-              style={{ width: 200 }}
-            />
             <Button
               className="f-r user-add-btn"
               type="primary"
@@ -384,7 +383,7 @@ class UserGrid extends Component {
         <div>
           <Spin spinning={loading}>
             <div>
-              <Table columns={this.columns} dataSource={data}></Table>
+              <Table columns={columns} dataSource={data} />
             </div>
             <div>{modalFlag && <UserCRUDModal {...modalProps} />}</div>
           </Spin>

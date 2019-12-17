@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import NearByListCard from "./NearByListCard";
 import { GOOGLE_MAPS_API_KEY } from "../../../Redux/_helpers/Constants";
 import Axios from "axios";
+import { Spin, Empty } from "antd";
 
 class NearByList extends Component {
   state = {
@@ -24,10 +25,14 @@ class NearByList extends Component {
   render() {
     const { results, loading } = this.state;
     if (loading) {
-      return <p>Loading...</p>;
+      return (
+        <center>
+          <Spin spinning />
+        </center>
+      );
     }
     if (!results.length) {
-      return <p>No results found</p>;
+      return <Empty description="No data found" />;
     }
     return (
       <Fragment>
