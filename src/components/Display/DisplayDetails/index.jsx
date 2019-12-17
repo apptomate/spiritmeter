@@ -70,7 +70,12 @@ export default class DisplayDetails extends Component {
         <Row>
           <Col className="mt-2">
             <div className="listing-map-div my-card">
-              <MarkerMap lat={latitude} lng={longitude} />
+              <MarkerMap
+                centerLat={latitude}
+                centerLng={longitude}
+                markerLat={latitude}
+                markerLng={longitude}
+              />
             </div>
           </Col>
         </Row>

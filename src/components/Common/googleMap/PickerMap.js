@@ -1,10 +1,14 @@
 import React from "react";
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
-const MarkerMap = withGoogleMap(props => {
-  const { centerLat, centerLng, markerLat, markerLng } = props;
+const Picker = withGoogleMap(props => {
+  const { centerLat, centerLng, markerLat, markerLng, handleMapClick } = props;
   return (
-    <GoogleMap defaultZoom={8} center={{ lat: centerLat, lng: centerLng }}>
+    <GoogleMap
+      onClick={handleMapClick}
+      defaultZoom={8}
+      center={{ lat: centerLat, lng: centerLng }}
+    >
       {markerLat && markerLng && (
         <Marker position={{ lat: markerLat, lng: markerLng }} />
       )}
@@ -12,11 +16,11 @@ const MarkerMap = withGoogleMap(props => {
   );
 });
 
-MarkerMap.defaultProps = {
+Picker.defaultProps = {
   loadingElement: <div style={{ height: "100%" }} />,
   containerElement: <div style={{ height: "400px" }} />,
   mapElement: <div style={{ height: "100%" }} />,
   defaultZoom: 8
 };
 
-export default MarkerMap;
+export default Picker;
