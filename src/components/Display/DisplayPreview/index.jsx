@@ -25,6 +25,7 @@ export default function DisplayPreview(props) {
   return (
     <Fragment>
       <Modal
+        className="mymodel-width"
         style={{ width: "80%" }}
         title="Display Preview"
         visible={toggleFlag}
@@ -32,46 +33,54 @@ export default function DisplayPreview(props) {
         onOk={toggleFunc}
         onCancel={toggleFunc}
       >
-        <div>
-          <DisplayImage srcPath={filePathParsed} />
-        </div>
-        <div className="list-name-imp">
-          <h4 className="list-name">{name}</h4>
-        </div>
-        <div className="list-name-imp">
-          <Icon type="home" /> {categoryName}
-        </div>
-        <div className="list-name-imp">
-          <Icon type="radar-chart" /> {type}
-        </div>
-        <div className="list-name-imp">
-          <Icon type="environment" /> {country}
-          {state && ` , ${state}`}
-          {cityName && ` , ${cityName}`}
-          {address && ` , ${address}`}
-        </div>
+        <Row>
+          <Col span={12}>
+            <div>
+              <DisplayImage srcPath={filePathParsed} />
+            </div>
+            <div className="list-name-imp">
+              <h4 className="list-name">{name}</h4>
+            </div>
+            <div className="list-name-imp">
+              <Icon type="home" /> {categoryName}
+            </div>
+            <div className="list-name-imp">
+              <Icon type="radar-chart" /> {type}
+            </div>
+            <div className="list-name-imp">
+              <Icon type="environment" /> {country}
+              {state && ` , ${state}`}
+              {cityName && ` , ${cityName}`}
+              {address && ` , ${address}`}
+            </div>
 
-        <div className="list-name-imp">
-          <i
-            className={
-              isPrivate
-                ? "fas fa-user-lock color-g"
-                : "fas fa-globe-asia color-r"
-            }
-          />
-          {isPrivate ? "Is Private" : "Is Public"}
-        </div>
+            <div className="list-name-imp">
+              <i
+                className={
+                  isPrivate
+                    ? "fas fa-user-lock color-g"
+                    : "fas fa-globe-asia color-r"
+                }
+              />
+              {isPrivate ? "Is Private" : "Is Public"}
+            </div>
 
-        <div className="item-center list-username mt-2 d-block">
-          <Avatar icon="user" />
-          <span>{createdByName}</span>
-        </div>
-        <MarkerMap
-          centerLat={latitude}
-          centerLng={longitude}
-          markerLat={latitude}
-          markerLng={longitude}
-        />
+            <div className="item-center list-username mt-2 d-block">
+              <Avatar icon="user" />
+              <span>{createdByName}</span>
+            </div>
+          </Col>
+          <Col span={12}>
+            <div className="map-p">
+              <MarkerMap
+                centerLat={latitude}
+                centerLng={longitude}
+                markerLat={latitude}
+                markerLng={longitude}
+              />
+            </div>
+          </Col>
+        </Row>
       </Modal>
     </Fragment>
   );

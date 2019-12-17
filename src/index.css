@@ -382,7 +382,7 @@ button:hover .button-text {
 /* For demo */
 .ant-carousel .slick-slide {
   text-align: center;
-  height: 160px;
+  height: 320px !important;
   line-height: 160px;
   background: #364d79;
   overflow: hidden;
@@ -848,6 +848,24 @@ button:hover .button-text {
   color: #333 !important;
 }
 
-.ant-modal {
+.mymodel-width {
   width: 80% !important;
+}
+
+.map-p {
+  padding: 0rem 1rem;
+}
+
+button.cus-btn:hover .circle .icon.arrow {
+  left: 0rem !important;
+}
+
+.my-link-btn {
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.ant-btn {
+  line-height: inherit !important;
 }
