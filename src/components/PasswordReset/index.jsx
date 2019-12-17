@@ -1,48 +1,90 @@
 import React, { Component, Fragment } from "react";
 import { Form, Row, Col } from "antd";
 import { connect } from "react-redux";
-import { authLogin } from "../../Redux/_actions";
-import { Redirect } from "react-router-dom";
+import { generateOtp, forgetPassword } from "../../Redux/_actions";
 import logoimg from "../../assets/img/logo.png";
-import PasswordResetStep1 from "./Step1Form";
-import PasswordResetStep2 from "./Step2Form";
+import PasswordResetStep1 from "./Step1Form.jsx";
+import PasswordResetStep2 from "./Step2Form.jsx";
 
 class PasswordReset extends Component {
   state = {
-    OTPVerified: false
+    otpSentPhone: "",
+    confirmDirty: ""
   };
   constructor(props) {
     super(props);
-    this.validateStep1 = this.validateStep1.bind(this);
-    this.validateStep2 = this.validateStep2.bind(this);
+    this.generateOtpFunc = this.generateOtpFunc.bind(this);
+    this.resetPasswordFunc = this.resetPasswordFunc.bind(this);
+    this.validateToNextPassword = this.validateToNextPassword.bind(this);
+    this.compareToFirstPassword = this.compareToFirstPassword.bind(this);
+    this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
   }
-  validateStep1 = e => {
+
+  //Compare with password
+  compareToFirstPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && value !== form.getFieldValue("password")) {
+      callback("Password not matched!");
+    } else {
+      callback();
+    }
+  };
+  //Compare with Confirm password
+  validateToNextPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(["confirmPassword"], { force: true });
+    }
+    callback();
+  };
+  //Blur
+  handleConfirmBlur = e => {
+    const { value } = e.target;
+    this.setState(prevState => ({
+      confirmDirty: prevState.confirmDirty || !!value
+    }));
+  };
+
+  //Reset new password
+  resetPasswordFunc = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log(1111111111111111, values);
-        this.props.authLogin(values);
+        let { otpSentPhone } = this.state;
+        delete values.confirmPassword;
+        values["phone"] = otpSentPhone;
+        this.props.forgetPassword(values);
       }
     });
   };
 
-  validateStep2 = e => {
+  //Generate OTP
+  generateOtpFunc = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log(2222222, values);
-        this.props.authLogin(values);
+        this.props.generateOtp(values);
+        this.setState({ otpSentPhone: values.phone });
       }
     });
   };
 
   render() {
-    let { LoginProps } = this.props;
-    let { OTPVerified } = this.state;
-    if (LoginProps && LoginProps.token) {
-      return <Redirect to={{ pathname: "/" }} />;
-    }
+    let { generateOtpProps, forgetPasswordRes } = this.props;
+    console.log(forgetPasswordRes);
+
+    let { otpSentPhone } = this.state;
+
     const { getFieldDecorator } = this.props.form;
+
+    const componentProps = {
+      resetPasswordFunc: this.resetPasswordFunc,
+      getFieldDecorator,
+      otpSentPhone,
+      validateToNextPassword: this.validateToNextPassword,
+      compareToFirstPassword: this.compareToFirstPassword,
+      handleConfirmBlur: this.handleConfirmBlur
+    };
     return (
       <Fragment>
         <div className="login-bg">
@@ -51,16 +93,13 @@ class PasswordReset extends Component {
               <img className="w-100" src={logoimg} alt="no data" />
             </Col>
             <Col span={2}></Col>
-            {!OTPVerified ? (
+            {!generateOtpProps ? (
               <PasswordResetStep1
-                validateLogin={this.validateStep1}
+                generateOtpFunc={this.generateOtpFunc}
                 getFieldDecorator={getFieldDecorator}
               />
             ) : (
-              <PasswordResetStep2
-                validateLogin={this.validateStep2}
-                getFieldDecorator={getFieldDecorator}
-              />
+              <PasswordResetStep2 componentProps={componentProps} />
             )}
             <Col span={2}></Col>
           </Row>
@@ -72,9 +111,11 @@ class PasswordReset extends Component {
 const Login = Form.create({ name: "PasswordReset" })(PasswordReset);
 const getState = state => {
   return {
-    LoginProps: state.authLogin.data
+    generateOtpProps: state.generateOtp.data,
+    forgetPasswordRes: state.forgetPassword.data
   };
 };
 export default connect(getState, {
-  authLogin
+  generateOtp,
+  forgetPassword
 })(Login);

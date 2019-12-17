@@ -2,6 +2,12 @@
 //Login
 export const AUTHLOGIN_SUCCESS = "AUTHLOGIN_SUCCESS";
 export const AUTHLOGIN_ERROR = "AUTHLOGIN_ERROR";
+//Generate OTP
+export const GENERATE_OTP_SUCCESS = "GENERATE_OTP_SUCCESS";
+export const GENERATE_OTP_ERROR = "GENERATE_OTP_ERROR";
+//Forget Password
+export const FORGET_PASSWORD_SUCCESS = "FORGET_PASSWORD_SUCCESS";
+export const FORGET_PASSWORD_ERROR = "FORGET_PASSWORD_ERROR";
 
 //Display
 //Get All List Display
