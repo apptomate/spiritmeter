@@ -90,7 +90,7 @@ class LoginForm extends Component {
                     <span className="button-text">Login</span>
                   </button>
                   <Link to="/forgot-password">
-                    <Button type="link" className="login-form-forgot">
+                    <Button type="link" className="my-link-btn f-r">
                       Forgot password
                     </Button>
                   </Link>
