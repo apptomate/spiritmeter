@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Modal, Icon, Avatar, Row, Col } from "antd";
+import { Modal, Icon, Avatar } from "antd";
 import DisplayImage from "../../Common/DisplayImage";
 import MarkerMap from "../../Common/googleMap/MarkerMap";
 export default function DisplayPreview(props) {

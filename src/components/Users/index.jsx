@@ -28,6 +28,8 @@ import UserCRUDModal from "./UserCRUDModal";
 import { FILE_UPLOAD_URL } from "../../Redux/_helpers/Constants";
 import { authHeader } from "../../Redux/_helpers/AuthHeaders";
 import API from "../../Redux/_actions/API";
+import { CLEAR_USER_DETAILS } from "../../Redux/_actions/ActionTypes";
+import { bindActionCreators } from "redux";
 
 //Base64
 function getBase64(img, callback) {
@@ -256,6 +258,9 @@ class UserGrid extends Component {
       modalFlag: !prevState.modalFlag,
       addMode: addMode
     }));
+    if (addMode) {
+      this.props.dispatch({ type: CLEAR_USER_DETAILS });
+    }
   }
 
   componentDidMount() {
@@ -407,11 +412,21 @@ const getState = state => {
     UserDetails: state.getUserDetails.data
   };
 };
-export default connect(getState, {
-  getAllListUsers,
-  // uploadFile,
-  addUser,
-  updateUser,
-  getUserDetails,
-  deleteUser
-})(Users);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        getAllListUsers,
+        addUser,
+        updateUser,
+        getUserDetails,
+        deleteUser
+      },
+      dispatch
+    )
+  };
+}
+
+export default connect(getState, mapDispatchToProps)(Users);
