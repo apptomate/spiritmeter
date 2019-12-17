@@ -869,3 +869,7 @@ button.cus-btn:hover .circle .icon.arrow {
 .ant-btn {
   line-height: inherit !important;
 }
+
+.ant-dropdown-menu {
+  top: 5px;
+}
