@@ -6,7 +6,7 @@ import {
 } from "../../../Redux/_service/AuthenticationService";
 
 const { Header } = Layout;
-const { Search } = Input;
+
 const menu = (
   <Menu>
     <Menu.Item key="0">
@@ -44,11 +44,7 @@ export default class Navbar extends Component {
           type={collapseFlag ? "menu-unfold" : "menu-fold"}
           onClick={collapseToggleFunc}
         /> */}
-        <Search
-          className="ml-1"
-          placeholder="Search..."
-          style={{ width: 200 }}
-        />
+
         <SignoutButton />
       </Header>
     );
