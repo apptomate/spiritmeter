@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Spin, PageHeader, Input } from "antd";
+import { Spin, PageHeader, Input, Empty } from "antd";
 import { getAllListRoutes } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import RouteCard from "../Common/RouteCard";
@@ -30,6 +30,7 @@ class Routes extends Component {
         return query.toLowerCase().includes(searchQuery.toLowerCase());
       });
     }
+    const recordLength = data.length;
 
     return (
       <Fragment>
@@ -46,9 +47,15 @@ class Routes extends Component {
         </div>
 
         <Spin spinning={loading}>
-          {data.map((list, key) => (
-            <RouteCard key={key} data={list} />
-          ))}
+          {!recordLength ? (
+            <Empty />
+          ) : (
+            <Fragment>
+              {data.map((list, key) => (
+                <RouteCard key={key} data={list} />
+              ))}
+            </Fragment>
+          )}
         </Spin>
       </Fragment>
     );

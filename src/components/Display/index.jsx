@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Spin, PageHeader, Input } from "antd";
+import { Spin, PageHeader, Input, Empty } from "antd";
 import { getAllListDisplay } from "../../Redux/_actions";
 import { connect } from "react-redux";
 import DisplayCard from "./DisplayCard";
@@ -26,11 +26,14 @@ class Display extends Component {
 
     if (searchQuery) {
       data = data.filter(list => {
-        const { name, country, state, cityName, address } = list;
-        const query = name + country + state + cityName + address;
+        const { name, country, state, cityName, address, createdByName } = list;
+        const query =
+          name + country + state + cityName + address + createdByName;
         return query.toLowerCase().includes(searchQuery.toLowerCase());
       });
     }
+
+    const recordLength = data.length;
 
     return (
       <Fragment>
@@ -47,10 +50,15 @@ class Display extends Component {
         </div>
 
         <Spin spinning={loading}>
-          {data &&
-            data.map((list, key) => (
-              <DisplayCard listData={list} hideViewButton={false} key={key} />
-            ))}
+          {!recordLength ? (
+            <Empty />
+          ) : (
+            <Fragment>
+              {data.map((list, key) => (
+                <DisplayCard listData={list} hideViewButton={false} key={key} />
+              ))}
+            </Fragment>
+          )}
         </Spin>
       </Fragment>
     );
