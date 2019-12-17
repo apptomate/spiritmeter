@@ -3,14 +3,14 @@ import { Form, Icon, Input, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 
 const PasswordResetStep1 = props => {
-  const { getFieldDecorator, validateLogin } = props;
+  const { getFieldDecorator, generateOtpFunc } = props;
   return (
     <Fragment>
       <Col span={8} className="login-form-div">
-        <h4 className="text-center login-title">Login</h4>
-        <Form onSubmit={validateLogin} className="login-form">
+        <h4 className="text-center login-title">Find Your Account</h4>
+        <Form onSubmit={generateOtpFunc} className="login-form">
           <Form.Item>
-            {getFieldDecorator("phoneNo", {
+            {getFieldDecorator("phone", {
               rules: [
                 {
                   required: true,
@@ -31,15 +31,15 @@ const PasswordResetStep1 = props => {
             )}
           </Form.Item>
           <Form.Item>
-            <button class="cus-btn ml-a">
-              <span class="circle">
-                <span class="icon arrow"></span>
+            <button className="cus-btn ml-a">
+              <span className="circle">
+                <span className="icon arrow"></span>
               </span>
-              <span class="button-text">Get OTP</span>
+              <span className="button-text">Get OTP</span>
             </button>
 
             <Button type="link" className="login-form-forgot">
-              <Link to="/forgot-password">Login</Link>
+              <Link to="/login">Login</Link>
             </Button>
           </Form.Item>
         </Form>

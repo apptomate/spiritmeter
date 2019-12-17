@@ -2,7 +2,9 @@ import API from "./API";
 import { authHeader } from "../_helpers/AuthHeaders";
 //URL
 import {
-  LOGIN_URL,
+  AUTHLOGIN_URL,
+  GENERATE_OTP_URL,
+  FORGET_PASSWORD_URL,
   ALL_LIST_DISPLAY_URL,
   ALL_LIST_ROUTES_URL,
   ALL_LIST_USERS_URL,
@@ -14,12 +16,17 @@ import {
   GET_USER_ROUTE_URL,
   FILE_UPLOAD_URL,
   ADD_USER_URL,
-  DELETE_USER_URL
+  DELETE_USER_URL,
+  UPDATE_USER_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
   AUTHLOGIN_SUCCESS,
   AUTHLOGIN_ERROR,
+  GENERATE_OTP_SUCCESS,
+  GENERATE_OTP_ERROR,
+  FORGET_PASSWORD_SUCCESS,
+  FORGET_PASSWORD_ERROR,
   ALL_LIST_DISPLAY_LOADING,
   ALL_LIST_DISPLAY_SUCCESS,
   ALL_LIST_DISPLAY_ERROR,
@@ -58,7 +65,7 @@ import { message } from "antd";
 //Login
 export function authLogin(formData) {
   return dispatch => {
-    API.post(LOGIN_URL, formData)
+    API.post(AUTHLOGIN_URL, formData)
       .then(response => {
         const {
           token,
@@ -82,6 +89,56 @@ export function authLogin(formData) {
           let { data } = error.response;
           dispatch({
             type: AUTHLOGIN_ERROR,
+            payload: data
+          });
+          message.error(data.errorMessage);
+        }
+      });
+  };
+}
+
+//Generate OTP
+export function generateOtp(formData) {
+  return dispatch => {
+    API.put(GENERATE_OTP_URL, formData)
+      .then(response => {
+        let { smsStatus } = response.data;
+        dispatch({
+          type: GENERATE_OTP_SUCCESS,
+          payload: smsStatus
+        });
+        message.success(smsStatus);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: GENERATE_OTP_ERROR,
+            payload: data
+          });
+          message.error(data.errorMessage);
+        }
+      });
+  };
+}
+
+//Password Update
+export function forgetPassword(formData) {
+  return dispatch => {
+    API.put(FORGET_PASSWORD_URL, formData)
+      .then(response => {
+        //let { smsStatus } = response.data;
+        dispatch({
+          type: FORGET_PASSWORD_SUCCESS,
+          payload: response.data
+        });
+        message.success(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: FORGET_PASSWORD_ERROR,
             payload: data
           });
           message.error(data.errorMessage);
@@ -247,6 +304,30 @@ export function getUserDetails(userId) {
 export function addUser(formData) {
   return dispatch => {
     API.post(ADD_USER_URL, formData, { headers: authHeader() })
+      .then(response => {
+        dispatch(getAllListUsers());
+        dispatch({
+          type: ADD_USER_SUCCESS,
+          payload: response.data
+        });
+        message.success(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: ADD_USER_ERROR,
+            payload: data
+          });
+          message.error(data.errorMessage);
+        }
+      });
+  };
+}
+
+export function updateUser(formData) {
+  return dispatch => {
+    API.put(UPDATE_USER_URL, formData, { headers: authHeader() })
       .then(response => {
         dispatch(getAllListUsers());
         dispatch({

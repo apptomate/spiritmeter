@@ -3,6 +3,7 @@ import {
   getAllListUsers,
   uploadFile,
   addUser,
+  updateUser,
   getUserDetails,
   deleteUser
 } from "../../Redux/_actions";
@@ -18,9 +19,6 @@ import {
   Tag,
   Form,
   Popconfirm,
-  Modal,
-  Radio,
-  Upload,
   message
 } from "antd";
 import Highlighter from "react-highlight-words";
@@ -54,12 +52,14 @@ class UserGrid extends Component {
     uploadLoading: false,
     imageUrl: "",
     confirmDirty: "",
-    popupToAdd: true
+    addMode: true
   };
   constructor(props) {
     super(props);
     this.userModalToggle = this.userModalToggle.bind(this);
-    this.addNewUser = this.addNewUser.bind(this);
+    this.handleAddEditUserFormSubmit = this.handleAddEditUserFormSubmit.bind(
+      this
+    );
     this.handleChange = this.handleChange.bind(this);
     this.validateToNextPassword = this.validateToNextPassword.bind(this);
     this.compareToFirstPassword = this.compareToFirstPassword.bind(this);
@@ -160,10 +160,7 @@ class UserGrid extends Component {
   editUser = e => {
     let userId = e.currentTarget.dataset.user_id;
     this.props.getUserDetails(userId);
-    this.setState(prevState => ({
-      modalFlag: !prevState.modalFlag,
-      popupToAdd: false
-    }));
+    this.userModalToggle(false);
   };
   handleConfirmBlur = e => {
     const { value } = e.target;
@@ -211,29 +208,36 @@ class UserGrid extends Component {
     }
   };
   //User Add
-  addNewUser = e => {
+  handleAddEditUserFormSubmit = (e, additional) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         let { FileUploadData } = this.props;
+        let { addMode } = this.state;
         delete values.confirmPassword;
         values["profileImage"] = FileUploadData ? FileUploadData.fileurl : "";
-        values["latitude"] = "0.111";
-        values["longitude"] = "0.111";
-        values["country"] = "USA";
-        values["state"] = " TX 77040";
-        values["cityName"] = "Houston";
-        values["address"] = "1/1 Fourth Car Street";
-        //this.props.addUser(values);
-        //this.setState({ modalFlag: false });
+        values["latitude"] = additional.latitude;
+        values["longitude"] = additional.longitude;
+        // values["country"] = "USA";
+        // values["state"] = " TX 77040";
+        // values["cityName"] = "Houston";
+        // values["address"] = "1/1 Fourth Car Street";
+        if (addMode) {
+          this.props.addUser(values);
+        } else {
+          console.log(values);
+          values.userID = additional.userId;
+          this.props.updateUser(values);
+        }
+        this.userModalToggle(false);
       }
     });
   };
   //User Modal
-  userModalToggle() {
+  userModalToggle(addMode) {
     this.setState(prevState => ({
       modalFlag: !prevState.modalFlag,
-      popupToAdd: true
+      addMode: addMode
     }));
   }
 
@@ -323,18 +327,16 @@ class UserGrid extends Component {
   render() {
     const {
       UsersResponse: { data = [], loading },
-      FileUploadData,
-      AddUserData,
       UserDetails
     } = this.props;
-    const { modalFlag, imageUrl, uploadLoading, popupToAdd } = this.state;
+    const { modalFlag, imageUrl, uploadLoading, addMode } = this.state;
     const { getFieldDecorator } = this.props.form;
     const { Search } = Input;
 
     //Modal Props
     const modalProps = {
       modalToggleFunc: this.userModalToggle,
-      addNewUser: this.addNewUser,
+      handleAddEditUserFormSubmit: this.handleAddEditUserFormSubmit,
       handleChange: this.handleChange,
       validateToNextPassword: this.validateToNextPassword,
       compareToFirstPassword: this.compareToFirstPassword,
@@ -344,7 +346,7 @@ class UserGrid extends Component {
       uploadLoading,
       beforeUpload,
       imageUrl,
-      popupToAdd,
+      addMode,
       UserDetails
     };
 
@@ -373,9 +375,7 @@ class UserGrid extends Component {
             <div>
               <Table columns={this.columns} dataSource={data}></Table>
             </div>
-            <div>
-              <UserCRUDModal modalProps={modalProps} />
-            </div>
+            <div>{modalFlag && <UserCRUDModal {...modalProps} />}</div>
           </Spin>
         </div>
       </Fragment>
@@ -395,6 +395,7 @@ export default connect(getState, {
   getAllListUsers,
   uploadFile,
   addUser,
+  updateUser,
   getUserDetails,
   deleteUser
 })(Users);
