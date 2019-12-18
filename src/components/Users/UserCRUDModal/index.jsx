@@ -285,8 +285,8 @@ class UserCRUDModal extends Component {
                 initialValue: UserDetails.gender || "Male"
               })(
                 <Radio.Group>
-                  <Radio value="Male">Male</Radio>
-                  <Radio value="Female">Female</Radio>
+                  <Radio value="male">Male</Radio>
+                  <Radio value="female">Female</Radio>
                 </Radio.Group>
               )}
             </Form.Item>
