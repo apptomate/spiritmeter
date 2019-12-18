@@ -57,7 +57,6 @@ class RouteCard extends Component {
     );
   }
   render() {
-    console.log("Inside");
     let { toggleFlag } = this.state;
     let {
       routeName,

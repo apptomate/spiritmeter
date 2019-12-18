@@ -285,7 +285,23 @@ class UserGrid extends Component {
       {
         title: "Gender",
         dataIndex: "gender",
-        key: "gender"
+        key: "gender",
+        render: gender => gender.toLowerCase(),
+        filters: [
+          {
+            text: "Male",
+            value: "male"
+          },
+          {
+            text: "Female",
+            value: "female"
+          }
+        ],
+        filterMultiple: false,
+        onFilter: (value, record) =>
+          record.gender.toLowerCase().indexOf(value) === 0,
+        sorter: (a, b) => a.gender.length - b.gender.length,
+        sortDirections: ["descend", "ascend"]
       },
       {
         title: "Phone Number",
@@ -299,9 +315,42 @@ class UserGrid extends Component {
         key: "role",
         render: role => (
           <span>
-            <Tag color={role === "Admin" ? "volcano" : "geekblue"}>{role}</Tag>
+            <Tag
+              color={role.toLowerCase() === "admin" ? "volcano" : "geekblue"}
+            >
+              {role.toLowerCase()}
+            </Tag>
           </span>
-        )
+        ),
+        filters: [
+          {
+            text: "User",
+            value: "user"
+          },
+          {
+            text: "Admin",
+            value: "admin"
+          }
+        ],
+        filterMultiple: false,
+        onFilter: (value, record) =>
+          record.role.toLowerCase().indexOf(value) === 0,
+        sorter: (a, b) => a.role.length - b.role.length,
+        sortDirections: ["descend", "ascend"]
+      },
+      {
+        title: "Display Count",
+        dataIndex: "savedDisplay",
+        key: "savedDisplay",
+        defaultSortOrder: "ascend",
+        sorter: (a, b) => a.savedDisplay - b.savedDisplay
+      },
+      {
+        title: "Route Count",
+        dataIndex: "savedRoutes",
+        key: "savedRoutes",
+        defaultSortOrder: "ascend",
+        sorter: (a, b) => a.savedRoutes - b.savedRoutes
       },
       {
         title: "Action",
@@ -377,13 +426,19 @@ class UserGrid extends Component {
               title="Add User"
               ghost
               onClick={this.userModalToggle}
-            />
+            >
+              New User
+            </Button>
           </div>
         </div>
         <div>
           <Spin spinning={loading}>
             <div>
-              <Table columns={columns} dataSource={data} />
+              <Table
+                columns={columns}
+                dataSource={data}
+                rowKey={record => record.userId}
+              />
             </div>
             <div>{modalFlag && <UserCRUDModal {...modalProps} />}</div>
           </Spin>
