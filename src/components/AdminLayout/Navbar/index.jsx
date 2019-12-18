@@ -13,6 +13,7 @@ import { getUserDetails, updateUser } from "../../../Redux/_actions";
 import { FILE_UPLOAD_URL } from "../../../Redux/_helpers/Constants";
 import API from "../../../Redux/_actions/API";
 import { authHeader } from "../../../Redux/_helpers/AuthHeaders";
+import DisplayAvatar from "../../Common/DisplayAvatar";
 
 const { Header } = Layout;
 export class Navbar extends Component {
@@ -151,7 +152,7 @@ export class Navbar extends Component {
     );
   }
   render() {
-    const { firstName } = loggedUserDetails();
+    const { firstName, profileImage } = loggedUserDetails();
     const { modalFlag, uploadLoading, imageUrl, addMode } = this.state;
     const { UserDetails } = this.props;
 
@@ -179,11 +180,9 @@ export class Navbar extends Component {
             {firstName} <Icon type="down" />
           </Button>
         </Dropdown>
-        <Avatar
-          className="navbar-UserIMg"
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        />
-
+        <span className="navbar-UserIMg">
+          <DisplayAvatar srcPath={profileImage} />
+        </span>
         <div>{modalFlag && <UserCRUDModal {...modalProps} />}</div>
       </Header>
     );
