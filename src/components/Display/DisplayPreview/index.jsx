@@ -65,7 +65,7 @@ export default function DisplayPreview(props) {
               {isPrivate ? "Private" : "Public"}
             </div>
 
-            <div className="item-center list-username mt-2 d-block">
+            <div className="item-center list-username mt-2">
               <Avatar icon="user" />
               <span>{createdByName}</span>
             </div>

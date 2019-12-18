@@ -29,9 +29,9 @@ export default class RouteDetails extends Component {
               </div>
               <div className="mb-2">
                 <span className="route-title">Map Points :</span>
-                <div className="route-map">
-                  <RouteMap srclat={2} srclng={2} directions={directions} />
-                </div>
+                {/* <div className="route-map"> */}
+                <RouteMap srclat={2} srclng={2} directions={directions} />
+                {/* </div> */}
               </div>
 
               <div className="mb-2">
