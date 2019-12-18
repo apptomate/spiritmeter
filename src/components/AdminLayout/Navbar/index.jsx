@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Icon, Menu, Dropdown, Button, Form } from "antd";
+import { Avatar, Layout, Icon, Menu, Dropdown, Button, Form } from "antd";
 import {
   loggedUserDetails,
   logout
@@ -174,13 +174,16 @@ export class Navbar extends Component {
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
         <h3>Holiday Drive</h3>
-
         <Dropdown className="logout-btn" overlay={this.getMenu}>
           <Button type="link" className="ant-dropdown-link">
-            <Icon type="user" />
             {firstName} <Icon type="down" />
           </Button>
         </Dropdown>
+        <Avatar
+          className="navbar-UserIMg"
+          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        />
+
         <div>{modalFlag && <UserCRUDModal {...modalProps} />}</div>
       </Header>
     );

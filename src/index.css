@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css?family=Lilita+One&display=swap");
 body {
   margin: 0;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif; */
-  font-family: "Be Vietnam", sans-serif;
+    sans-serif;
+  /* font-family: "Be Vietnam", sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  /* font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace; */
-  font-family: "Be Vietnam", sans-serif;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+  /* font-family: "Be Vietnam", sans-serif; */
 }
 .w-100 {
   width: 100%;
@@ -70,10 +70,10 @@ code {
   display: inline-block;
 }
 .color-o {
-  color: orange;
+  color: orange !important;
 }
 .color-g {
-  color: green;
+  color: green !important;
 }
 .list-display p {
   font-weight: 500;
@@ -252,7 +252,7 @@ code {
 .list-name {
   font-size: 16px;
   font-weight: 600;
-  color: #001a35;
+  color: #017ee2;
 }
 .list-name-imp {
   font-size: 13px;
@@ -263,9 +263,10 @@ code {
 
 .list-name-imp i {
   padding-right: 5px;
+  color: #a7a7a7;
 }
 .color-r {
-  color: red;
+  color: red !important;
 }
 .ant-btn > i,
 .ant-btn > span {
@@ -459,7 +460,7 @@ button:hover .button-text {
 .route-title {
   font-size: 15px;
   font-weight: 700;
-  color: #001a35;
+  color: #017ee2;
   margin-bottom: 10px;
 }
 
@@ -520,7 +521,7 @@ button:hover .button-text {
 }
 .route-title {
   font-weight: 600;
-  color: #000;
+  color: #017ee2;
   padding-right: 1rem;
 }
 .p-1 {
@@ -878,4 +879,47 @@ button.cus-btn:hover .circle .icon.arrow {
   color: #244769;
   width: 50%;
   float: left;
+}
+
+.navbar-UserIMg {
+  float: right;
+  margin-top: 12px !important;
+  margin-right: -10px !important;
+}
+
+.ant-input {
+  color: #2d2d2d !important;
+}
+
+/* Media Query */
+
+@media only screen and (max-width: 650px) {
+  .listing-contant {
+    width: 100%;
+  }
+  .list-img {
+    width: 100%;
+  }
+
+  .ant-col-12 {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+  .ant-col-offset-6 {
+    margin-left: 0% !important;
+  }
+  .ant-col-8 {
+    display: block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .login-form-div {
+    margin-top: 0rem;
+    border-radius: 0px;
+    background: #ffffff;
+    /* border: 1px #001529 solid; */
+    box-shadow: 0 0 24px white;
+  }
 }
