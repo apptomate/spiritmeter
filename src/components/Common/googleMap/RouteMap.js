@@ -24,7 +24,7 @@ class RouteMapCore extends React.PureComponent {
 const RouteMap = compose(
   withProps({
     loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "300px" }} />,
+    containerElement: <div style={{ height: "400px" }} />,
     mapElement: <div style={{ height: "100%" }} />
   }),
   withGoogleMap

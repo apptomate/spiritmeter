@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from "react";
 
-import { Row, Col, Card, Skeleton, Switch, Icon, Avatar } from "antd";
+import { Row, Col, Card, Avatar } from "antd";
 
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
