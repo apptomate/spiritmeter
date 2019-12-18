@@ -11,7 +11,10 @@ import {
   AutoComplete
 } from "antd";
 import UUID from "uuid";
-import { GOOGLE_MAPS_API_KEY } from "../../../Redux/_helpers/Constants";
+import {
+  GOOGLE_MAPS_API_KEY,
+  CORS_BY_PASS_URL
+} from "../../../Redux/_helpers/Constants";
 import Axios from "axios";
 import PickerMap from "../../Common/googleMap/PickerMap";
 const { Option } = AutoComplete;
@@ -76,9 +79,7 @@ class UserCRUDModal extends Component {
     } = this.state;
     const url = GET_GOOGLE_AUTOCOMPLETE_API(value, sessionToken);
     try {
-      let response = await Axios.get(
-        "https://cors-anywhere.herokuapp.com/" + url
-      );
+      let response = await Axios.get(CORS_BY_PASS_URL + url);
       const googleResponse = response.data;
 
       this.setState(({ mapData }) => ({
@@ -112,9 +113,7 @@ class UserCRUDModal extends Component {
   async addressLookup() {
     const url = GET_GOOGLE_REVERSE_GEOCODE_API();
     try {
-      let response = await Axios.get(
-        "https://cors-anywhere.herokuapp.com/" + url
-      );
+      let response = await Axios.get(CORS_BY_PASS_URL + url);
       const googleResponse = response.data;
 
       this.setState(({ mapData }) => ({
