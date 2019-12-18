@@ -75,7 +75,7 @@ class ViewRoute extends Component {
     let {
       routeName,
       designatedCharityName,
-      ridePoints,
+      ridePoints = [],
       routePoints
     } = RouteData;
 
@@ -109,8 +109,6 @@ class ViewRoute extends Component {
       totalPaths
     };
 
-    ridePoints = [];
-
     return (
       <Fragment>
         <Spin spinning={loading}>
@@ -120,16 +118,20 @@ class ViewRoute extends Component {
               <RouteDetails propsData={routeDetailsProps} />
             </TabPane>
             <TabPane tab="Display List" key="2">
-              {ridePoints &&
-                ridePoints.map((list, key) => (
-                  <DisplayCard
-                    listData={list}
-                    hideViewButton={false}
-                    showPreviewModal
-                    key={key}
-                  />
-                ))}
-              {!ridePoints.length && <Empty description="No display found" />}
+              {ridePoints.length ? (
+                <Fragment>
+                  {ridePoints.map((list, key) => (
+                    <DisplayCard
+                      listData={list}
+                      hideViewButton={false}
+                      showPreviewModal
+                      key={key}
+                    />
+                  ))}
+                </Fragment>
+              ) : (
+                <Empty description="No display found" />
+              )}
             </TabPane>
             <TabPane tab="Near By" key="3">
               <NearBy
