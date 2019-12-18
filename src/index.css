@@ -263,7 +263,7 @@ code {
 
 .list-name-imp i {
   padding-right: 5px;
-  color: #a7a7a7;
+  color: #ff9800;
 }
 .color-r {
   color: red !important;
@@ -922,4 +922,40 @@ button.cus-btn:hover .circle .icon.arrow {
     /* border: 1px #001529 solid; */
     box-shadow: 0 0 24px white;
   }
+}
+
+.bg-info {
+  background-color: #2962ff !important;
+}
+.bg-warning {
+  background-color: #ffbc34 !important;
+}
+.bg-danger {
+  background-color: #f62d51 !important;
+}
+.bg-success {
+  background-color: #36bea6 !important;
+}
+
+.ant-card-meta-description {
+  color: rgb(156, 156, 156) !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  /* float: right; */
+}
+
+.ant-card-meta-title {
+  overflow: hidden;
+  color: rgb(0, 21, 41) !important;
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.p-1 {
+  padding: 1rem !important;
+}
+.card-shodow {
+  box-shadow: 0 0 20px #c1c1c1;
 }
