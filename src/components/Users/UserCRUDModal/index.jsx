@@ -37,10 +37,6 @@ class UserCRUDModal extends Component {
       results: [],
       latitude: "",
       longitude: ""
-      // country: "",
-      // state: "",
-      // cityName: "",
-      // address: ""
     }
   };
 
@@ -183,6 +179,14 @@ class UserCRUDModal extends Component {
       profileImage: imageUrl
     };
 
+    let {
+      firstName,
+      lastName,
+      phoneNumber,
+      gender = "",
+      role = ""
+    } = UserDetails;
+
     return (
       <Fragment>
         <Modal
@@ -224,7 +228,7 @@ class UserCRUDModal extends Component {
                     message: "Please input your first name"
                   }
                 ],
-                initialValue: UserDetails.firstName || ""
+                initialValue: firstName || ""
               })(
                 <Input
                   prefix={
@@ -242,7 +246,7 @@ class UserCRUDModal extends Component {
                     message: "Please input your last name"
                   }
                 ],
-                initialValue: UserDetails.lastName || ""
+                initialValue: lastName || ""
               })(
                 <Input
                   prefix={
@@ -264,7 +268,7 @@ class UserCRUDModal extends Component {
                     message: "input must be a valid phone number"
                   }
                 ],
-                initialValue: UserDetails.phoneNumber || ""
+                initialValue: phoneNumber || ""
               })(
                 <Input
                   prefix={
@@ -282,7 +286,7 @@ class UserCRUDModal extends Component {
                     message: "Please select anyone"
                   }
                 ],
-                initialValue: UserDetails.gender || "Male"
+                initialValue: gender.toLowerCase() || "male"
               })(
                 <Radio.Group>
                   <Radio value="male">Male</Radio>
@@ -298,11 +302,11 @@ class UserCRUDModal extends Component {
                     message: "Please select anyone"
                   }
                 ],
-                initialValue: UserDetails.role || "User"
+                initialValue: role.toLowerCase() || "user"
               })(
                 <Radio.Group>
-                  <Radio value="User">User</Radio>
-                  <Radio value="Admin">Admin</Radio>
+                  <Radio value="user">User</Radio>
+                  <Radio value="admin">Admin</Radio>
                 </Radio.Group>
               )}
             </Form.Item>
