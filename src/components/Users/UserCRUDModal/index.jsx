@@ -17,6 +17,8 @@ import {
 } from "../../../Redux/_helpers/Constants";
 import Axios from "axios";
 import PickerMap from "../../Common/googleMap/PickerMap";
+// import { MarkerWithLabel } from "react-google-maps/lib/components/addons/MarkerWithLabel";
+
 const { Option } = AutoComplete;
 
 export const GET_GOOGLE_AUTOCOMPLETE_API = (
@@ -112,6 +114,12 @@ class UserCRUDModal extends Component {
       latitude,
       longitude
     );
+    this.props.manualSetValue({
+      cityName,
+      state,
+      country,
+      address
+    });
     this.setState(({ mapData }) => ({
       mapData: {
         ...mapData,
@@ -140,7 +148,6 @@ class UserCRUDModal extends Component {
         const result = this.getAddressComponents(
           googleResponse.results[0]["address_components"]
         );
-        console.log(googleResponse);
         addressResult = { ...addressResult, ...result };
       }
     } catch (error) {
@@ -152,13 +159,28 @@ class UserCRUDModal extends Component {
 
   getAddressComponents(comps = []) {
     console.log(comps);
+    let result = {
+      cityName: "",
+      state: "",
+      country: "",
+      address: ""
+    };
     comps.forEach(comp => {
       const { types = [], long_name } = comp;
-      if (types) {
-        console.log(long_name);
+      if (types.includes("country")) {
+        result.country = long_name;
+      }
+      if (types.includes("administrative_area_level_1")) {
+        result.state = long_name;
+      }
+      if (types.includes("administrative_area_level_2")) {
+        result.cityName = long_name;
+      }
+      if (types.includes("route")) {
+        result.address = long_name;
       }
     });
-    return { cityName: "", state: "", country: "", address: "" };
+    return result;
   }
   async callBackAutoCompleteSelect(place, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -170,6 +192,12 @@ class UserCRUDModal extends Component {
         latitude,
         longitude
       );
+      this.props.manualSetValue({
+        cityName,
+        state,
+        country,
+        address
+      });
       this.setState(({ mapData }) => ({
         mapData: {
           ...mapData,
@@ -398,102 +426,92 @@ class UserCRUDModal extends Component {
                 {children}
               </AutoComplete>
               {latitude && longitude && (
-                <Fragment>
-                  <PickerMap
-                    centerLat={latitude}
-                    centerLng={longitude}
-                    markerLat={latitude}
-                    markerLng={longitude}
-                    zoom={14}
-                    handleMapClick={this.handleMapClick}
-                  />
-
-                  <Form.Item label="Address">
-                    {getFieldDecorator("address", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your address"
-                        }
-                      ],
-                      initialValue: address || ""
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="address"
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="City">
-                    {getFieldDecorator("cityName", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your city"
-                        }
-                      ],
-                      initialValue: cityName || ""
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="city"
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="State">
-                    {getFieldDecorator("state", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your state"
-                        }
-                      ],
-                      initialValue: state || ""
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="state"
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Country">
-                    {getFieldDecorator("country", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please input your country"
-                        }
-                      ],
-                      initialValue: country || ""
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: "rgba(0,0,0,.25)" }}
-                          />
-                        }
-                        placeholder="country"
-                      />
-                    )}
-                  </Form.Item>
-                </Fragment>
+                <PickerMap
+                  centerLat={latitude}
+                  centerLng={longitude}
+                  markerLat={latitude}
+                  markerLng={longitude}
+                  zoom={14}
+                  handleMapClick={this.handleMapClick}
+                ></PickerMap>
               )}
+
+              <Form.Item label="Address">
+                {getFieldDecorator("address", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your address"
+                    }
+                  ],
+                  initialValue: address || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="address"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item label="City">
+                {getFieldDecorator("cityName", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your city"
+                    }
+                  ],
+                  initialValue: cityName || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="city"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item label="State">
+                {getFieldDecorator("state", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your state"
+                    }
+                  ],
+                  initialValue: state || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="state"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item label="Country">
+                {getFieldDecorator("country", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your country"
+                    }
+                  ],
+                  initialValue: country || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="country"
+                  />
+                )}
+              </Form.Item>
             </Form.Item>
             <div className="d-fr">
               <Button className="f-r" type="primary" htmlType="submit">
