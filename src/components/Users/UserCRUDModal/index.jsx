@@ -39,7 +39,11 @@ class UserCRUDModal extends Component {
       sessionToken: UUID.v4(),
       results: [],
       latitude: "",
-      longitude: ""
+      longitude: "",
+      cityName: "",
+      state: "",
+      country: "",
+      address: ""
     }
   };
 
@@ -99,40 +103,82 @@ class UserCRUDModal extends Component {
       this.callBackAutoCompleteSelect
     );
   }
-  handleMapClick(event) {
+
+  async handleMapClick(event) {
     const { latLng } = event;
+    const latitude = latLng.lat();
+    const longitude = latLng.lng();
+    const { cityName, state, country, address } = await this.addressLookup(
+      latitude,
+      longitude
+    );
     this.setState(({ mapData }) => ({
       mapData: {
         ...mapData,
-        latitude: latLng.lat(),
-        longitude: latLng.lng()
+        latitude,
+        longitude,
+        cityName,
+        state,
+        country,
+        address
       }
     }));
   }
 
-  async addressLookup() {
-    const url = GET_GOOGLE_REVERSE_GEOCODE_API();
+  async addressLookup(latitude, longitude) {
+    const url = GET_GOOGLE_REVERSE_GEOCODE_API(latitude, longitude);
+    let addressResult = {
+      cityName: "",
+      state: "",
+      country: "",
+      address: ""
+    };
     try {
       let response = await Axios.get(CORS_BY_PASS_URL + url);
       const googleResponse = response.data;
-
-      this.setState(({ mapData }) => ({
-        mapData: { ...mapData, results: googleResponse.predictions }
-      }));
+      if (response.data.status === "OK") {
+        const result = this.getAddressComponents(
+          googleResponse.results[0]["address_components"]
+        );
+        console.log(googleResponse);
+        addressResult = { ...addressResult, ...result };
+      }
     } catch (error) {
       console.error(error);
+    } finally {
+      return addressResult;
     }
   }
 
-  callBackAutoCompleteSelect(place, status) {
+  getAddressComponents(comps = []) {
+    console.log(comps);
+    comps.forEach(comp => {
+      const { types = [], long_name } = comp;
+      if (types) {
+        console.log(long_name);
+      }
+    });
+    return { cityName: "", state: "", country: "", address: "" };
+  }
+  async callBackAutoCompleteSelect(place, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       const latLng = place.geometry.location;
+
+      const latitude = latLng.lat();
+      const longitude = latLng.lng();
+      const { cityName, state, country, address } = await this.addressLookup(
+        latitude,
+        longitude
+      );
       this.setState(({ mapData }) => ({
         mapData: {
           ...mapData,
-          latitude: latLng.lat(),
-          longitude: latLng.lng(),
-          sessionToken: UUID.v4()
+          latitude,
+          longitude,
+          cityName,
+          state,
+          country,
+          address
         }
       }));
     }
@@ -152,8 +198,8 @@ class UserCRUDModal extends Component {
       addMode,
       UserDetails = {}
     } = this.props;
+    console.log(this.state);
     let { imageUrl } = this.props;
-
     if (!addMode) {
       imageUrl = imageUrl || (UserDetails && UserDetails.profileImage);
     }
@@ -183,7 +229,11 @@ class UserCRUDModal extends Component {
       lastName,
       phoneNumber,
       gender = "",
-      role = ""
+      role = "",
+      country = "",
+      state = "",
+      cityName = "",
+      address = ""
     } = UserDetails;
 
     return (
@@ -348,14 +398,101 @@ class UserCRUDModal extends Component {
                 {children}
               </AutoComplete>
               {latitude && longitude && (
-                <PickerMap
-                  centerLat={latitude}
-                  centerLng={longitude}
-                  markerLat={latitude}
-                  markerLng={longitude}
-                  zoom={14}
-                  handleMapClick={this.handleMapClick}
-                />
+                <Fragment>
+                  <PickerMap
+                    centerLat={latitude}
+                    centerLng={longitude}
+                    markerLat={latitude}
+                    markerLng={longitude}
+                    zoom={14}
+                    handleMapClick={this.handleMapClick}
+                  />
+
+                  <Form.Item label="Address">
+                    {getFieldDecorator("address", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input your address"
+                        }
+                      ],
+                      initialValue: address || ""
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: "rgba(0,0,0,.25)" }}
+                          />
+                        }
+                        placeholder="address"
+                      />
+                    )}
+                  </Form.Item>
+                  <Form.Item label="City">
+                    {getFieldDecorator("cityName", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input your city"
+                        }
+                      ],
+                      initialValue: cityName || ""
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: "rgba(0,0,0,.25)" }}
+                          />
+                        }
+                        placeholder="city"
+                      />
+                    )}
+                  </Form.Item>
+                  <Form.Item label="State">
+                    {getFieldDecorator("state", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input your state"
+                        }
+                      ],
+                      initialValue: state || ""
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: "rgba(0,0,0,.25)" }}
+                          />
+                        }
+                        placeholder="state"
+                      />
+                    )}
+                  </Form.Item>
+                  <Form.Item label="Country">
+                    {getFieldDecorator("country", {
+                      rules: [
+                        {
+                          required: true,
+                          message: "Please input your country"
+                        }
+                      ],
+                      initialValue: country || ""
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: "rgba(0,0,0,.25)" }}
+                          />
+                        }
+                        placeholder="country"
+                      />
+                    )}
+                  </Form.Item>
+                </Fragment>
               )}
             </Form.Item>
             <div className="d-fr">
