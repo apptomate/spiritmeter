@@ -62,7 +62,7 @@ export default function DisplayPreview(props) {
                     : "fas fa-globe-asia color-r"
                 }
               />
-              {isPrivate ? "Is Private" : "Is Public"}
+              {isPrivate ? "Private" : "Public"}
             </div>
 
             <div className="item-center list-username mt-2 d-block">

@@ -48,7 +48,7 @@ export default class DisplayDetails extends Component {
                       : "fas fa-globe-asia color-r"
                   }
                 />
-                {isPrivate ? "Is Private" : "Is Public"}
+                {isPrivate ? "Private" : "Public"}
               </div>
 
               <p className="mt-1">
