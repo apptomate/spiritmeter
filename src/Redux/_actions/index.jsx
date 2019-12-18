@@ -67,7 +67,7 @@ export function authLogin(formData) {
           accessToken: { token },
           user: { userId, firstName, profileImage, role }
         } = response.data;
-        if (role === "Admin") {
+        if (role.toLowerCase() === "admin") {
           let loggedUserData = { userId, firstName, profileImage };
           localStorage.setItem("authToken", token);
           localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
