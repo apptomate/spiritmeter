@@ -98,7 +98,7 @@ class RouteCard extends Component {
             </Col>
             <Col span={12}>
               <div>
-                <h4 className="route-title mt-0-5">{routeName}</h4>
+                <h4 className="route-title">{routeName}</h4>
                 <div className="list-name-imp mt-0-5">
                   <i
                     className={
