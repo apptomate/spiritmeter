@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from "react";
 import NearByListCard from "./NearByListCard";
-import { GOOGLE_MAPS_API_KEY } from "../../../Redux/_helpers/Constants";
+import {
+  GOOGLE_MAPS_API_KEY,
+  CORS_BY_PASS_URL
+} from "../../../Redux/_helpers/Constants";
 import Axios from "axios";
 import { Spin, Empty } from "antd";
 
@@ -17,7 +20,7 @@ class NearByList extends Component {
   async fetchNearByPlaces(srclat, srclng, keyword) {
     this.setState({ loading: true });
     const response = await Axios.get(
-      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${srclat},${srclng}&radius=1500&field=&type=${keyword}&keyword=${keyword}&key=${GOOGLE_MAPS_API_KEY}`
+      `${CORS_BY_PASS_URL}/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${srclat},${srclng}&radius=1500&field=&type=${keyword}&keyword=${keyword}&key=${GOOGLE_MAPS_API_KEY}`
     );
     this.setState({ loading: false, results: response.data.results });
   }

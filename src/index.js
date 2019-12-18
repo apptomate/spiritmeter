@@ -4,6 +4,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import * as Sentry from "@sentry/browser";
 import "antd/dist/antd.css";
+import "./index.css";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
