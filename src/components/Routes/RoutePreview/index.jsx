@@ -40,7 +40,7 @@ export default function RoutePreview(props) {
                       : "fas fa-globe-asia color-r"
                   }
                 />
-                {isPrivate ? "Is Private" : "Is Public"}
+                {isPrivate ? "Private" : "Public"}
               </div>
               <div className="list-name-imp mt-0-5">
                 <h4>

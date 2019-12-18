@@ -11,7 +11,10 @@ import {
   AutoComplete
 } from "antd";
 import UUID from "uuid";
-import { GOOGLE_MAPS_API_KEY } from "../../../Redux/_helpers/Constants";
+import {
+  GOOGLE_MAPS_API_KEY,
+  CORS_BY_PASS_URL
+} from "../../../Redux/_helpers/Constants";
 import Axios from "axios";
 import PickerMap from "../../Common/googleMap/PickerMap";
 const { Option } = AutoComplete;
@@ -37,10 +40,6 @@ class UserCRUDModal extends Component {
       results: [],
       latitude: "",
       longitude: ""
-      // country: "",
-      // state: "",
-      // cityName: "",
-      // address: ""
     }
   };
 
@@ -80,9 +79,7 @@ class UserCRUDModal extends Component {
     } = this.state;
     const url = GET_GOOGLE_AUTOCOMPLETE_API(value, sessionToken);
     try {
-      let response = await Axios.get(
-        "https://cors-anywhere.herokuapp.com/" + url
-      );
+      let response = await Axios.get(CORS_BY_PASS_URL + url);
       const googleResponse = response.data;
 
       this.setState(({ mapData }) => ({
@@ -116,9 +113,7 @@ class UserCRUDModal extends Component {
   async addressLookup() {
     const url = GET_GOOGLE_REVERSE_GEOCODE_API();
     try {
-      let response = await Axios.get(
-        "https://cors-anywhere.herokuapp.com/" + url
-      );
+      let response = await Axios.get(CORS_BY_PASS_URL + url);
       const googleResponse = response.data;
 
       this.setState(({ mapData }) => ({
@@ -183,6 +178,14 @@ class UserCRUDModal extends Component {
       profileImage: imageUrl
     };
 
+    let {
+      firstName,
+      lastName,
+      phoneNumber,
+      gender = "",
+      role = ""
+    } = UserDetails;
+
     return (
       <Fragment>
         <Modal
@@ -224,7 +227,7 @@ class UserCRUDModal extends Component {
                     message: "Please input your first name"
                   }
                 ],
-                initialValue: UserDetails.firstName || ""
+                initialValue: firstName || ""
               })(
                 <Input
                   prefix={
@@ -242,7 +245,7 @@ class UserCRUDModal extends Component {
                     message: "Please input your last name"
                   }
                 ],
-                initialValue: UserDetails.lastName || ""
+                initialValue: lastName || ""
               })(
                 <Input
                   prefix={
@@ -264,7 +267,7 @@ class UserCRUDModal extends Component {
                     message: "input must be a valid phone number"
                   }
                 ],
-                initialValue: UserDetails.phoneNumber || ""
+                initialValue: phoneNumber || ""
               })(
                 <Input
                   prefix={
@@ -282,7 +285,7 @@ class UserCRUDModal extends Component {
                     message: "Please select anyone"
                   }
                 ],
-                initialValue: UserDetails.gender || "Male"
+                initialValue: gender.toLowerCase() || "male"
               })(
                 <Radio.Group>
                   <Radio value="male">Male</Radio>
@@ -298,11 +301,11 @@ class UserCRUDModal extends Component {
                     message: "Please select anyone"
                   }
                 ],
-                initialValue: UserDetails.role || "User"
+                initialValue: role.toLowerCase() || "user"
               })(
                 <Radio.Group>
-                  <Radio value="User">User</Radio>
-                  <Radio value="Admin">Admin</Radio>
+                  <Radio value="user">User</Radio>
+                  <Radio value="admin">Admin</Radio>
                 </Radio.Group>
               )}
             </Form.Item>

@@ -30,3 +30,5 @@ export const DELETE_USER_URL = BASE_URL + "User/deleteUser";
 //File Upload
 export const FILE_UPLOAD_URL = BASE_URL + "UploadFile/UploadFileBase64";
 export const GOOGLE_MAPS_API_KEY = "AIzaSyCSTfXlm6bBFV5-o5RawVMKvhOd4foWnw4";
+
+export const CORS_BY_PASS_URL = "https://corsbypass-app.herokuapp.com/";
