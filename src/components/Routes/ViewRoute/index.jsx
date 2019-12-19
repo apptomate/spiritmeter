@@ -109,6 +109,7 @@ class ViewRoute extends Component {
       pathsToTravel,
       totalPaths
     };
+    console.log(this.props);
 
     return (
       <Fragment>

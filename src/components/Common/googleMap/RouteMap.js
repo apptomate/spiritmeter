@@ -16,43 +16,47 @@ const {
 
 class RouteMapCore extends React.PureComponent {
   state = { markers: [] };
-  componentDidMount() {
+  componentDidUpdate() {
     const { routePoints } = this.props;
-    let markers = [];
-    const src = getLatLng(routePoints.origin);
-    markers.push(
-      getMarkerWithStyle(
-        src[0],
-        src[1],
-        "Start",
-        "http://maps.google.com/mapfiles/kml/pal4/icon61.png"
-      )
-    );
-    const dest = getLatLng(routePoints.destination);
-    markers.push(
-      getMarkerWithStyle(
-        dest[0],
-        dest[1],
-        "Destination",
-        "http://maps.google.com/mapfiles/kml/pal4/icon53.png"
-      )
-    );
+    const { markers } = this.state;
+    console.log(this.routePoints);
+    if (routePoints && !markers.length) {
+      let markers = [];
+      const src = getLatLng(routePoints.origin);
+      markers.push(
+        getMarkerWithStyle(
+          src[0],
+          src[1],
+          "Start",
+          "http://maps.google.com/mapfiles/kml/pal4/icon61.png"
+        )
+      );
+      const dest = getLatLng(routePoints.destination);
+      markers.push(
+        getMarkerWithStyle(
+          dest[0],
+          dest[1],
+          "Destination",
+          "http://maps.google.com/mapfiles/kml/pal4/icon53.png"
+        )
+      );
 
-    const waypoints = getWayPointsLatLng(routePoints.waypoints).map(e =>
-      getMarkerWithStyle(
-        e[0],
-        e[1],
-        null,
-        "http://maps.google.com/mapfiles/kml/pal2/icon13.png"
-      )
-    );
+      const waypoints = getWayPointsLatLng(routePoints.waypoints).map(e =>
+        getMarkerWithStyle(
+          e[0],
+          e[1],
+          null,
+          "http://maps.google.com/mapfiles/kml/pal2/icon13.png"
+        )
+      );
 
-    markers = markers.concat(waypoints);
-    this.setState({ markers });
+      markers = markers.concat(waypoints);
+      this.setState({ markers });
+    }
   }
 
   render() {
-    const { srclat, srclng, directions } = this.props;
+    const { srclat, srclng, directions, routePoints } = this.props;
     const { markers } = this.state;
     return (
       <GoogleMap
@@ -61,7 +65,7 @@ class RouteMapCore extends React.PureComponent {
       >
         {directions && (
           <DirectionsRenderer
-            defaultOptions={{ suppressMarkers: true }}
+            defaultOptions={{ suppressMarkers: !!routePoints }}
             directions={directions}
           />
         )}
