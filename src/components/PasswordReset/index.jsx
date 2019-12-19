@@ -1,95 +1,72 @@
 import React, { Component, Fragment } from "react";
-import { Form, Row, Col } from "antd";
-import { connect } from "react-redux";
-import { generateOtp, forgetPassword } from "../../Redux/_actions";
+import { Row, Col, message } from "antd";
 import logoimg from "../../assets/img/logo.png";
-import PasswordResetStep1 from "./Step1Form.jsx";
-import PasswordResetStep2 from "./Step2Form.jsx";
+import API from "../../Redux/_actions/API";
+import {
+  GENERATE_OTP_URL,
+  FORGET_PASSWORD_URL
+} from "../../Redux/_helpers/Constants";
+import GenerateOtp from "./GenerateOtp.jsx";
+import SetPassword from "./SetPassword.jsx";
 
 class PasswordReset extends Component {
   state = {
     otpSentPhone: "",
-    confirmDirty: ""
+    isOtpGenerate: false
   };
   constructor(props) {
     super(props);
     this.generateOtpFunc = this.generateOtpFunc.bind(this);
     this.resetPasswordFunc = this.resetPasswordFunc.bind(this);
-    this.validateToNextPassword = this.validateToNextPassword.bind(this);
-    this.compareToFirstPassword = this.compareToFirstPassword.bind(this);
-    this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
-    this.resendOtpFunc = this.resendOtpFunc.bind(this);
   }
-  //Resend OTP
-  resendOtpFunc() {
-    let paramData = { phone: this.state.otpSentPhone };
-    this.props.generateOtp(paramData);
-  }
-  //Compare with password
-  compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue("password")) {
-      callback("Password not matched!");
-    } else {
-      callback();
-    }
-  };
-  //Compare with Confirm password
-  validateToNextPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(["confirmPassword"], { force: true });
-    }
-    callback();
-  };
-  //Blur
-  handleConfirmBlur = e => {
-    const { value } = e.target;
-    this.setState(prevState => ({
-      confirmDirty: prevState.confirmDirty || !!value
-    }));
-  };
 
   //Reset new password
-  resetPasswordFunc = e => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        let { otpSentPhone } = this.state;
-        let { history } = this.props;
-        delete values.confirmPassword;
-        values["phone"] = otpSentPhone;
-        this.props.forgetPassword(values, history);
-      }
-    });
+  resetPasswordFunc = async values => {
+    let { otpSentPhone } = this.state;
+    delete values.confirmPassword;
+    values["phone"] = otpSentPhone;
+    let loadingMessage = message.loading("Action in progress..");
+    let apiResponse = await API.put(FORGET_PASSWORD_URL, values)
+      .then(response => {
+        message.success(response.data.message);
+        this.props.history.push("/login");
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          message.error(data.errorMessage);
+        }
+      });
+    setTimeout(loadingMessage, apiResponse);
   };
 
   //Generate OTP
-  generateOtpFunc = e => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.generateOtp(values);
-        this.setState({ otpSentPhone: values.phone });
-      }
-    });
+  generateOtpFunc = async (values, funcCallFrom) => {
+    let loadingMessage = message.loading("Action in progress..");
+    let apiResponse = await API.put(GENERATE_OTP_URL, values)
+      .then(response => {
+        let { smsStatus } = response.data;
+        message.success(smsStatus);
+        if (funcCallFrom !== "resend_otp") {
+          this.setState({ isOtpGenerate: true, otpSentPhone: values.phone });
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          message.error(data.errorMessage);
+        }
+      });
+    setTimeout(loadingMessage, apiResponse);
   };
 
   render() {
-    let { generateOtpProps } = this.props;
-
-    let { otpSentPhone } = this.state;
-
-    const { getFieldDecorator } = this.props.form;
-
-    const componentProps = {
-      resetPasswordFunc: this.resetPasswordFunc,
-      getFieldDecorator,
+    let { otpSentPhone, isOtpGenerate } = this.state;
+    let generateOtpProps = { generateOtpFunc: this.generateOtpFunc };
+    let passwordResetProps = {
       otpSentPhone,
-      validateToNextPassword: this.validateToNextPassword,
-      compareToFirstPassword: this.compareToFirstPassword,
-      handleConfirmBlur: this.handleConfirmBlur,
-      resendOtpFunc: this.resendOtpFunc
+      resetPasswordFunc: this.resetPasswordFunc,
+      generateOtpFunc: this.generateOtpFunc
     };
     return (
       <Fragment>
@@ -99,13 +76,10 @@ class PasswordReset extends Component {
               <img className="w-100" src={logoimg} alt="no data" />
             </Col>
             <Col span={2}></Col>
-            {!generateOtpProps ? (
-              <PasswordResetStep1
-                generateOtpFunc={this.generateOtpFunc}
-                getFieldDecorator={getFieldDecorator}
-              />
+            {!isOtpGenerate ? (
+              <GenerateOtp {...generateOtpProps} />
             ) : (
-              <PasswordResetStep2 componentProps={componentProps} />
+              <SetPassword {...passwordResetProps} />
             )}
             <Col span={2}></Col>
           </Row>
@@ -114,13 +88,4 @@ class PasswordReset extends Component {
     );
   }
 }
-const Login = Form.create({ name: "PasswordReset" })(PasswordReset);
-const getState = state => {
-  return {
-    generateOtpProps: state.generateOtp.data
-  };
-};
-export default connect(getState, {
-  generateOtp,
-  forgetPassword
-})(Login);
+export default PasswordReset;
