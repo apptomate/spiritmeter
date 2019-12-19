@@ -27,21 +27,19 @@ class NearByList extends Component {
 
   render() {
     const { results, loading } = this.state;
-    if (loading) {
-      return (
-        <center>
-          <Spin spinning />
-        </center>
-      );
-    }
-    if (!results.length) {
-      return <Empty description="No data found" />;
-    }
     return (
       <Fragment>
-        {results.map((data, i) => (
-          <NearByListCard data={data} key={i} />
-        ))}
+        <Spin spinning={loading}>
+          {results && results.length ? (
+            <Fragment>
+              {results.map((data, i) => (
+                <NearByListCard data={data} key={i} />
+              ))}
+            </Fragment>
+          ) : (
+            <Empty description="No data found" />
+          )}
+        </Spin>
       </Fragment>
     );
   }

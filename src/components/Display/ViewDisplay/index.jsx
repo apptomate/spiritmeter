@@ -7,12 +7,16 @@ import BackButton from "../../Common/BackButton";
 import DisplayDetails from "../DisplayDetails";
 const { TabPane } = Tabs;
 class ViewDisplay extends Component {
+  state = { redirectToDashboard: false };
   componentDidMount() {
     const {
       match: {
         params: { id }
-      }
+      },
+      location: { state = {} }
     } = this.props;
+    if (state && state.isRouteFromDashboard)
+      this.setState({ redirectToDashboard: true });
     this.props.getDisplayDetails(id);
   }
   render() {
@@ -29,10 +33,15 @@ class ViewDisplay extends Component {
     //Props Data
     const propsData = { DisplayDetailsData, latitude, longitude };
 
+    let { redirectToDashboard } = this.state;
+
     return (
       <Fragment>
         <Spin spinning={loading}>
-          <BackButton linkPath="/admin/display" linkText="Back" />
+          <BackButton
+            linkPath={redirectToDashboard ? "/" : "/admin/display"}
+            linkText="Back"
+          />
           <Tabs defaultActiveKey="1">
             <TabPane tab="Display Details" key="1">
               <DisplayDetails propsData={propsData} />

@@ -13,14 +13,25 @@ import {
   ResponsiveContainer
 } from "recharts";
 import { getDashboardData } from "../../Redux/_actions";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
 const displayColumns = [
   {
     title: "Display Name",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "displayId",
+    key: "name",
+    render: (text, record) => (
+      <Link
+        to={{
+          pathname: `/admin/viewDisplay/${record.displayId}`,
+          state: { isRouteFromDashboard: true }
+        }}
+      >
+        {record.name}
+      </Link>
+    )
   },
   {
     title: "Category",
