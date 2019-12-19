@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Card, Avatar, Table, Spin } from "antd";
+import { Row, Col, Card, Avatar, Table, Spin, Empty } from "antd";
 import { connect } from "react-redux";
 
 import {
@@ -10,18 +10,28 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Cell
 } from "recharts";
 import { getDashboardData } from "../../Redux/_actions";
 import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
+const COLORS = [
+  "#E30022",
+  "#FF8B00",
+  "#F2B400",
+  "#03C03C",
+  "#1F75FE",
+  "#431C53"
+];
+
 const displayColumns = [
   {
     title: "Display Name",
-    dataIndex: "displayId",
-    key: "name",
+    dataIndex: "displayName",
+    key: "displayName",
     render: (text, record) => (
       <Link
         to={{
@@ -65,51 +75,6 @@ const routeColumns = [
   }
 ];
 
-const chartData = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
-  }
-];
-
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getDashboardData();
@@ -122,7 +87,9 @@ class Dashboard extends Component {
       userCount = 0,
       savedDisplays = 0,
       savedRoutes = 0,
-      popularDisplay = []
+      popularDisplay = [],
+      userWithDisplay = [],
+      userWithRoutes = []
     } = data;
 
     return (
@@ -191,59 +158,63 @@ class Dashboard extends Component {
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="User Vs Routes"
+                title="User Vs Display"
                 bordered={false}
               >
-                <BarChart
-                  width={400}
-                  height={300}
-                  data={chartData}
-                  margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 5
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="pv" stackId="a" fill="#f62d51" />
-                  <Bar dataKey="uv" stackId="a" fill="#ffbc34" />
-                </BarChart>
+                {userWithDisplay && userWithDisplay.length ? (
+                  <div style={{ width: "100%", height: 300 }}>
+                    <ResponsiveContainer>
+                      <BarChart data={userWithDisplay}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="savedDisplays" name="Saved Display">
+                          {userWithDisplay.map((list, key) => (
+                            <Cell
+                              key={`display-${key}`}
+                              fill={COLORS[key % COLORS.length]}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <Empty />
+                )}
               </Card>
             </Col>
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="User Vs Display"
+                title="User Vs Routes"
                 bordered={false}
               >
-                <div style={{ width: "100%", height: 300 }}>
-                  <ResponsiveContainer>
-                    <BarChart
-                      width={400}
-                      height={300}
-                      data={chartData}
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="pv" fill="#2962ff" />
-                      <Bar dataKey="uv" fill="#36bea6" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
+                {userWithRoutes && userWithRoutes.length ? (
+                  <div style={{ width: "100%", height: 300 }}>
+                    <ResponsiveContainer>
+                      <BarChart data={userWithRoutes}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="savedRoutes" name="Saved Routes">
+                          {userWithRoutes.map((list, key) => (
+                            <Cell
+                              key={`route-${key}`}
+                              fill={COLORS[key % COLORS.length]}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <Empty />
+                )}
               </Card>
             </Col>
           </Row>
@@ -258,8 +229,10 @@ class Dashboard extends Component {
                 <Table
                   columns={displayColumns}
                   dataSource={popularDisplay}
-                  rowKey={record => record.displayId}
+                  rowKey={record => `display_${record.displayId}`}
                   pagination={{ pageSize: 5 }}
+                  //pagination={{ pageSize: 100 }} scroll={{ y: 240 }}
+                  loading={loading}
                 />
               </Card>
             </Col>
@@ -269,7 +242,11 @@ class Dashboard extends Component {
                 title="Popular Route"
                 bordered={false}
               >
-                <Table columns={routeColumns} />
+                <Table
+                  columns={routeColumns}
+                  pagination={{ pageSize: 5 }}
+                  loading={loading}
+                />
               </Card>
             </Col>
           </Row>
