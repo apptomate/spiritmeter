@@ -158,7 +158,6 @@ class UserCRUDModal extends Component {
   }
 
   getAddressComponents(comps = []) {
-    console.log(comps);
     let result = {
       cityName: "",
       state: "",
@@ -226,7 +225,6 @@ class UserCRUDModal extends Component {
       addMode,
       UserDetails = {}
     } = this.props;
-    console.log(this.state);
     let { imageUrl } = this.props;
     if (!addMode) {
       imageUrl = imageUrl || (UserDetails && UserDetails.profileImage);

@@ -8,7 +8,8 @@ export default function RoutePreview(props) {
     previewData,
     routesData,
     directionsData,
-    totalMiles
+    totalMiles,
+    routePoints
   } = props;
   let totalPaths = routesData.length;
   let { routeName, comments, designatedCharityName, isPrivate } = previewData;
@@ -87,7 +88,12 @@ export default function RoutePreview(props) {
             </Col>
             <Col span={12}>
               <div className="route-card-map">
-                <RouteMap srclat={2} srclng={2} directions={directionsData} />
+                <RouteMap
+                  srclat={2}
+                  srclng={2}
+                  routePoints={routePoints}
+                  directions={directionsData}
+                />
               </div>
             </Col>
           </Row>

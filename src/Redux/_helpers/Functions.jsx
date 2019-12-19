@@ -27,6 +27,14 @@ export const getWayPoints = (data = "") => {
   }));
   return result;
 };
+
+export const getWayPointsLatLng = (data = "") => {
+  let result = [];
+  const points = data.split("|");
+  result = points.map(point => getLatLng(point));
+  return result;
+};
+
 //Get miles from legs
 export const getMilesFromLegs = (legs = []) =>
   convertMetreToMiles(legs.reduce((a, e) => a + e.distance.value, 0));

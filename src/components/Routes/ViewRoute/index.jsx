@@ -104,6 +104,7 @@ class ViewRoute extends Component {
       routeName,
       designatedCharityName,
       miles,
+      routePoints,
       directions,
       pathsToTravel,
       totalPaths

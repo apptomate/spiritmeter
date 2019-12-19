@@ -160,6 +160,7 @@ class RouteCard extends Component {
                       toggleFunc={this.toggleModal}
                       previewData={data}
                       routesData={pathsToTravel}
+                      routePoints={routePoints}
                       directionsData={directions}
                       totalMiles={miles}
                     />
@@ -174,7 +175,12 @@ class RouteCard extends Component {
             </Col>
             <Col span={12}>
               <div className="route-card-map">
-                <RouteMap srclat={2} srclng={2} directions={directions} />
+                <RouteMap
+                  srclat={2}
+                  srclng={2}
+                  routePoints={routePoints}
+                  directions={directions}
+                />
               </div>
             </Col>
           </Row>
