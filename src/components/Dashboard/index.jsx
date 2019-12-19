@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Card, Avatar, Table, Spin } from "antd";
+import { Row, Col, Card, Avatar, Table, Spin, Empty } from "antd";
 import { connect } from "react-redux";
 
 import {
@@ -158,55 +158,63 @@ class Dashboard extends Component {
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="User Vs Routes"
+                title="User Vs Display"
                 bordered={false}
               >
-                <div style={{ width: "100%", height: 300 }}>
-                  <ResponsiveContainer>
-                    <BarChart data={userWithRoutes}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="savedRoutes" name="Saved Routes">
-                        {userWithRoutes.map((list, key) => (
-                          <Cell
-                            key={`route-${key}`}
-                            fill={COLORS[key % COLORS.length]}
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
+                {userWithDisplay && userWithDisplay.length ? (
+                  <div style={{ width: "100%", height: 300 }}>
+                    <ResponsiveContainer>
+                      <BarChart data={userWithDisplay}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="savedDisplays" name="Saved Display">
+                          {userWithDisplay.map((list, key) => (
+                            <Cell
+                              key={`display-${key}`}
+                              fill={COLORS[key % COLORS.length]}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <Empty />
+                )}
               </Card>
             </Col>
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="User Vs Display"
+                title="User Vs Routes"
                 bordered={false}
               >
-                <div style={{ width: "100%", height: 300 }}>
-                  <ResponsiveContainer>
-                    <BarChart data={userWithDisplay}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="savedDisplays" name="Saved Display">
-                        {userWithDisplay.map((list, key) => (
-                          <Cell
-                            key={`display-${key}`}
-                            fill={COLORS[key % COLORS.length]}
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
+                {userWithRoutes && userWithRoutes.length ? (
+                  <div style={{ width: "100%", height: 300 }}>
+                    <ResponsiveContainer>
+                      <BarChart data={userWithRoutes}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="savedRoutes" name="Saved Routes">
+                          {userWithRoutes.map((list, key) => (
+                            <Cell
+                              key={`route-${key}`}
+                              fill={COLORS[key % COLORS.length]}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <Empty />
+                )}
               </Card>
             </Col>
           </Row>
