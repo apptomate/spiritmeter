@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import { Row, Col, Card, Avatar } from "antd";
+import { Row, Col, Card, Avatar, Table } from "antd";
 
 import {
   BarChart,
@@ -14,6 +14,42 @@ import {
 } from "recharts";
 
 const { Meta } = Card;
+
+const displayColumns = [
+  {
+    title: "Display Name",
+    dataIndex: "name",
+    key: "name"
+  },
+  {
+    title: "Category",
+    dataIndex: "categoryName",
+    key: "categoryName"
+  },
+  {
+    title: "Total Count",
+    dataIndex: "count",
+    key: "count"
+  }
+];
+
+const routeColumns = [
+  {
+    title: "Route Name",
+    dataIndex: "name",
+    key: "name"
+  },
+  {
+    title: "Charity",
+    dataIndex: "charity",
+    key: "charity"
+  },
+  {
+    title: "Distance",
+    dataIndex: "distance",
+    key: "distance"
+  }
+];
 
 const data = [
   {
@@ -118,7 +154,7 @@ class Dashboard extends Component {
           <Col span={12} className="p-1">
             <Card
               className="card-shodow"
-              title="User and User Created Routes"
+              title="User Vs Routes"
               bordered={false}
             >
               <BarChart
@@ -145,7 +181,7 @@ class Dashboard extends Component {
           <Col span={12} className="p-1">
             <Card
               className="card-shodow"
-              title="User and User Created Display"
+              title="User Vs Display"
               bordered={false}
             >
               <div style={{ width: "100%", height: 300 }}>
@@ -182,7 +218,7 @@ class Dashboard extends Component {
               title="Popular Display"
               bordered={false}
             >
-              Table
+              <Table columns={displayColumns} />
             </Card>
           </Col>
           <Col span={12} className="p-1">
@@ -191,7 +227,7 @@ class Dashboard extends Component {
               title="Popular Route"
               bordered={false}
             >
-              Table
+              <Table columns={routeColumns} />
             </Card>
           </Col>
         </Row>

@@ -11,8 +11,6 @@ import { getUserDisplay } from "./UsersReducers/GetUserDisplay";
 import { getUserRoute } from "./UsersReducers/GetUserRoute";
 import { addUser } from "./UsersReducers/AddUser";
 import { deleteUser } from "./UsersReducers/DeleteUser";
-import { generateOtp } from "./LoginReducers/GenerateOtp";
-import { forgetPassword } from "./LoginReducers/ForgetPassword";
 
 const RootReducer = combineReducers({
   authLogin,
@@ -26,9 +24,7 @@ const RootReducer = combineReducers({
   getUserDisplay,
   getUserRoute,
   addUser,
-  deleteUser,
-  generateOtp,
-  forgetPassword
+  deleteUser
 });
 
 export default RootReducer;

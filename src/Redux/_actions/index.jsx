@@ -3,8 +3,6 @@ import { authHeader } from "../_helpers/AuthHeaders";
 //URL
 import {
   AUTHLOGIN_URL,
-  GENERATE_OTP_URL,
-  FORGET_PASSWORD_URL,
   ALL_LIST_DISPLAY_URL,
   ALL_LIST_ROUTES_URL,
   ALL_LIST_USERS_URL,
@@ -22,9 +20,6 @@ import {
 import {
   AUTHLOGIN_SUCCESS,
   AUTHLOGIN_ERROR,
-  GENERATE_OTP_SUCCESS,
-  GENERATE_OTP_ERROR,
-  FORGET_PASSWORD_ERROR,
   ALL_LIST_DISPLAY_LOADING,
   ALL_LIST_DISPLAY_SUCCESS,
   ALL_LIST_DISPLAY_ERROR,
@@ -86,61 +81,6 @@ export function authLogin(formData) {
           dispatch({
             type: AUTHLOGIN_ERROR,
             payload: data
-          });
-          message.error(data.errorMessage);
-        }
-      });
-  };
-}
-
-//Generate OTP
-export function generateOtp(formData) {
-  return dispatch => {
-    API.put(GENERATE_OTP_URL, formData)
-      .then(response => {
-        let { smsStatus } = response.data;
-        dispatch({
-          type: GENERATE_OTP_SUCCESS,
-          payload: smsStatus
-        });
-        message.success(smsStatus);
-      })
-      .catch(error => {
-        if (error.response) {
-          let { data } = error.response;
-          dispatch({
-            type: GENERATE_OTP_ERROR,
-            payload: data
-          });
-          message.error(data.errorMessage);
-        }
-      });
-  };
-}
-
-//Password Update
-export function forgetPassword(formData, history) {
-  return dispatch => {
-    API.put(FORGET_PASSWORD_URL, formData)
-      .then(response => {
-        let { message: updateMsg } = response.data;
-        // dispatch({
-        //   type: FORGET_PASSWORD_SUCCESS,
-        //   payload: message
-        // });
-        message.success(updateMsg);
-        dispatch({
-          type: GENERATE_OTP_SUCCESS,
-          payload: null
-        });
-        history.push("/login");
-      })
-      .catch(error => {
-        if (error.response) {
-          let { data } = error.response;
-          dispatch({
-            type: FORGET_PASSWORD_ERROR,
-            payload: data.errorMessage
           });
           message.error(data.errorMessage);
         }
