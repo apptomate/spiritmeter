@@ -4,6 +4,9 @@ import {
   getLatLng,
   getWayPointsLatLng
 } from "../../../Redux/_helpers/Functions";
+import gift from "../../../assets/img/gift.png";
+import sleigh from "../../../assets/img/sleigh.png";
+import christmasTree from "../../../assets/img/christmas-tree.png";
 const { compose, withProps } = require("recompose");
 const {
   withGoogleMap,
@@ -23,31 +26,12 @@ class RouteMapCore extends React.PureComponent {
     if (routePoints && !markers.length) {
       let markers = [];
       const src = getLatLng(routePoints.origin);
-      markers.push(
-        getMarkerWithStyle(
-          src[0],
-          src[1],
-          "Start",
-          "http://maps.google.com/mapfiles/kml/pal4/icon61.png"
-        )
-      );
+      markers.push(getMarkerWithStyle(src[0], src[1], "Start", sleigh));
       const dest = getLatLng(routePoints.destination);
-      markers.push(
-        getMarkerWithStyle(
-          dest[0],
-          dest[1],
-          "Destination",
-          "http://maps.google.com/mapfiles/kml/pal4/icon53.png"
-        )
-      );
+      markers.push(getMarkerWithStyle(dest[0], dest[1], "Destination", gift));
 
       const waypoints = getWayPointsLatLng(routePoints.waypoints).map(e =>
-        getMarkerWithStyle(
-          e[0],
-          e[1],
-          null,
-          "http://maps.google.com/mapfiles/kml/pal2/icon13.png"
-        )
+        getMarkerWithStyle(e[0], e[1], null, christmasTree)
       );
 
       markers = markers.concat(waypoints);
