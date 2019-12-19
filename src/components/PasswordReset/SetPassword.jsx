@@ -71,7 +71,6 @@ class SetPasswordForm extends Component {
               type="success"
               showIcon
             />
-            <br />
             <Form.Item label="OTP Code">
               {getFieldDecorator("otpValue", {
                 rules: [
@@ -120,7 +119,7 @@ class SetPasswordForm extends Component {
                 className="login-form-forgot"
                 onClick={this.triggerToResend}
               >
-                Resend Code
+                Resend Code?
               </Button>
             </Form.Item>
           </Form>

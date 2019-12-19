@@ -14,12 +14,16 @@ import {
   GET_USER_ROUTE_URL,
   ADD_USER_URL,
   DELETE_USER_URL,
-  UPDATE_USER_URL
+  UPDATE_USER_URL,
+  GET_DASHBOARD_DATA_URL
 } from "../_helpers/Constants";
 //Action Types
 import {
   AUTHLOGIN_SUCCESS,
   AUTHLOGIN_ERROR,
+  GET_DASHBOARD_DATA_LOADING,
+  GET_DASHBOARD_DATA_SUCCESS,
+  GET_DASHBOARD_DATA_ERROR,
   ALL_LIST_DISPLAY_LOADING,
   ALL_LIST_DISPLAY_SUCCESS,
   ALL_LIST_DISPLAY_ERROR,
@@ -83,6 +87,31 @@ export function authLogin(formData) {
             payload: data
           });
           message.error(data.errorMessage);
+        }
+      });
+  };
+}
+//Dashboard
+//Get Dashboard Details
+export function getDashboardData() {
+  return dispatch => {
+    dispatch({
+      type: GET_DASHBOARD_DATA_LOADING
+    });
+    API.get(GET_DASHBOARD_DATA_URL, { headers: authHeader() })
+      .then(response => {
+        dispatch({
+          type: GET_DASHBOARD_DATA_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response) {
+          let { data } = error.response;
+          dispatch({
+            type: GET_DASHBOARD_DATA_ERROR,
+            payload: data
+          });
         }
       });
   };

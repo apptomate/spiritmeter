@@ -11,9 +11,11 @@ import { getUserDisplay } from "./UsersReducers/GetUserDisplay";
 import { getUserRoute } from "./UsersReducers/GetUserRoute";
 import { addUser } from "./UsersReducers/AddUser";
 import { deleteUser } from "./UsersReducers/DeleteUser";
+import { getDashboardData } from "./DashboardReducers/GetDashboardData";
 
 const RootReducer = combineReducers({
   authLogin,
+  getDashboardData,
   getAllListDisplay,
   getAllListRoutes,
   getAllListUsers,

@@ -3,6 +3,8 @@ export const BASE_URL = "https://spiritmeter.azurewebsites.net/api/";
 
 //Login
 export const AUTHLOGIN_URL = BASE_URL + "Login/Login";
+//Dashboard
+export const GET_DASHBOARD_DATA_URL = BASE_URL + "DashBoard/dashBoardData";
 //Generate OTP
 export const GENERATE_OTP_URL = BASE_URL + "User/generateOTP";
 //Forget Password
