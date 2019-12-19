@@ -169,7 +169,8 @@ export class Navbar extends Component {
       beforeUpload,
       imageUrl,
       addMode,
-      UserDetails
+      UserDetails,
+      manualSetValue: this.props.form.setFieldsValue
     };
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
