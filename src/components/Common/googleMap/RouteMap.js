@@ -21,8 +21,7 @@ class RouteMapCore extends React.PureComponent {
   state = { markers: [] };
   componentDidUpdate() {
     const { routePoints } = this.props;
-    const { markers } = this.state;
-    console.log(this.routePoints);
+    const { markers } = this.state;    
     if (routePoints && !markers.length) {
       let markers = [];
       const src = getLatLng(routePoints.origin);

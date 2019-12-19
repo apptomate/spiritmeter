@@ -13,14 +13,25 @@ import {
   ResponsiveContainer
 } from "recharts";
 import { getDashboardData } from "../../Redux/_actions";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
 const displayColumns = [
   {
     title: "Display Name",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "displayId",
+    key: "name",
+    render: (text, record) => (
+      <Link
+        to={{
+          pathname: `/admin/viewDisplay/${record.displayId}`,
+          state: { isRouteFromDashboard: true }
+        }}
+      >
+        {record.name}
+      </Link>
+    )
   },
   {
     title: "Category",
@@ -30,7 +41,8 @@ const displayColumns = [
   {
     title: "Total Count",
     dataIndex: "count",
-    key: "count"
+    key: "count",
+    align: "center"
   }
 ];
 
@@ -48,7 +60,8 @@ const routeColumns = [
   {
     title: "Distance",
     dataIndex: "distance",
-    key: "distance"
+    key: "distance",
+    align: "center"
   }
 ];
 
@@ -105,7 +118,12 @@ class Dashboard extends Component {
     const {
       DashboardData: { data = {}, loading }
     } = this.props;
-    const { userCount = 0, savedDisplays = 0, savedRoutes = 0 } = data;
+    const {
+      userCount = 0,
+      savedDisplays = 0,
+      savedRoutes = 0,
+      popularDisplay = []
+    } = data;
 
     return (
       <Fragment>
@@ -237,7 +255,12 @@ class Dashboard extends Component {
                 title="Popular Display"
                 bordered={false}
               >
-                <Table columns={displayColumns} />
+                <Table
+                  columns={displayColumns}
+                  dataSource={popularDisplay}
+                  rowKey={record => record.displayId}
+                  pagination={{ pageSize: 5 }}
+                />
               </Card>
             </Col>
             <Col span={12} className="p-1">
