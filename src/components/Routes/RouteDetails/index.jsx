@@ -8,6 +8,7 @@ export default class RouteDetails extends Component {
       designatedCharityName,
       miles,
       directions,
+      routePoints,
       pathsToTravel,
       totalPaths
     } = this.props.propsData;
@@ -30,7 +31,12 @@ export default class RouteDetails extends Component {
               <div className="mb-2">
                 <span className="route-title">Map Points :</span>
                 {/* <div className="route-map"> */}
-                <RouteMap srclat={2} srclng={2} directions={directions} />
+                <RouteMap
+                  srclat={2}
+                  srclng={2}
+                  routePoints={routePoints}
+                  directions={directions}
+                />
                 {/* </div> */}
               </div>
 

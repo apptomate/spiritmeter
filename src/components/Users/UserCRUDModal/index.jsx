@@ -17,6 +17,8 @@ import {
 } from "../../../Redux/_helpers/Constants";
 import Axios from "axios";
 import PickerMap from "../../Common/googleMap/PickerMap";
+// import { MarkerWithLabel } from "react-google-maps/lib/components/addons/MarkerWithLabel";
+
 const { Option } = AutoComplete;
 
 export const GET_GOOGLE_AUTOCOMPLETE_API = (
@@ -39,7 +41,11 @@ class UserCRUDModal extends Component {
       sessionToken: UUID.v4(),
       results: [],
       latitude: "",
-      longitude: ""
+      longitude: "",
+      cityName: "",
+      state: "",
+      country: "",
+      address: ""
     }
   };
 
@@ -99,40 +105,107 @@ class UserCRUDModal extends Component {
       this.callBackAutoCompleteSelect
     );
   }
-  handleMapClick(event) {
+
+  async handleMapClick(event) {
     const { latLng } = event;
+    const latitude = latLng.lat();
+    const longitude = latLng.lng();
+    const { cityName, state, country, address } = await this.addressLookup(
+      latitude,
+      longitude
+    );
+    this.props.manualSetValue({
+      cityName,
+      state,
+      country,
+      address
+    });
     this.setState(({ mapData }) => ({
       mapData: {
         ...mapData,
-        latitude: latLng.lat(),
-        longitude: latLng.lng()
+        latitude,
+        longitude,
+        cityName,
+        state,
+        country,
+        address
       }
     }));
   }
 
-  async addressLookup() {
-    const url = GET_GOOGLE_REVERSE_GEOCODE_API();
+  async addressLookup(latitude, longitude) {
+    const url = GET_GOOGLE_REVERSE_GEOCODE_API(latitude, longitude);
+    let addressResult = {
+      cityName: "",
+      state: "",
+      country: "",
+      address: ""
+    };
     try {
       let response = await Axios.get(CORS_BY_PASS_URL + url);
       const googleResponse = response.data;
-
-      this.setState(({ mapData }) => ({
-        mapData: { ...mapData, results: googleResponse.predictions }
-      }));
+      if (response.data.status === "OK") {
+        const result = this.getAddressComponents(
+          googleResponse.results[0]["address_components"]
+        );
+        addressResult = { ...addressResult, ...result };
+      }
     } catch (error) {
       console.error(error);
+    } finally {
+      return addressResult;
     }
   }
 
-  callBackAutoCompleteSelect(place, status) {
+  getAddressComponents(comps = []) {
+    let result = {
+      cityName: "",
+      state: "",
+      country: "",
+      address: ""
+    };
+    comps.forEach(comp => {
+      const { types = [], long_name } = comp;
+      if (types.includes("country")) {
+        result.country = long_name;
+      }
+      if (types.includes("administrative_area_level_1")) {
+        result.state = long_name;
+      }
+      if (types.includes("administrative_area_level_2")) {
+        result.cityName = long_name;
+      }
+      if (types.includes("route")) {
+        result.address = long_name;
+      }
+    });
+    return result;
+  }
+  async callBackAutoCompleteSelect(place, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       const latLng = place.geometry.location;
+
+      const latitude = latLng.lat();
+      const longitude = latLng.lng();
+      const { cityName, state, country, address } = await this.addressLookup(
+        latitude,
+        longitude
+      );
+      this.props.manualSetValue({
+        cityName,
+        state,
+        country,
+        address
+      });
       this.setState(({ mapData }) => ({
         mapData: {
           ...mapData,
-          latitude: latLng.lat(),
-          longitude: latLng.lng(),
-          sessionToken: UUID.v4()
+          latitude,
+          longitude,
+          cityName,
+          state,
+          country,
+          address
         }
       }));
     }
@@ -153,7 +226,6 @@ class UserCRUDModal extends Component {
       UserDetails = {}
     } = this.props;
     let { imageUrl } = this.props;
-
     if (!addMode) {
       imageUrl = imageUrl || (UserDetails && UserDetails.profileImage);
     }
@@ -183,7 +255,11 @@ class UserCRUDModal extends Component {
       lastName,
       phoneNumber,
       gender = "",
-      role = ""
+      role = "",
+      country = "",
+      state = "",
+      cityName = "",
+      address = ""
     } = UserDetails;
 
     return (
@@ -355,8 +431,85 @@ class UserCRUDModal extends Component {
                   markerLng={longitude}
                   zoom={14}
                   handleMapClick={this.handleMapClick}
-                />
+                ></PickerMap>
               )}
+
+              <Form.Item label="Address">
+                {getFieldDecorator("address", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your address"
+                    }
+                  ],
+                  initialValue: address || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="address"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item label="City">
+                {getFieldDecorator("cityName", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your city"
+                    }
+                  ],
+                  initialValue: cityName || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="city"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item label="State">
+                {getFieldDecorator("state", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your state"
+                    }
+                  ],
+                  initialValue: state || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="state"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item label="Country">
+                {getFieldDecorator("country", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your country"
+                    }
+                  ],
+                  initialValue: country || ""
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    disabled={!latitude && !longitude}
+                    placeholder="country"
+                  />
+                )}
+              </Form.Item>
             </Form.Item>
             <div className="d-fr">
               <Button className="f-r" type="primary" htmlType="submit">

@@ -19,6 +19,7 @@ const Picker = withGoogleMap(props => {
       {markerLat && markerLng && (
         <Marker position={{ lat: markerLat, lng: markerLng }} />
       )}
+      {props.children}
     </GoogleMap>
   );
 });
