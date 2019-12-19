@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Card, Avatar, Table, Spin, Empty } from "antd";
+import { Row, Col, Card, Avatar, Table, Spin, Empty, Badge } from "antd";
 import { connect } from "react-redux";
 
 import {
@@ -52,7 +52,8 @@ const displayColumns = [
     title: "Total Count",
     dataIndex: "count",
     key: "count",
-    align: "center"
+    align: "center",
+    render: count => <Badge count={count} />
   }
 ];
 
@@ -232,7 +233,7 @@ class Dashboard extends Component {
                   rowKey={record => `display_${record.displayId}`}
                   pagination={{ pageSize: 5 }}
                   //pagination={{ pageSize: 100 }} scroll={{ y: 240 }}
-                  loading={loading}
+                  //loading={loading}
                 />
               </Card>
             </Col>
@@ -245,7 +246,7 @@ class Dashboard extends Component {
                 <Table
                   columns={routeColumns}
                   pagination={{ pageSize: 5 }}
-                  loading={loading}
+                  //loading={loading}
                 />
               </Card>
             </Col>

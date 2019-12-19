@@ -26,9 +26,25 @@ class Display extends Component {
 
     if (searchQuery) {
       data = data.filter(list => {
-        const { name, country, state, cityName, address, createdByName } = list;
+        const {
+          name,
+          country,
+          state,
+          cityName,
+          address,
+          createdByName,
+          type,
+          categoryName
+        } = list;
         const query =
-          name + country + state + cityName + address + createdByName;
+          name +
+          country +
+          state +
+          cityName +
+          address +
+          createdByName +
+          type +
+          categoryName;
         return query.toLowerCase().includes(searchQuery.toLowerCase());
       });
     }
