@@ -91,7 +91,7 @@ class LoginForm extends Component {
                   </button>
                   <Link to="/forgot-password">
                     <Button type="link" className="my-link-btn f-r">
-                      Forgot password
+                      Forgotten password?
                     </Button>
                   </Link>
                 </Form.Item>
