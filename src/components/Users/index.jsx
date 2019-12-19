@@ -439,6 +439,7 @@ class UserGrid extends Component {
                 columns={columns}
                 dataSource={data}
                 rowKey={record => record.userId}
+                loading={loading}
               />
             </div>
             <div>{modalFlag && <UserCRUDModal {...modalProps} />}</div>

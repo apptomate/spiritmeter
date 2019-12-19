@@ -45,8 +45,8 @@ class PasswordReset extends Component {
     let loadingMessage = message.loading("Action in progress..");
     let apiResponse = await API.put(GENERATE_OTP_URL, values)
       .then(response => {
-        let { smsStatus } = response.data;
-        message.success(smsStatus);
+        let { message: otpMessage = "" } = response.data;
+        message.success(otpMessage);
         if (funcCallFrom !== "resend_otp") {
           this.setState({ isOtpGenerate: true, otpSentPhone: values.phone });
         }
