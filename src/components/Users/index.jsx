@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from "react";
 import {
   getAllListUsers,
-  // uploadFile,
-  addUser,
-  updateUser,
   getUserDetails,
   deleteUser
 } from "../../Redux/_actions";
@@ -18,27 +15,27 @@ import {
   Divider,
   Tag,
   Form,
-  Popconfirm
+  Popconfirm,
+  message
 } from "antd";
 import Highlighter from "react-highlight-words";
 import DisplayAvatar from "../Common/DisplayAvatar";
 import { Link } from "react-router-dom";
 import UserCRUDModal from "./UserCRUDModal";
-import { FILE_UPLOAD_URL } from "../../Redux/_helpers/Constants";
+import {
+  FILE_UPLOAD_URL,
+  ADD_USER_URL,
+  UPDATE_USER_URL
+} from "../../Redux/_helpers/Constants";
 import { authHeader } from "../../Redux/_helpers/AuthHeaders";
 import API from "../../Redux/_actions/API";
-import { CLEAR_USER_DETAILS } from "../../Redux/_actions/ActionTypes";
+import {
+  CLEAR_USER_DETAILS,
+  ADD_USER_SUCCESS,
+  ADD_USER_ERROR
+} from "../../Redux/_actions/ActionTypes";
 import { bindActionCreators } from "redux";
 import { getBase64, beforeUpload } from "../../Redux/_helpers/Functions";
-
-//Base64
-// function getBase64(img, callback) {
-//   const reader = new FileReader();
-//   reader.addEventListener("load", () => callback(reader.result));
-//   reader.readAsDataURL(img);
-// }
-
-//Before File Upload
 
 class UserGrid extends Component {
   state = {
@@ -142,26 +139,48 @@ class UserGrid extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // let { FileUploadData } = this.props;
         let { addMode } = this.state;
         delete values.confirmPassword;
         values["profileImage"] = additional.profileImage;
         values["latitude"] = additional.latitude;
         values["longitude"] = additional.longitude;
-        // values["country"] = "USA";
-        // values["state"] = " TX 77040";
-        // values["cityName"] = "Houston";
-        // values["address"] = "1/1 Fourth Car Street";
-        if (addMode) {
-          this.props.addUser(values);
-        } else {
+        let addEditUserUrl = ADD_USER_URL;
+        let axiosMethod = "post";
+        if (!addMode) {
+          addEditUserUrl = UPDATE_USER_URL;
           values.userID = additional.userId;
-          this.props.updateUser(values);
+          axiosMethod = "put";
         }
-        this.userModalToggle(false);
+        const options = {
+          method: axiosMethod,
+          headers: authHeader(),
+          data: values,
+          url: addEditUserUrl
+        };
+        API(options)
+          .then(response => {
+            this.props.getAllListUsers();
+            this.props.dispatch({
+              type: ADD_USER_SUCCESS,
+              payload: response.data
+            });
+            message.success(response.data);
+            this.setState({ modalFlag: false });
+          })
+          .catch(error => {
+            if (error.response) {
+              let { data } = error.response;
+              this.props.dispatch({
+                type: ADD_USER_ERROR,
+                payload: data
+              });
+              message.error(data.errorMessage);
+            }
+          });
       }
     });
   };
+
   //User Modal
   userModalToggle(addMode) {
     this.setState(prevState => ({
@@ -263,7 +282,6 @@ class UserGrid extends Component {
     } = this.props;
     const { modalFlag, imageUrl, uploadLoading, addMode } = this.state;
     const { getFieldDecorator } = this.props.form;
-    //const { Search } = Input;
 
     const columns = [
       {
@@ -464,8 +482,6 @@ function mapDispatchToProps(dispatch) {
     ...bindActionCreators(
       {
         getAllListUsers,
-        addUser,
-        updateUser,
         getUserDetails,
         deleteUser
       },
