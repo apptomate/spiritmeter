@@ -43,7 +43,8 @@ export default class Sidebar extends Component {
         <Menu
           theme="light"
           mode="inline"
-          defaultSelectedKeys={getCurrentActiveMenu(currentMenuToActive)}
+          defaultSelectedKeys={"dashboard"}
+          selectedKeys={getCurrentActiveMenu(currentMenuToActive)}
         >
           {menuList.map(list => (
             <Menu.Item key={list.menuKey}>
