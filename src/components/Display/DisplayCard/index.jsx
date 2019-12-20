@@ -35,6 +35,8 @@ export default class DisplayCard extends Component {
     let filePathJson = listData.filePath || "[]";
     let filePathParsed = JSON.parse(filePathJson);
     filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
+    const location_address = `${country}${state && ` , ${state}`}${cityName &&
+      ` , ${cityName}`}${address && ` , ${address}`}`;
     return (
       <Fragment>
         <div className="list-card">
@@ -50,10 +52,7 @@ export default class DisplayCard extends Component {
               <Icon type="radar-chart" /> {type}
             </div>
             <div className="list-name-imp">
-              <Icon type="environment" /> {country}
-              {state && ` , ${state}`}
-              {cityName && ` , ${cityName}`}
-              {address && ` , ${address}`}
+              <Icon type="environment" /> {location_address}
             </div>
 
             <div className="list-name-imp">

@@ -6,12 +6,10 @@ export default function RoutePreview(props) {
     toggleFlag,
     toggleFunc,
     previewData,
-    routesData,
-    directionsData,
-    totalMiles,
-    routePoints
+    legs,
+    directions,
+    totalMiles
   } = props;
-  let totalPaths = routesData.length;
   let { routeName, comments, designatedCharityName, isPrivate } = previewData;
   return (
     <Fragment>
@@ -57,26 +55,21 @@ export default function RoutePreview(props) {
               </div>
               <div>
                 <h4>Routes :</h4>
-                {routesData.map((travelPath, key) => {
-                  if (totalPaths === key + 1)
-                    return (
-                      <Fragment key={`path_${key}`}>
-                        <div className="route-name">
-                          <Icon type="swap" />
-                          {travelPath.start_address}
-                        </div>
-                        <div className="route-name" key={`path_${key}`}>
+                {legs.map((travelPath, key) => {
+                  return (
+                    <Fragment key={`startpath_${key}`}>
+                      <div className="route-name">
+                        <Icon type="swap" />
+                        {travelPath.start_address}
+                      </div>
+                      {legs.length === key + 1 && (
+                        <div className="route-name" key={`endpath_${key}`}>
                           <Icon type="swap" />
                           {travelPath.end_address}
                         </div>
-                      </Fragment>
-                    );
-                  else
-                    return (
-                      <div className="route-name" key={`path_${key}`}>
-                        <Icon type="swap" /> {travelPath.start_address}
-                      </div>
-                    );
+                      )}
+                    </Fragment>
+                  );
                 })}
               </div>
 
@@ -88,12 +81,7 @@ export default function RoutePreview(props) {
             </Col>
             <Col span={12}>
               <div className="route-card-map">
-                <RouteMap
-                  srclat={2}
-                  srclng={2}
-                  routePoints={routePoints}
-                  directions={directionsData}
-                />
+                <RouteMap srclat={2} srclng={2} directions={directions} />
               </div>
             </Col>
           </Row>

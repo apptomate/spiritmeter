@@ -1,5 +1,6 @@
 import React from "react";
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import sleigh from "../../../assets/img/sleigh.png";
 
 const Picker = withGoogleMap(props => {
   const {
@@ -17,7 +18,7 @@ const Picker = withGoogleMap(props => {
       center={{ lat: centerLat, lng: centerLng }}
     >
       {markerLat && markerLng && (
-        <Marker position={{ lat: markerLat, lng: markerLng }} />
+        <Marker icon={sleigh} position={{ lat: markerLat, lng: markerLng }} />
       )}
       {props.children}
     </GoogleMap>

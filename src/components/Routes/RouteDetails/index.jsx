@@ -9,8 +9,7 @@ export default class RouteDetails extends Component {
       miles,
       directions,
       routePoints,
-      pathsToTravel,
-      totalPaths
+      legs
     } = this.props.propsData;
     return (
       <Fragment>
@@ -44,23 +43,21 @@ export default class RouteDetails extends Component {
                 <span className="route-title">Map Routes Names :</span>
                 <div className="mt-1 route-list">
                   <Icon type="right-square" />
-                  {pathsToTravel.map((travelPath, key) => {
-                    if (totalPaths === key + 1)
-                      return (
-                        <Fragment key={`path_${key}`}>
+                  {legs.map((travelPath, key) => {
+                    return (
+                      <Fragment key={`startpath_${key}`}>
+                        <div className="route-name">
                           <Icon type="swap" />
-                          <Tag color="blue">{travelPath.start_address}</Tag>
-                          <Icon type="swap" />
-                          <Tag color="blue">{travelPath.end_address}</Tag>
-                        </Fragment>
-                      );
-                    else
-                      return (
-                        <Fragment key={`path_${key}`}>
-                          {key !== 0 && <Icon type="swap" />}
-                          <Tag color="blue">{travelPath.start_address}</Tag>
-                        </Fragment>
-                      );
+                          {travelPath.start_address}
+                        </div>
+                        {legs.length === key + 1 && (
+                          <div className="route-name" key={`endpath_${key}`}>
+                            <Icon type="swap" />
+                            {travelPath.end_address}
+                          </div>
+                        )}
+                      </Fragment>
+                    );
                   })}
                   <Icon type="left-square" />
                 </div>

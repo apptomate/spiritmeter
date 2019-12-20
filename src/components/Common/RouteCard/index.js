@@ -78,12 +78,10 @@ class RouteCard extends Component {
       this.getRoute(srclat, srclng, destlat, destlng, waypoints);
     }
 
-    let pathsToTravel = [];
-    let totalPaths = 0;
+    let legs = [];
     let miles = 0;
     if (directions) {
-      pathsToTravel = directions.routes[0].legs;
-      totalPaths = pathsToTravel.length;
+      legs = directions.routes[0].legs;
       miles = getMilesFromLegs(directions.routes[0].legs);
       miles = miles.toFixed(2);
     }
@@ -123,26 +121,21 @@ class RouteCard extends Component {
                 </div>
                 <div>
                   <h4>Routes :</h4>
-                  {pathsToTravel.map((travelPath, key) => {
-                    if (totalPaths === key + 1)
-                      return (
-                        <Fragment key={`path_${key}`}>
-                          <div className="route-name">
-                            <Icon type="swap" />
-                            {travelPath.start_address}
-                          </div>
-                          <div className="route-name" key={`path_${key}`}>
+                  {legs.map((travelPath, key) => {
+                    return (
+                      <Fragment key={`startpath_${key}`}>
+                        <div className="route-name">
+                          <Icon type="swap" />
+                          {travelPath.start_address}
+                        </div>
+                        {legs.length === key + 1 && (
+                          <div className="route-name" key={`endpath_${key}`}>
                             <Icon type="swap" />
                             {travelPath.end_address}
                           </div>
-                        </Fragment>
-                      );
-                    else
-                      return (
-                        <div className="route-name" key={`path_${key}`}>
-                          <Icon type="swap" /> {travelPath.start_address}
-                        </div>
-                      );
+                        )}
+                      </Fragment>
+                    );
                   })}
                   <h4>Distance : {miles} miles </h4>
                 </div>
@@ -159,9 +152,9 @@ class RouteCard extends Component {
                       toggleFlag={toggleFlag}
                       toggleFunc={this.toggleModal}
                       previewData={data}
-                      routesData={pathsToTravel}
+                      legs={legs}
                       routePoints={routePoints}
-                      directionsData={directions}
+                      directions={directions}
                       totalMiles={miles}
                     />
                   </Fragment>

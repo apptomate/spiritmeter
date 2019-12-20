@@ -57,8 +57,49 @@ class UserCRUDModal extends Component {
       this
     );
     this.handleMapClick = this.handleMapClick.bind(this);
+    // this.getLocation = this.getLocation.bind(this);
+    // this.showPosition = this.showPosition.bind(this);
   }
+  // getLocation() {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(this.showPosition, () =>
+  //       console.error("not supported")
+  //     );
+  //   } else {
+  //     console.error("Geolocation is not supported by this browser.");
+  //   }
+  // }
 
+  // async showPosition(position) {
+  //   const latitude = position.coords.latitude;
+  //   const longitude = position.coords.longitude;
+  //   const { cityName, state, country, address } = await this.addressLookup(
+  //     latitude,
+  //     longitude
+  //   );
+  //   this.props.manualSetValue({
+  //     cityName,
+  //     state,
+  //     country,
+  //     address
+  //   });
+  //   this.setState(({ mapData }) => ({
+  //     mapData: {
+  //       ...mapData,
+  //       latitude,
+  //       longitude,
+  //       cityName,
+  //       state,
+  //       country,
+  //       address
+  //     }
+  //   }));
+  // }
+  // componentDidMount() {
+  //   if (this.props.addMode) {
+  //     this.getLocation();
+  //   }
+  // }
   componentDidUpdate(prevProp) {
     if (!this.props.addMode) {
       const {

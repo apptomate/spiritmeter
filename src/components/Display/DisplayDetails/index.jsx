@@ -20,6 +20,8 @@ export default class DisplayDetails extends Component {
       latitude,
       longitude
     } = this.props.propsData;
+    const location_address = `${country}${state && ` , ${state}`}${cityName &&
+      ` , ${cityName}`}${address && ` , ${address}`}`;
     return (
       <Fragment>
         <Row>
@@ -34,10 +36,7 @@ export default class DisplayDetails extends Component {
               </div>
 
               <div className="list-name-imp">
-                <Icon type="environment" /> {country}
-                {state && ` , ${state}`}
-                {cityName && ` , ${cityName}`}
-                {address && ` , ${address}`}
+                <Icon type="environment" /> {location_address}
               </div>
 
               <div className="list-name-imp">
@@ -75,6 +74,7 @@ export default class DisplayDetails extends Component {
                 centerLng={longitude}
                 markerLat={latitude}
                 markerLng={longitude}
+                title={location_address}
               />
             </div>
           </Col>

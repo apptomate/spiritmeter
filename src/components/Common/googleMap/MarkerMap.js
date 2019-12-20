@@ -1,12 +1,19 @@
+/* global google */
 import React from "react";
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import sleigh from "../../../assets/img/sleigh.png";
 
 const MarkerMap = withGoogleMap(props => {
-  const { centerLat, centerLng, markerLat, markerLng } = props;
+  const { centerLat, centerLng, markerLat, markerLng, title } = props;
   return (
     <GoogleMap defaultZoom={8} center={{ lat: centerLat, lng: centerLng }}>
       {markerLat && markerLng && (
-        <Marker position={{ lat: markerLat, lng: markerLng }} />
+        <Marker
+          position={{ lat: markerLat, lng: markerLng }}
+          icon={sleigh}
+          title={title}
+          animation={google.maps.Animation.DROP}
+        />
       )}
     </GoogleMap>
   );

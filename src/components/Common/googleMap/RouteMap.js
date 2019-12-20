@@ -1,9 +1,5 @@
 /*global google*/
 import React from "react";
-import {
-  getLatLng,
-  getWayPointsLatLng
-} from "../../../Redux/_helpers/Functions";
 import gift from "../../../assets/img/gift.png";
 import sleigh from "../../../assets/img/sleigh.png";
 import christmasTree from "../../../assets/img/christmas-tree.png";
@@ -20,17 +16,34 @@ const {
 class RouteMapCore extends React.PureComponent {
   state = { markers: [] };
   componentDidUpdate() {
-    const { routePoints } = this.props;
-    const { markers } = this.state;    
-    if (routePoints && !markers.length) {
+    const { directions } = this.props;
+    console.log(directions);
+    const { markers } = this.state;
+    if (!markers.length && directions) {
       let markers = [];
-      const src = getLatLng(routePoints.origin);
-      markers.push(getMarkerWithStyle(src[0], src[1], "Start", sleigh));
-      const dest = getLatLng(routePoints.destination);
-      markers.push(getMarkerWithStyle(dest[0], dest[1], "Destination", gift));
+      let legs = directions.routes[0].legs;
+      let routes = [];
 
-      const waypoints = getWayPointsLatLng(routePoints.waypoints).map(e =>
-        getMarkerWithStyle(e[0], e[1], null, christmasTree)
+      legs.forEach((e, i) => {
+        let temp = {};
+        temp = e.start_location;
+        routes.push([temp.lat(), temp.lng(), e.start_address]);
+        if (i + 1 === legs.length) {
+          temp = e.end_location;
+          routes.push([temp.lat(), temp.lng(), e.end_address]);
+        }
+      });
+      console.warn(routes);
+      const src = routes[0];
+      markers.push(getMarkerWithStyle(src[0], src[1], src[2], "Start", sleigh));
+      const dest = routes[routes.length - 1];
+      markers.push(
+        getMarkerWithStyle(dest[0], dest[1], dest[2], "Destination", gift)
+      );
+
+      let waypoints = routes.slice(1, -1);
+      waypoints = waypoints.map(e =>
+        getMarkerWithStyle(e[0], e[1], e[2], null, christmasTree)
       );
 
       markers = markers.concat(waypoints);
@@ -39,7 +52,7 @@ class RouteMapCore extends React.PureComponent {
   }
 
   render() {
-    const { srclat, srclng, directions, routePoints } = this.props;
+    const { srclat, srclng, directions } = this.props;
     const { markers } = this.state;
     return (
       <GoogleMap
@@ -48,7 +61,7 @@ class RouteMapCore extends React.PureComponent {
       >
         {directions && (
           <DirectionsRenderer
-            defaultOptions={{ suppressMarkers: !!routePoints }}
+            defaultOptions={{ suppressMarkers: true }}
             directions={directions}
           />
         )}
@@ -61,7 +74,7 @@ class RouteMapCore extends React.PureComponent {
 const RouteMap = compose(
   withProps({
     loadingElement: <div style={{ height: "100%" }} />,
-    containerElement: <div style={{ height: "400px" }} />,
+    containerElement: <div style={{ height: "300px" }} />,
     mapElement: <div style={{ height: "100%" }} />
   }),
   withGoogleMap
@@ -72,6 +85,7 @@ export default RouteMap;
 const getMarkerWithStyle = (
   lat,
   lng,
+  title = "",
   label = "",
   icon,
   style = {
@@ -87,6 +101,7 @@ const getMarkerWithStyle = (
       labelAnchor={new google.maps.Point(0, 0)}
       labelStyle={style}
       labelVisible={!!label}
+      title={title}
       icon={icon}
     >
       <div>{label}</div>

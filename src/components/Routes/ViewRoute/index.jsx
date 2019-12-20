@@ -18,7 +18,7 @@ const { TabPane } = Tabs;
 
 class ViewRoute extends Component {
   state = {
-    directions: null,
+    directions: false,
     srclat: "",
     srclng: "",
     destlat: "",
@@ -100,12 +100,11 @@ class ViewRoute extends Component {
 
       this.getRoute(srclat, srclng, destlat, destlng, waypoints);
     }
-    let pathsToTravel = [];
-    let totalPaths = 0;
+    let legs = [];
     let miles = 0;
     if (directions) {
-      pathsToTravel = directions.routes[0].legs;
-      totalPaths = pathsToTravel.length;
+      console.log(directions);
+      legs = directions.routes[0].legs;
       miles = getMilesFromLegs(directions.routes[0].legs);
       miles = miles.toFixed(2);
     }
@@ -117,8 +116,7 @@ class ViewRoute extends Component {
       miles,
       routePoints,
       directions,
-      pathsToTravel,
-      totalPaths
+      legs
     };
 
     return (

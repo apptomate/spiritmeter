@@ -476,7 +476,7 @@ button:hover .button-text {
   padding: 1rem;
 }
 .route-card-map {
-  height: 18rem;
+  /* height: 18rem; */
   overflow: hidden;
 }
 .f-r {

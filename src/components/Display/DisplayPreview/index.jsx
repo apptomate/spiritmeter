@@ -22,6 +22,8 @@ export default function DisplayPreview(props) {
   filePathParsed = filePathParsed.length ? filePathParsed[0].filePath : "";
   latitude = parseFloat(latitude);
   longitude = parseFloat(longitude);
+  const location_address = `${country}${state && ` , ${state}`}${cityName &&
+    ` , ${cityName}`}${address && ` , ${address}`}`;
   return (
     <Fragment>
       <Modal
@@ -48,10 +50,7 @@ export default function DisplayPreview(props) {
               <Icon type="radar-chart" /> {type}
             </div>
             <div className="list-name-imp">
-              <Icon type="environment" /> {country}
-              {state && ` , ${state}`}
-              {cityName && ` , ${cityName}`}
-              {address && ` , ${address}`}
+              <Icon type="environment" /> {location_address}
             </div>
 
             <div className="list-name-imp">
@@ -75,6 +74,7 @@ export default function DisplayPreview(props) {
               <MarkerMap
                 centerLat={latitude}
                 centerLng={longitude}
+                title={location_address}
                 markerLat={latitude}
                 markerLng={longitude}
               />
