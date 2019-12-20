@@ -107,11 +107,11 @@ class Dashboard extends Component {
     return (
       <Fragment>
         <Spin spinning={loading}>
-          <Row className="mb-2">
+          <Row className="mb-1 p-1">
             <Col span={8}>
               <Card
                 className="card-shodow"
-                style={{ width: 300, marginTop: 16 }}
+                style={{ width: 400, marginTop: 16 }}
               >
                 <Meta
                   avatar={
@@ -130,7 +130,7 @@ class Dashboard extends Component {
             <Col span={8}>
               <Card
                 className="card-shodow"
-                style={{ width: 300, marginTop: 16 }}
+                style={{ width: 400, marginTop: 16 }}
               >
                 <Meta
                   avatar={
@@ -147,10 +147,7 @@ class Dashboard extends Component {
               </Card>
             </Col>
             <Col span={8}>
-              <Card
-                className="card-shodow"
-                style={{ width: 300, marginTop: 16 }}
-              >
+              <Card className="card-shodow" style={{ marginTop: 16 }}>
                 <Meta
                   avatar={
                     <Avatar
