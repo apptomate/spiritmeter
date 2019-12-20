@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Card, Avatar, Table, Spin, Empty, Badge } from "antd";
+import { Row, Col, Card, Avatar, Table, Spin, Empty, Badge, Tag } from "antd";
 import { connect } from "react-redux";
 
 import {
@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
-import { getDashboardData } from "../../Redux/_actions";
+import { getDashboardData, getAllListRoutes } from "../../Redux/_actions";
 import { Link } from "react-router-dom";
 
 const { Meta } = Card;
@@ -53,37 +53,52 @@ const displayColumns = [
     dataIndex: "count",
     key: "count",
     align: "center",
-    render: count => <Badge count={count} />
+    render: count => <Tag color="#108ee9">{count}</Tag>
+    //<Tag color="#108ee9">#108ee9</Tag><Badge count={count} />
   }
 ];
 
 const routeColumns = [
   {
     title: "Route Name",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "routeName",
+    key: "routeName",
+    render: (text, record) => (
+      <Link
+        to={{
+          pathname: `/admin/viewRoute/${record.routeId}`,
+          state: { isRouteFromDashboard: true }
+        }}
+      >
+        {record.routeName}
+      </Link>
+    )
   },
   {
     title: "Charity",
-    dataIndex: "charity",
-    key: "charity"
+    dataIndex: "designatedCharityName",
+    key: "designatedCharityName"
   },
   {
     title: "Distance",
-    dataIndex: "distance",
-    key: "distance",
-    align: "center"
+    dataIndex: "totalMiles",
+    key: "totalMiles",
+    align: "center",
+    render: distance => <Tag color="purple">{distance}</Tag>
   }
 ];
 
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getDashboardData();
+    this.props.getAllListRoutes();
   }
   render() {
-    const {
-      DashboardData: { data = {}, loading }
+    let {
+      DashboardData: { data = {}, loading },
+      RoutesResponseData = []
     } = this.props;
+
     const {
       userCount = 0,
       savedDisplays = 0,
@@ -92,6 +107,11 @@ class Dashboard extends Component {
       userWithDisplay = [],
       userWithRoutes = []
     } = data;
+
+    if (RoutesResponseData && RoutesResponseData.length) {
+      RoutesResponseData = RoutesResponseData.slice(-10);
+    }
+    console.log(RoutesResponseData);
 
     return (
       <Fragment>
@@ -245,7 +265,9 @@ class Dashboard extends Component {
               >
                 <Table
                   columns={routeColumns}
+                  dataSource={RoutesResponseData}
                   pagination={{ pageSize: 5 }}
+                  rowKey={record => `route_${record.routeId}`}
                   //loading={loading}
                 />
               </Card>
@@ -259,8 +281,11 @@ class Dashboard extends Component {
 
 const getState = state => {
   return {
-    DashboardData: state.getDashboardData
+    DashboardData: state.getDashboardData,
+    RoutesResponseData: state.getAllListRoutes.data
   };
 };
 
-export default connect(getState, { getDashboardData })(Dashboard);
+export default connect(getState, { getDashboardData, getAllListRoutes })(
+  Dashboard
+);
