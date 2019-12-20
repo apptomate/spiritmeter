@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Card, Avatar, Table, Spin, Empty, Badge, Tag } from "antd";
+import { Row, Col, Card, Avatar, Table, Spin, Empty, Tag } from "antd";
 import { connect } from "react-redux";
-
 import {
   BarChart,
   Bar,
@@ -15,9 +14,9 @@ import {
 } from "recharts";
 import { getDashboardData, getAllListRoutes } from "../../Redux/_actions";
 import { Link } from "react-router-dom";
-
 const { Meta } = Card;
-
+const displayTableTitle = <Link to="/admin/display">Popular Display</Link>;
+const routeTableTitle = <Link to="/admin/routes">Popular Route</Link>;
 const COLORS = [
   "#E30022",
   "#FF8B00",
@@ -26,7 +25,6 @@ const COLORS = [
   "#1F75FE",
   "#431C53"
 ];
-
 const displayColumns = [
   {
     title: "Display Name",
@@ -54,10 +52,8 @@ const displayColumns = [
     key: "count",
     align: "center",
     render: count => <Tag color="#108ee9">{count}</Tag>
-    //<Tag color="#108ee9">#108ee9</Tag><Badge count={count} />
   }
 ];
-
 const routeColumns = [
   {
     title: "Route Name",
@@ -87,7 +83,6 @@ const routeColumns = [
     render: distance => <Tag color="purple">{distance}</Tag>
   }
 ];
-
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getDashboardData();
@@ -98,7 +93,6 @@ class Dashboard extends Component {
       DashboardData: { data = {}, loading },
       RoutesResponseData = []
     } = this.props;
-
     const {
       userCount = 0,
       savedDisplays = 0,
@@ -107,12 +101,9 @@ class Dashboard extends Component {
       userWithDisplay = [],
       userWithRoutes = []
     } = data;
-
     if (RoutesResponseData && RoutesResponseData.length) {
       RoutesResponseData = RoutesResponseData.slice(-10);
     }
-    console.log(RoutesResponseData);
-
     return (
       <Fragment>
         <Spin spinning={loading}>
@@ -239,12 +230,11 @@ class Dashboard extends Component {
               </Card>
             </Col>
           </Row>
-
           <Row>
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="Popular Display"
+                title={displayTableTitle}
                 bordered={false}
               >
                 <Table
@@ -260,7 +250,7 @@ class Dashboard extends Component {
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="Popular Route"
+                title={routeTableTitle}
                 bordered={false}
               >
                 <Table
@@ -278,14 +268,12 @@ class Dashboard extends Component {
     );
   }
 }
-
 const getState = state => {
   return {
     DashboardData: state.getDashboardData,
     RoutesResponseData: state.getAllListRoutes.data
   };
 };
-
 export default connect(getState, { getDashboardData, getAllListRoutes })(
   Dashboard
 );
