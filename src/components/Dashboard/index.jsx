@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Row, Col, Card, Avatar, Table, Spin, Empty } from "antd";
+import { Row, Col, Card, Avatar, Table, Spin, Empty, Tag } from "antd";
 import { connect } from "react-redux";
-
 import {
   BarChart,
   Bar,
@@ -13,11 +12,11 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
-import { getDashboardData } from "../../Redux/_actions";
+import { getDashboardData, getAllListRoutes } from "../../Redux/_actions";
 import { Link } from "react-router-dom";
-
 const { Meta } = Card;
-
+const displayTableTitle = <Link to="/admin/display">Popular Display</Link>;
+const routeTableTitle = <Link to="/admin/routes">Popular Route</Link>;
 const COLORS = [
   "#E30022",
   "#FF8B00",
@@ -26,7 +25,6 @@ const COLORS = [
   "#1F75FE",
   "#431C53"
 ];
-
 const displayColumns = [
   {
     title: "Display Name",
@@ -52,36 +50,48 @@ const displayColumns = [
     title: "Total Count",
     dataIndex: "count",
     key: "count",
-    align: "center"
+    align: "center",
+    render: count => <Tag color="#108ee9">{count}</Tag>
   }
 ];
-
 const routeColumns = [
   {
     title: "Route Name",
-    dataIndex: "name",
-    key: "name"
+    dataIndex: "routeName",
+    key: "routeName",
+    render: (text, record) => (
+      <Link
+        to={{
+          pathname: `/admin/viewRoute/${record.routeId}`,
+          state: { isRouteFromDashboard: true }
+        }}
+      >
+        {record.routeName}
+      </Link>
+    )
   },
   {
     title: "Charity",
-    dataIndex: "charity",
-    key: "charity"
+    dataIndex: "designatedCharityName",
+    key: "designatedCharityName"
   },
   {
     title: "Distance",
-    dataIndex: "distance",
-    key: "distance",
-    align: "center"
+    dataIndex: "totalMiles",
+    key: "totalMiles",
+    align: "center",
+    render: distance => <Tag color="purple">{distance}</Tag>
   }
 ];
-
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getDashboardData();
+    this.props.getAllListRoutes();
   }
   render() {
-    const {
-      DashboardData: { data = {}, loading }
+    let {
+      DashboardData: { data = {}, loading },
+      RoutesResponseData = []
     } = this.props;
     const {
       userCount = 0,
@@ -91,7 +101,9 @@ class Dashboard extends Component {
       userWithDisplay = [],
       userWithRoutes = []
     } = data;
-
+    if (RoutesResponseData && RoutesResponseData.length) {
+      RoutesResponseData = RoutesResponseData.slice(-10);
+    }
     return (
       <Fragment>
         <Spin spinning={loading}>
@@ -218,12 +230,11 @@ class Dashboard extends Component {
               </Card>
             </Col>
           </Row>
-
           <Row>
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="Popular Display"
+                title={displayTableTitle}
                 bordered={false}
               >
                 <Table
@@ -232,20 +243,22 @@ class Dashboard extends Component {
                   rowKey={record => `display_${record.displayId}`}
                   pagination={{ pageSize: 5 }}
                   //pagination={{ pageSize: 100 }} scroll={{ y: 240 }}
-                  loading={loading}
+                  //loading={loading}
                 />
               </Card>
             </Col>
             <Col span={12} className="p-1">
               <Card
                 className="card-shodow"
-                title="Popular Route"
+                title={routeTableTitle}
                 bordered={false}
               >
                 <Table
                   columns={routeColumns}
+                  dataSource={RoutesResponseData}
                   pagination={{ pageSize: 5 }}
-                  loading={loading}
+                  rowKey={record => `route_${record.routeId}`}
+                  //loading={loading}
                 />
               </Card>
             </Col>
@@ -255,11 +268,12 @@ class Dashboard extends Component {
     );
   }
 }
-
 const getState = state => {
   return {
-    DashboardData: state.getDashboardData
+    DashboardData: state.getDashboardData,
+    RoutesResponseData: state.getAllListRoutes.data
   };
 };
-
-export default connect(getState, { getDashboardData })(Dashboard);
+export default connect(getState, { getDashboardData, getAllListRoutes })(
+  Dashboard
+);

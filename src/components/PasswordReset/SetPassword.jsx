@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from "react";
-import { Form, Icon, Input, Col, Alert, Button } from "antd";
+import { Form, Icon, Input, Col, Alert, Button, Tooltip } from "antd";
+import { Link } from "react-router-dom";
 
 class SetPasswordForm extends Component {
   state = {
@@ -63,7 +64,14 @@ class SetPasswordForm extends Component {
     return (
       <Fragment>
         <Col span={8} className="login-form-div">
-          <h4 className="text-center login-title">Reset your password</h4>
+          <h4 className="text-center login-title">
+            Reset your password{" "}
+            <Link to="/login">
+              <Tooltip placement="top" title="Go To Login">
+                <Button type="primary" shape="circle" icon="login" />
+              </Tooltip>
+            </Link>
+          </h4>
           <Form onSubmit={this.validateForm} className="login-form">
             <Alert
               message="We sent security code to :"

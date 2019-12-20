@@ -22,7 +22,8 @@ class ViewRoute extends Component {
     srclat: "",
     srclng: "",
     destlat: "",
-    destlng: ""
+    destlng: "",
+    redirectToDashboard: false
   };
 
   getRoute(srclat, srclng, destlat, destlng, waypoints = []) {
@@ -60,15 +61,25 @@ class ViewRoute extends Component {
     const {
       match: {
         params: { id }
-      }
+      },
+      location: { state = {} }
     } = this.props;
     if (id) {
       let routeParam = { routeId: parseInt(id) };
       this.props.getRouteDetails(routeParam);
     }
+    if (state && state.isRouteFromDashboard)
+      this.setState({ redirectToDashboard: true });
   }
   render() {
-    const { directions, srclat, srclng, destlat, destlng } = this.state;
+    const {
+      directions,
+      srclat,
+      srclng,
+      destlat,
+      destlng,
+      redirectToDashboard
+    } = this.state;
     const RouteData = this.props.RouteDetailsData.data || "{}";
     const { loading } = this.props.RouteDetailsData;
 
@@ -113,7 +124,10 @@ class ViewRoute extends Component {
     return (
       <Fragment>
         <Spin spinning={loading}>
-          <BackButton linkPath="/admin/routes" linkText="Back" />
+          <BackButton
+            linkPath={redirectToDashboard ? "/" : "/admin/routes"}
+            linkText="Back"
+          />
           <Tabs defaultActiveKey="1">
             <TabPane tab="Routes" key="1">
               <RouteDetails propsData={routeDetailsProps} />

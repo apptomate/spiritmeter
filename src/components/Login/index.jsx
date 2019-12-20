@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { Form, Icon, Input, Row, Col, Button } from "antd";
-import { connect } from "react-redux";
-import { authLogin } from "../../Redux/_actions";
-import { Redirect } from "react-router-dom";
+import { Form, Icon, Input, Row, Col, Button, message } from "antd";
 import logoimg from "../../assets/img/logo.png";
 import { Link } from "react-router-dom";
+import API from "../../Redux/_actions/API";
+import { AUTHLOGIN_URL } from "../../Redux/_helpers/Constants";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -13,18 +12,40 @@ class LoginForm extends Component {
   }
   validateLogin = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        this.props.authLogin(values);
+        let loadingMessage = message.loading("Action in progress..");
+        let apiResponse = await API.post(AUTHLOGIN_URL, values)
+          .then(response => {
+            const {
+              accessToken: { token },
+              user: { userId, firstName, profileImage, role }
+            } = response.data;
+            if (role.toLowerCase() === "admin") {
+              let loggedUserData = { userId, firstName, profileImage };
+              localStorage.setItem("authToken", token);
+              localStorage.setItem(
+                "loggedUser",
+                JSON.stringify(loggedUserData)
+              );
+              message.success("Login Success");
+              this.props.history.push("/admin/dashboard");
+            } else {
+              message.warning("Invalid User");
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              let { data } = error.response;
+              message.error(data.errorMessage);
+            }
+          });
+        setTimeout(loadingMessage, apiResponse);
       }
     });
   };
 
   render() {
-    let { LoginProps } = this.props;
-    if (LoginProps) {
-      return <Redirect to={{ pathname: "/" }} />;
-    }
     const { getFieldDecorator } = this.props.form;
     return (
       <Fragment>
@@ -105,11 +126,4 @@ class LoginForm extends Component {
   }
 }
 const Login = Form.create({ name: "normal_login" })(LoginForm);
-const getState = state => {
-  return {
-    LoginProps: state.authLogin.data
-  };
-};
-export default connect(getState, {
-  authLogin
-})(Login);
+export default Login;

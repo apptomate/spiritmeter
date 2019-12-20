@@ -3,7 +3,6 @@ import { getAllListDisplay } from "./DisplayReducers/GetAllListDisplay";
 import { getAllListRoutes } from "./RouteReducers/GetAllListRoutes";
 import { getAllListUsers } from "./UsersReducers/GetAllListUsers";
 import { getDisplayDetails } from "./DisplayReducers/GetDisplayDetails";
-import { authLogin } from "./LoginReducers/AuthLogin";
 import { getRouteDetails } from "./RouteReducers/GetRouteDetails";
 import { getUserDetails } from "./UsersReducers/GetUserDetails";
 import { getUserSpiritMeter } from "./UsersReducers/GetUserSpiritMeter";
@@ -14,7 +13,6 @@ import { deleteUser } from "./UsersReducers/DeleteUser";
 import { getDashboardData } from "./DashboardReducers/GetDashboardData";
 
 const RootReducer = combineReducers({
-  authLogin,
   getDashboardData,
   getAllListDisplay,
   getAllListRoutes,
