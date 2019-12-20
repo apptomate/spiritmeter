@@ -1,8 +1,3 @@
-//Authentication
-//Login
-export const AUTHLOGIN_SUCCESS = "AUTHLOGIN_SUCCESS";
-export const AUTHLOGIN_ERROR = "AUTHLOGIN_ERROR";
-
 //Dashboard
 //Get Dashboard Data
 export const GET_DASHBOARD_DATA_LOADING = "GET_DASHBOARD_DATA_LOADING";

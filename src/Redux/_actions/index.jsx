@@ -2,7 +2,6 @@ import API from "./API";
 import { authHeader } from "../_helpers/AuthHeaders";
 //URL
 import {
-  AUTHLOGIN_URL,
   ALL_LIST_DISPLAY_URL,
   ALL_LIST_ROUTES_URL,
   ALL_LIST_USERS_URL,
@@ -19,8 +18,6 @@ import {
 } from "../_helpers/Constants";
 //Action Types
 import {
-  AUTHLOGIN_SUCCESS,
-  AUTHLOGIN_ERROR,
   GET_DASHBOARD_DATA_LOADING,
   GET_DASHBOARD_DATA_SUCCESS,
   GET_DASHBOARD_DATA_ERROR,
@@ -56,41 +53,6 @@ import {
 
 import { message } from "antd";
 
-//Authentication
-//Login
-export function authLogin(formData) {
-  return dispatch => {
-    API.post(AUTHLOGIN_URL, formData)
-      .then(response => {
-        const {
-          accessToken: { token },
-          user: { userId, firstName, profileImage, role }
-        } = response.data;
-        if (role.toLowerCase() === "admin") {
-          let loggedUserData = { userId, firstName, profileImage };
-          localStorage.setItem("authToken", token);
-          localStorage.setItem("loggedUser", JSON.stringify(loggedUserData));
-          message.success("Login Success");
-          dispatch({
-            type: AUTHLOGIN_SUCCESS,
-            payload: token
-          });
-        } else {
-          message.warning("Invalid User");
-        }
-      })
-      .catch(error => {
-        if (error.response) {
-          let { data } = error.response;
-          dispatch({
-            type: AUTHLOGIN_ERROR,
-            payload: data
-          });
-          message.error(data.errorMessage);
-        }
-      });
-  };
-}
 //Dashboard
 //Get Dashboard Details
 export function getDashboardData() {
