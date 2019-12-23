@@ -37,7 +37,7 @@ export default function DisplayPreview(props) {
       >
         <Row>
           <Col span={12}>
-            <div>
+            <div className="display-popImg">
               <DisplayImage srcPath={filePathParsed} />
             </div>
             <div className="list-name-imp">

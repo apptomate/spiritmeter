@@ -959,3 +959,11 @@ button.cus-btn:hover .circle .icon.arrow {
 .card-shodow {
   box-shadow: 0 0 20px #c1c1c1;
 }
+.display-popImg {
+  max-height: 300px;
+  overflow: hidden;
+}
+.table-action {
+  display: inline-flex;
+  padding: 4px;
+}
