@@ -375,7 +375,7 @@ class UserGrid extends Component {
         dataIndex: "userId",
         key: "userId",
         render: userId => (
-          <span>
+          <span className="table-action">
             <Link to={`/admin/viewUser/${userId}`}>
               <Button
                 type="primary"
