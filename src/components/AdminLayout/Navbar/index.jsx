@@ -14,6 +14,7 @@ import { FILE_UPLOAD_URL } from "../../../Redux/_helpers/Constants";
 import API from "../../../Redux/_actions/API";
 import { authHeader } from "../../../Redux/_helpers/AuthHeaders";
 import DisplayAvatar from "../../Common/DisplayAvatar";
+import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 export class Navbar extends Component {
@@ -175,7 +176,9 @@ export class Navbar extends Component {
     };
     return (
       <Header style={{ background: "#fff", padding: 0 }}>
-        <h3>Holiday Drive</h3>
+        <Link to="/">
+          <h3>Holiday Drive</h3>
+        </Link>
         <Dropdown className="logout-btn" overlay={this.getMenu}>
           <Button type="link" className="ant-dropdown-link">
             {firstName} <Icon type="down" />
